@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <Router>
+            <div className="app">
+                <header className="app-header">
+                    <h1>🎬 TMDB-Kinopoisk</h1>
+                </header>
+                <main>
+                    <Routes>
+                        <Route path="/" element={
+                            <div className="home">
+                                <h2>Добро пожаловать!</h2>
+                                <p>Приложение для поиска фильмов с использованием TMDB API</p>
+                                <div className="features">
+                                    <div>✅ Поиск фильмов</div>
+                                    <div>✅ Детальная информация</div>
+                                    <div>✅ Рейтинги и отзывы</div>
+                                    <div>🚧 В разработке...</div>
+                                </div>
+                            </div>
+                        }/>
+                        <Route path="*" element={<div>404 - Страница не найдена</div>}/>
+                    </Routes>
+                </main>
+                <footer>
+                    <p>Использует <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer">TMDB API</a>
+                    </p>
+                </footer>
+            </div>
+        </Router>
+    );
 }
 
-export default App
+export default App;
