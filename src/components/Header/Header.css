@@ -1,0 +1,132 @@
+/* Основной хедер */
+.header {
+    background-color: #0d253f;
+    color: white;
+    padding: 0;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+/* Логотип */
+.header-logo {
+    flex: 0 0 auto;
+}
+
+.header-logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.tmdb-logo {
+    width: 154px;
+    height: 20px;
+}
+
+/* Навигация */
+.header-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 4px;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    color: #01b4e4;
+}
+
+.nav-link.active {
+    color: #01b4e4;
+    font-weight: 600;
+}
+
+.nav-separator {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    user-select: none;
+}
+
+/* Кнопка темы */
+.header-theme {
+    flex: 0 0 auto;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #01b4e4;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 10px;
+        height: 56px;
+    }
+
+    .header-nav {
+        gap: 6px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        padding: 6px 2px;
+    }
+
+    .nav-separator {
+        font-size: 14px;
+    }
+
+    .tmdb-logo {
+        width: 120px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-nav {
+        display: none; /* Скрываем навигацию на очень маленьких экранах */
+    }
+
+    .header-container {
+        justify-content: space-between;
+    }
+}
