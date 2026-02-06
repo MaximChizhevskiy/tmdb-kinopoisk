@@ -1,22 +1,67 @@
-/* УБЕРИТЕ display: flex и place-items: center! */
-body {
+/* Базовые сбросы */
+* {
   margin: 0;
   padding: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  width: 100%;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Светлая тема (по умолчанию) */
+body.light-theme {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Тёмная тема */
+body.dark-theme {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+/* Стили для контента */
 #root {
-  width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Остальное можно оставить */
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-/* ... остальные стили */
+/* Общие стили для страниц */
+.page {
+  padding: 20px 0;
+}
+
+/* Ссылки */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 15px;
+  }
+}

@@ -1,70 +1,60 @@
-import { useState } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import "./App.css"
-import Header from "./components/Header/Header.tsx"
+import { ThemeProvider } from "./context/ThemeContext.tsx"
+import { Header } from "./components/Header/Header.tsx"
 
-// Временные страницы
-const HomePage = () => (
+export const HomePage = () => (
   <div className="page">
-    <h1>TMDB-Kinopoisk</h1>
+    <h1>🎬 TMDB-Kinopoisk</h1>
     <p>Главная страница с популярными фильмами</p>
   </div>
 )
 
-const MoviesPage = () => (
+export const MoviesPage = () => (
   <div className="page">
-    <h1>Фильмы по категориям</h1>
-    <p>Список фильмов по жанрам</p>
+    <h1>🎥 Фильмы по категориям</h1>
+    <p>Скоро здесь будут фильмы</p>
   </div>
 )
 
-// ... остальные страницы (FiltersPage, SearchPage, FavoritesPage)
+export const FiltersPage = () => (
+  <div className="page">
+    <h1>🔍 Фильтры</h1>
+    <p>Фильтрация фильмов</p>
+  </div>
+)
 
-function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
+export const SearchPage = () => (
+  <div className="page">
+    <h1>🔎 Поиск</h1>
+    <p>Поиск фильмов</p>
+  </div>
+)
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
-    // Здесь можно добавить сохранение в localStorage
-  }
+export const FavoritesPage = () => (
+  <div className="page">
+    <h1>⭐ Избранное</h1>
+    <p>Ваши сохранённые фильмы</p>
+  </div>
+)
 
+export const App = () => {
   return (
-    <Router>
-      <div className={`app ${isDarkMode ? "dark" : "light"}`}>
-        <Header />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/movies" element={<MoviesPage />} />
-            <Route
-              path="/filters"
-              element={
-                <div className="page">
-                  <h1>Фильтры</h1>
-                </div>
-              }
-            />
-            <Route
-              path="/search"
-              element={
-                <div className="page">
-                  <h1>Поиск</h1>
-                </div>
-              }
-            />
-            <Route
-              path="/favorites"
-              element={
-                <div className="page">
-                  <h1>Избранное</h1>
-                </div>
-              }
-            />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <div className="app">
+          <Header />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/movies" element={<MoviesPage />} />
+              <Route path="/filters" element={<FiltersPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </ThemeProvider>
   )
 }
-
-export default App

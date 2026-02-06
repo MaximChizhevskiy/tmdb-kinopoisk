@@ -130,3 +130,30 @@
         justify-content: space-between;
     }
 }
+
+/* Стили для темы */
+.light-theme .header {
+    background-color: #0d253f; /* TMDB синий остаётся в светлой теме */
+}
+
+.dark-theme .header {
+    background-color: #0a1a2d; /* Более тёмный синий для тёмной темы */
+}
+
+.light-theme .theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark-theme .theme-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.light-theme .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}

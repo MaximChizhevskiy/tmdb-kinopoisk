@@ -52,3 +52,51 @@ a {
     padding: 15px;
   }
 }
+
+/* CSS переменные для тем */
+:root {
+  /* Светлая тема */
+  --primary-color: #0d253f;
+  --secondary-color: #01b4e4;
+  --background-color: #f8f9fa;
+  --text-color: #333;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0;
+}
+
+.dark-theme {
+  /* Тёмная тема */
+  --primary-color: #0a1a2d;
+  --secondary-color: #90cea1;
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --card-bg: #1e1e1e;
+  --border-color: #333;
+}
+
+/* Применяем переменные */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.header {
+  background-color: var(--primary-color);
+}
+
+.nav-link.active {
+  color: var(--secondary-color);
+}
+
+/* Пример использования для карточек (понадобится позже) */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
