@@ -2,13 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import "./App.css"
 import { ThemeProvider } from "./context/ThemeContext.tsx"
 import { Header } from "./components/Header/Header.tsx"
+import { WelcomeSection } from "./components/WelcomeSection/WelcomeSection.tsx"
+import { SearchPage } from "./pages/SearchPage.tsx"
 
-export const HomePage = () => (
-  <div className="page">
-    <h1>🎬 TMDB-Kinopoisk</h1>
-    <p>Главная страница с популярными фильмами</p>
-  </div>
-)
+export const HomePage = () => {
+  return (
+    <div className="page">
+      <WelcomeSection />
+      {/* Здесь позже добавим остальные секции */}
+    </div>
+  )
+}
 
 export const MoviesPage = () => (
   <div className="page">
@@ -21,13 +25,6 @@ export const FiltersPage = () => (
   <div className="page">
     <h1>🔍 Фильтры</h1>
     <p>Фильтрация фильмов</p>
-  </div>
-)
-
-export const SearchPage = () => (
-  <div className="page">
-    <h1>🔎 Поиск</h1>
-    <p>Поиск фильмов</p>
   </div>
 )
 

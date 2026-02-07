@@ -1,10 +1,11 @@
-/* Базовые сбросы */
-* {
+/* Modern CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
+/* Базовые стили */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -12,6 +13,47 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   transition: background-color 0.3s, color 0.3s;
+}
+
+/* Убираем стили форм */
+input, button, textarea, select {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Убираем синюю подсветку на тач-устройствах */
+input, button, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Убираем стрелки у number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Убираем стандартные стили поиска */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* Убираем outline по умолчанию, но добавляем кастомный для доступности */
+:focus {
+  outline: 2px solid var(--secondary-color, #01b4e4);
+  outline-offset: 2px;
+}
+
+/* Убираем outline для элементов с mouse interaction */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Светлая тема (по умолчанию) */
@@ -33,35 +75,7 @@ body.dark-theme {
   flex-direction: column;
 }
 
-.main-content {
-  flex: 1;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Общие стили для страниц */
-.page {
-  padding: 20px 0;
-}
-
-/* Ссылки */
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.2s;
-}
-
-/* Адаптивность */
-@media (max-width: 1200px) {
-  .main-content {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    padding: 15px;
-  }
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
 }

@@ -1,56 +1,15 @@
-/* Сброс и базовые стили */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-}
-
-.app.light {
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-.app.dark {
-  background-color: #121212;
-  color: #f0f0f0;
-}
-
+/* Убираем отступы у main на всех страницах */
 .main-content {
-  flex: 1;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
 }
 
-.page {
-  padding: 20px 0;
-}
-
-/* Ссылки */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Адаптивность */
-@media (max-width: 1200px) {
-  .main-content {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    padding: 15px;
-  }
+/* Но добавляем отступы для других страниц, кроме Home */
+.page:not(:first-child) .main-content {
+  padding: 20px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
 }
 
 /* CSS переменные для тем */
@@ -60,6 +19,7 @@ a {
   --secondary-color: #01b4e4;
   --background-color: #f8f9fa;
   --text-color: #333;
+  --text-secondary: #666;
   --card-bg: #ffffff;
   --border-color: #e0e0e0;
 }
@@ -70,33 +30,12 @@ a {
   --secondary-color: #90cea1;
   --background-color: #121212;
   --text-color: #f0f0f0;
+  --text-secondary: #aaa;
   --card-bg: #1e1e1e;
   --border-color: #333;
 }
 
-/* Применяем переменные */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-}
-
-.header {
-  background-color: var(--primary-color);
-}
-
-.nav-link.active {
-  color: var(--secondary-color);
-}
-
-/* Пример использования для карточек (понадобится позже) */
-.card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
-  transition: transform 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-2px);
 }
