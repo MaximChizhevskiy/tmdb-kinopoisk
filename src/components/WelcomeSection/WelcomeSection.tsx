@@ -21,7 +21,6 @@ export const WelcomeSection = () => {
     }
   }, [popularMovies, isLoading])
 
-  // 🔧 ИСПРАВЛЕНИЕ: убираем FormEvent
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     if (searchQuery.trim()) {

@@ -1,0 +1,72 @@
+.category-movies-page {
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.category-movies-header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.category-movies-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.movies-count {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.category-movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.error {
+    color: #ff4444;
+}
+
+.page-info {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .category-movies-page {
+        padding: 30px 15px;
+    }
+
+    .category-movies-header h1 {
+        font-size: 2rem;
+    }
+
+    .category-movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-movies-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .category-movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}

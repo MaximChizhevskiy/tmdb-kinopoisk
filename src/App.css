@@ -39,3 +39,21 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
 }
+
+/* Отступы между блоками фильмов на главной */
+.page > section + section {
+  margin-top: 20px;
+}
+
+/* Граница между блоками */
+.page > section:not(:first-child) {
+  border-top: 1px solid var(--border-color);
+  padding-top: 40px;
+}
+
+/* Для мобильных */
+@media (max-width: 768px) {
+  .page > section:not(:first-child) {
+    padding-top: 30px;
+  }
+}

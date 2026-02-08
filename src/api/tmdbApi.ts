@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import type { MoviesResponse, SearchMoviesParams } from "../types/tmdb"
+import type { MoviesResponse, SearchMoviesParams } from "../types/tmdbTypes.ts"
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = "https://api.themoviedb.org/3"
@@ -15,12 +15,9 @@ export const tmdbApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    // Популярные фильмы (для рандомного бэкдропа)
     getPopularMovies: builder.query<MoviesResponse, number>({
       query: (page = 1) => `/movie/popular?language=ru-RU&page=${page}`,
     }),
-
-    // Поиск фильмов
     searchMovies: builder.query<MoviesResponse, SearchMoviesParams>({
       query: ({ query, page = 1, language = "ru-RU" }) => ({
         url: "/search/movie",
@@ -31,7 +28,24 @@ export const tmdbApi = createApi({
         },
       }),
     }),
+    getTopRatedMovies: builder.query<MoviesResponse, number>({
+      query: (page = 1) => `/movie/top_rated?language=ru-RU&page=${page}`,
+    }),
+    getUpcomingMovies: builder.query<MoviesResponse, number>({
+      query: (page = 1) => `/movie/upcoming?language=ru-RU&page=${page}`,
+    }),
+
+    getNowPlayingMovies: builder.query<MoviesResponse, number>({
+      query: (page = 1) => `/movie/now_playing?language=ru-RU&page=${page}`,
+    }),
   }),
 })
 
-export const { useGetPopularMoviesQuery, useSearchMoviesQuery, useLazySearchMoviesQuery } = tmdbApi
+export const {
+  useGetPopularMoviesQuery,
+  useSearchMoviesQuery,
+  useLazySearchMoviesQuery,
+  useGetTopRatedMoviesQuery,
+  useGetUpcomingMoviesQuery,
+  useGetNowPlayingMoviesQuery,
+} = tmdbApi

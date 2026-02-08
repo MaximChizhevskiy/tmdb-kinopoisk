@@ -1,12 +1,7 @@
 import { useState, type ChangeEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import "./SearchBar.css"
-
-type SearchBarProps = {
-  initialQuery?: string
-  onSearch?: (query: string) => void
-  align?: "left" | "center" | "right"
-}
+import type { SearchBarProps } from "../../types/tmdbTypes.ts"
 
 export const SearchBar = ({ initialQuery = "", onSearch, align = "left" }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState(initialQuery)

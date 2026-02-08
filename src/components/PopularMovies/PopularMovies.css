@@ -1,0 +1,98 @@
+.popular-movies {
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.popular-movies-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.popular-movies-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.popular-movies-view-more {
+    padding: 10px 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.popular-movies-view-more:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.popular-movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.popular-movies-loading,
+.popular-movies-error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.popular-movies-error {
+    color: #ff4444;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .popular-movies-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .popular-movies {
+        padding: 30px 15px;
+    }
+
+    .popular-movies-title {
+        font-size: 1.8rem;
+    }
+
+    .popular-movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .popular-movies-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .popular-movies-view-more {
+        width: 100%;
+        text-align: center;
+    }
+
+    .popular-movies-grid {
+        grid-template-columns: 1fr;
+    }
+}
