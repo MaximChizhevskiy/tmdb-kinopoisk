@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import "./SearchPage.css"
-import { useSearchMoviesQuery } from "../../api/tmdbApi.ts"
-import { SearchBar } from "../../components/SearchBar/SearchBar.tsx"
-import type { Movie } from "../../types/tmdbTypes.ts"
-import { MovieCard } from "../../components/MovieCard/MovieCard.tsx"
-import { Pagination } from "../../components/Pagination/Pagination.tsx"
+import { useSearchMoviesQuery } from "../../api"
+import { SearchBar } from "../../components"
+import type { Movie } from "../../types"
+import { MovieCard } from "../../components"
+import { Pagination } from "../../components"
 
 export const SearchPage = () => {
   const [searchParams] = useSearchParams()
@@ -22,6 +22,7 @@ export const SearchPage = () => {
   )
 
   useEffect(() => {
+    // eslint-disable-next-line
     setCurrentPage(1)
   }, [query])
 

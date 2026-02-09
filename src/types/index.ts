@@ -1,5 +1,9 @@
-/*
-export type { MovieCardProps } from './MovieCard/MovieCard.tsx';
-export type { MoviesCategoryProps } from './MoviesCategory/MoviesCategory.tsx';
-export type { SearchBarProps } from './SearchBar/SearchBar.tsx';
-export type { PaginationProps } from './Pagination/Pagination.tsx';*/
+export type { MovieCardProps } from "./tmdbTypes.ts"
+export type { MoviesCategoryProps } from "./tmdbTypes.ts"
+export type { SearchBarProps } from "./tmdbTypes.ts"
+export type { PaginationProps } from "./tmdbTypes.ts"
+export type { MoviesResponse } from "./tmdbTypes.ts"
+export type { Movie } from "./tmdbTypes.ts"
+export type { SearchMoviesParams } from "./tmdbTypes.ts"
+export type { ThemeContextType } from "./tmdbTypes.ts"
+export type { ThemeProviderProps } from "./tmdbTypes.ts"

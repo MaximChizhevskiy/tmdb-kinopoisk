@@ -1,25 +1,25 @@
-import { type ChangeEvent, useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./WelcomeSection.css"
-import { useGetPopularMoviesQuery } from "../../api/tmdbApi.ts"
+import { useGetPopularMoviesQuery } from "../../api"
 
 export const WelcomeSection = () => {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState("")
-  const [randomBackdrop, setRandomBackdrop] = useState<string | null>(null)
-
   const { data: popularMovies, isLoading } = useGetPopularMoviesQuery(1)
+  const [randomSeed] = useState(() => Math.random())
 
-  useEffect(() => {
+  const backdropUrl = useMemo(() => {
     if (!isLoading && popularMovies?.results && popularMovies.results.length > 0) {
-      const randomIndex = Math.floor(Math.random() * popularMovies.results.length)
-      const randomMovie = popularMovies.results[randomIndex]
+      const index = Math.floor(randomSeed * popularMovies.results.length)
+      const selectedMovie = popularMovies.results[index]
 
-      if (randomMovie?.backdrop_path) {
-        setRandomBackdrop(`https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`)
+      if (selectedMovie?.backdrop_path) {
+        return `https://image.tmdb.org/t/p/original${selectedMovie.backdrop_path}`
       }
     }
-  }, [popularMovies, isLoading])
+    return ""
+  }, [popularMovies, isLoading, randomSeed])
 
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault()
@@ -28,7 +28,7 @@ export const WelcomeSection = () => {
     }
   }
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
   }
 
@@ -38,17 +38,12 @@ export const WelcomeSection = () => {
     <section
       className="welcome-section"
       style={{
-        backgroundImage: randomBackdrop
-          ? `url(${randomBackdrop})`
-          : "linear-gradient(135deg, #0d253f 0%, #01b4e4 100%)",
+        backgroundImage: backdropUrl ? `url(${backdropUrl})` : "linear-gradient(135deg, #0d253f 0%, #01b4e4 100%)",
       }}
     >
       <div className="welcome-content">
         <h1 className="welcome-title">Добро пожаловать.</h1>
-        <p className="welcome-subtitle">
-          Миллионы фильмов, сериалов и людей. <br />
-          Исследуйте сейчас.
-        </p>
+        <p className="welcome-subtitle">Миллионы фильмов, сериалов и людей. Исследуйте сейчас.</p>
 
         <form className="search-form" onSubmit={handleSearch}>
           <div className="search-input-wrapper">

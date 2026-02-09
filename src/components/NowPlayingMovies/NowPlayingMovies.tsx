@@ -1,4 +1,4 @@
-import { useGetNowPlayingMoviesQuery } from "../../api/tmdbApi.ts"
+import { useGetNowPlayingMoviesQuery } from "../../api"
 import { MoviesCategory } from "../MoviesCategory/MoviesCategory.tsx"
 
 export const NowPlayingMovies = () => {

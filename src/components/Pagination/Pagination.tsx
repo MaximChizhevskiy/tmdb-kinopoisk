@@ -1,6 +1,6 @@
 import { type ChangeEvent, useState } from "react"
 import "./Pagination.css"
-import type { PaginationProps } from "../../types/tmdbTypes.ts"
+import type { PaginationProps } from "../../types"
 
 export const Pagination = ({
   currentPage,

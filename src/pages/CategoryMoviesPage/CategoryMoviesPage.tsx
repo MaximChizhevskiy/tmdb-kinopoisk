@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
-
 import "./CategoryMoviesPage.css"
 import {
   useGetNowPlayingMoviesQuery,
   useGetPopularMoviesQuery,
   useGetTopRatedMoviesQuery,
   useGetUpcomingMoviesQuery,
-} from "../../api/tmdbApi.ts"
-import { MovieCard } from "../../components/MovieCard/MovieCard.tsx"
-import { Pagination } from "../../components/Pagination/Pagination.tsx"
+} from "../../api"
+import { MovieCard } from "../../components"
+import { Pagination } from "../../components"
 
 export const CategoryMoviesPage = () => {
   const [searchParams] = useSearchParams()
   const category = searchParams.get("category") || "popular"
   const [currentPage, setCurrentPage] = useState(1)
 
-  // Выбираем нужный запрос
   const popularQuery = useGetPopularMoviesQuery(currentPage, { skip: category !== "popular" })
   const topRatedQuery = useGetTopRatedMoviesQuery(currentPage, { skip: category !== "top_rated" })
   const upcomingQuery = useGetUpcomingMoviesQuery(currentPage, { skip: category !== "upcoming" })
@@ -38,6 +36,7 @@ export const CategoryMoviesPage = () => {
   const { data, isLoading, isError } = getActiveQuery()
 
   useEffect(() => {
+    // eslint-disable-next-line
     setCurrentPage(1)
   }, [category])
 

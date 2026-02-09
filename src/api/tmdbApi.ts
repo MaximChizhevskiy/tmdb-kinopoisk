@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import type { MoviesResponse, SearchMoviesParams } from "../types/tmdbTypes.ts"
+import type { MoviesResponse, SearchMoviesParams } from "../types"
 
-const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
+export const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = "https://api.themoviedb.org/3"
 
 export const tmdbApi = createApi({

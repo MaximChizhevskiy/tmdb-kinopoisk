@@ -1,4 +1,4 @@
-import { useGetPopularMoviesQuery } from "../../api/tmdbApi.ts"
+import { useGetPopularMoviesQuery } from "../../api"
 import { MoviesCategory } from "../MoviesCategory/MoviesCategory.tsx"
 
 export const PopularMovies = () => {

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react"
+
 export type Movie = {
   id: number
   title: string
@@ -54,4 +56,13 @@ export type MoviesCategoryProps = {
   isLoading: boolean
   isError: boolean
   viewMoreLink: string
+}
+
+export type ThemeContextType = {
+  isDarkMode: boolean
+  toggleTheme: () => void
+}
+
+export type ThemeProviderProps = {
+  children: ReactNode
 }

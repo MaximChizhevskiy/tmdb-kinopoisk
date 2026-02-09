@@ -1,4 +1,4 @@
-import { useGetTopRatedMoviesQuery } from "../../api/tmdbApi.ts"
+import { useGetTopRatedMoviesQuery } from "../../api"
 import { MoviesCategory } from "../MoviesCategory/MoviesCategory.tsx"
 
 export const TopRatedMovies = () => {

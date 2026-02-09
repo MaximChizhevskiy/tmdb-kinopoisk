@@ -8,7 +8,9 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/movies" element={<CategoryMoviesPage />} />
-      {/*<Route path="/filters" element={<FiltersPage />} />*/}
+      {/*
+      <Route path="/movie/:id" element={<MoviePage />} />
+      <Route path="/filters" element={<FiltersPage />} />*/}
       <Route path="/search" element={<SearchPage />} />
       {/* <Route path="/favorites" element={<FavoritesPage />} />*/}
       <Route path="*" element={<div>404 - Страница не найдена</div>} />

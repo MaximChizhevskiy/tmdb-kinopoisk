@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import "./MoviesCategory.css"
-import type { MoviesCategoryProps } from "../../types/tmdbTypes.ts"
+import type { MoviesCategoryProps } from "../../types"
 import { MovieCard } from "../MovieCard/MovieCard.tsx"
 
 export const MoviesCategory = ({ title, movies, isLoading, isError, viewMoreLink }: MoviesCategoryProps) => {

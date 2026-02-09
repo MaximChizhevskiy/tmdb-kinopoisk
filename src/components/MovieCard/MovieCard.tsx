@@ -1,13 +1,57 @@
+import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import "./MovieCard.css"
-import type { MovieCardProps } from "../../types/tmdbTypes.ts"
+import type { MovieCardProps } from "../../types"
 
 export const MovieCard = ({ movie, showRating = true }: MovieCardProps) => {
   const navigate = useNavigate()
+  const [isFavorite, setIsFavorite] = useState(false)
 
-  const handleClick = () => {
+  // Загружаем состояние избранного из localStorage
+  useEffect(() => {
+    const loadFavoriteState = () => {
+      try {
+        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]")
+        setIsFavorite(favorites.includes(movie.id))
+      } catch (error) {
+        console.error("Error loading favorites:", error)
+      }
+    }
+
+    loadFavoriteState()
+  }, [movie.id])
+
+  const handleClick = useCallback(() => {
     navigate(`/movie/${movie.id}`)
-  }
+  }, [navigate, movie.id])
+
+  const handleFavoriteClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+
+      const newFavoriteState = !isFavorite
+      setIsFavorite(newFavoriteState)
+
+      // Обновляем localStorage
+      try {
+        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]")
+
+        if (newFavoriteState) {
+          if (!favorites.includes(movie.id)) {
+            const updatedFavorites = [...favorites, movie.id]
+            localStorage.setItem("favorites", JSON.stringify(updatedFavorites))
+          }
+        } else {
+          const updatedFavorites = favorites.filter((id: number) => id !== movie.id)
+          localStorage.setItem("favorites", JSON.stringify(updatedFavorites))
+        }
+      } catch (error) {
+        console.error("Error updating favorites:", error)
+        setIsFavorite(!newFavoriteState)
+      }
+    },
+    [isFavorite, movie.id],
+  )
 
   const releaseYear = movie.release_date?.split("-")[0] || "Нет года"
   const rating = movie.vote_average.toFixed(1)
@@ -35,15 +79,19 @@ export const MovieCard = ({ movie, showRating = true }: MovieCardProps) => {
         <h3 className="movie-card-title" title={movie.title}>
           {movie.title}
         </h3>
-        <div className="movie-card-info">
+        <div className="movie-card-footer">
+          {/* Сердце слева */}
+          <button
+            className={`movie-card-favorite ${isFavorite ? "active" : ""}`}
+            onClick={handleFavoriteClick}
+            aria-label={isFavorite ? "Удалить из избранного" : "Добавить в избранное"}
+            type="button"
+          >
+            <span className="movie-card-favorite-icon">{isFavorite ? "❤️" : "🤍"}</span>
+          </button>
+
+          {/* Год справа */}
           <span className="movie-card-year">{releaseYear}</span>
-          <span className="movie-card-genres">
-            {movie.genre_ids?.slice(0, 2).map((genreId) => (
-              <span key={genreId} className="movie-card-genre">
-                {genreId}
-              </span>
-            ))}
-          </span>
         </div>
       </div>
     </div>
