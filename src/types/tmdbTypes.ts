@@ -66,3 +66,75 @@ export type ThemeContextType = {
 export type ThemeProviderProps = {
   children: ReactNode
 }
+
+export type MovieDetails = Movie & {
+  budget: number
+  genres: {
+    id: number
+    name: string
+  }[]
+  homepage: string
+  imdb_id: string
+  production_companies: {
+    id: number
+    logo_path: string | null
+    name: string
+    origin_country: string
+  }[]
+  production_countries: {
+    iso_3166_1: string
+    name: string
+  }[]
+  revenue: number
+  runtime: number
+  spoken_languages: {
+    english_name: string
+    iso_639_1: string
+    name: string
+  }[]
+  status: string
+  tagline: string
+}
+
+export type MovieCredits = {
+  id: number
+  cast: CastMember[]
+  crew: CrewMember[]
+}
+
+export type CastMember = {
+  id: number
+  name: string
+  character: string
+  profile_path: string | null
+  order: number
+}
+
+export type CrewMember = {
+  id: number
+  name: string
+  job: string
+  department: string
+  profile_path: string | null
+}
+
+export type MovieVideos = {
+  id: number
+  results: Video[]
+}
+
+export type Video = {
+  id: string
+  key: string
+  name: string
+  site: string
+  type: string
+  official: boolean
+}
+
+export type RecommendationsResponse = {
+  page: number
+  results: Movie[]
+  total_pages: number
+  total_results: number
+}

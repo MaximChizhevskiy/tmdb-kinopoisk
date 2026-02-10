@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom"
 import "./Header.css"
-import { useTheme } from "../../context/ThemeContext"
+import { useTheme } from "../../context"
 
 export const Header = () => {
   const location = useLocation()

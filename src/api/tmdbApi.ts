@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import type { MoviesResponse, SearchMoviesParams } from "../types"
+import type { MovieCredits, MovieDetails, MovieVideos, RecommendationsResponse } from "../types/tmdbTypes.ts"
 
 export const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = "https://api.themoviedb.org/3"
@@ -38,6 +39,21 @@ export const tmdbApi = createApi({
     getNowPlayingMovies: builder.query<MoviesResponse, number>({
       query: (page = 1) => `/movie/now_playing?language=ru-RU&page=${page}`,
     }),
+    getMovieDetails: builder.query<MovieDetails, { movieId: number; language?: string }>({
+      query: ({ movieId, language = "ru-RU" }) => `/movie/${movieId}?language=${language}`,
+    }),
+
+    getMovieCredits: builder.query<MovieCredits, number>({
+      query: (movieId) => `/movie/${movieId}/credits?language=ru-RU`,
+    }),
+
+    getMovieVideos: builder.query<MovieVideos, number>({
+      query: (movieId) => `/movie/${movieId}/videos?language=ru-RU`,
+    }),
+
+    getMovieRecommendations: builder.query<RecommendationsResponse, { movieId: number; page?: number }>({
+      query: ({ movieId, page = 1 }) => `/movie/${movieId}/recommendations?language=ru-RU&page=${page}`,
+    }),
   }),
 })
 
@@ -48,4 +64,8 @@ export const {
   useGetTopRatedMoviesQuery,
   useGetUpcomingMoviesQuery,
   useGetNowPlayingMoviesQuery,
+  useGetMovieDetailsQuery,
+  useGetMovieCreditsQuery,
+  useGetMovieVideosQuery,
+  useGetMovieRecommendationsQuery,
 } = tmdbApi
