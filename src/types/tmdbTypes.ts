@@ -138,3 +138,45 @@ export type RecommendationsResponse = {
   total_pages: number
   total_results: number
 }
+
+// Добавляем новые типы для фильтров
+export type SortOption = {
+  value: string
+  label: string
+}
+
+export const SORT_OPTIONS: SortOption[] = [
+  { value: "popularity.desc", label: "По популярности (убыв.)" },
+  { value: "popularity.asc", label: "По популярности (возр.)" },
+  { value: "vote_average.desc", label: "По рейтингу (убыв.)" },
+  { value: "vote_average.asc", label: "По рейтингу (возр.)" },
+  { value: "release_date.desc", label: "По дате выхода (новые)" },
+  { value: "release_date.asc", label: "По дате выхода (старые)" },
+  { value: "title.asc", label: "По названию (А-Я)" },
+  { value: "title.desc", label: "По названию (Я-А)" },
+  { value: "revenue.desc", label: "По сборам (убыв.)" },
+  { value: "revenue.asc", label: "По сборам (возр.)" },
+]
+
+export type Genre = {
+  id: number
+  name: string
+}
+
+export type DiscoverMoviesParams = {
+  page?: number
+  language?: string
+  sort_by?: string
+  with_genres?: string // через запятую для AND, через | для OR
+  "vote_average.gte"?: number
+  "vote_average.lte"?: number
+  "release_date.gte"?: string
+  "release_date.lte"?: string
+  with_runtime_gte?: number
+  with_runtime_lte?: number
+  include_adult?: boolean
+  include_video?: boolean
+  with_original_language?: string
+  year?: number
+  primary_release_year?: number
+}

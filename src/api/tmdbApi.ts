@@ -1,6 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import type { MoviesResponse, SearchMoviesParams } from "../types"
-import type { MovieCredits, MovieDetails, MovieVideos, RecommendationsResponse } from "../types/tmdbTypes.ts"
+import type {
+  DiscoverMoviesParams,
+  Genre,
+  MovieCredits,
+  MovieDetails,
+  MovieVideos,
+  RecommendationsResponse,
+} from "../types/tmdbTypes.ts"
 
 export const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = "https://api.themoviedb.org/3"
@@ -54,6 +61,23 @@ export const tmdbApi = createApi({
     getMovieRecommendations: builder.query<RecommendationsResponse, { movieId: number; page?: number }>({
       query: ({ movieId, page = 1 }) => `/movie/${movieId}/recommendations?language=ru-RU&page=${page}`,
     }),
+    getGenres: builder.query<{ genres: Genre[] }, string>({
+      query: (language = "ru-RU") => `/genre/movie/list?language=${language}`,
+    }),
+
+    discoverMovies: builder.query<MoviesResponse, DiscoverMoviesParams>({
+      query: (params) => ({
+        url: "/discover/movie",
+        params: {
+          language: "ru-RU",
+          include_adult: false,
+          include_video: false,
+          page: params.page || 1,
+          sort_by: params.sort_by || "popularity.desc",
+          ...params,
+        },
+      }),
+    }),
   }),
 })
 
@@ -68,4 +92,7 @@ export const {
   useGetMovieCreditsQuery,
   useGetMovieVideosQuery,
   useGetMovieRecommendationsQuery,
+  useGetGenresQuery,
+  useDiscoverMoviesQuery,
+  useLazyDiscoverMoviesQuery,
 } = tmdbApi
