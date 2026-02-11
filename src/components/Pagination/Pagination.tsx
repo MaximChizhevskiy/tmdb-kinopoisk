@@ -11,6 +11,7 @@ export const Pagination = ({
 }: PaginationProps) => {
   const [customPageInput, setCustomPageInput] = useState("")
 
+  // В Pagination.tsx, обновите onPageChange вызовы:
   const goToFirstPage = () => onPageChange(1)
   const goToLastPage = () => onPageChange(Math.min(totalPages, 500))
   const goToPrevPage = () => onPageChange(Math.max(1, currentPage - 1))
@@ -25,7 +26,7 @@ export const Pagination = ({
     const pageNum = parseInt(customPageInput)
 
     if (pageNum >= 1 && pageNum <= Math.min(totalPages, 500)) {
-      onPageChange(pageNum)
+      onPageChange(pageNum) // Просто вызываем onPageChange, не устанавливаем стейт напрямую
       setCustomPageInput("")
     }
   }

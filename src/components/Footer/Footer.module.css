@@ -1,0 +1,16 @@
+/* components/Footer/Footer.module.css */
+.footer {
+    flex: 0 0 auto;  /* ⬅️ Не растягивается */
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding: 20px 0;
+    margin-top: auto;  /* ⬅️ Дополнительная страховка */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+    color: #666;
+}

@@ -20,7 +20,7 @@ export const Header = () => {
             Main
           </a>
           <span className="nav-separator">|</span>
-          <a href="/movies" className={`nav-link ${location.pathname === "/movies" ? "active" : ""}`}>
+          <a href="/movies?category=popular" className={`nav-link ${location.pathname === "/movies" ? "active" : ""}`}>
             Category movies
           </a>
           <span className="nav-separator">|</span>
