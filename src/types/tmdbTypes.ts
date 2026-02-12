@@ -168,6 +168,15 @@ export interface BaseMovie {
   vote_average: number
 }
 
+// Базовый интерфейс с минимально необходимыми полями
+export interface BaseMovie {
+  id: number
+  title: string
+  poster_path: string | null
+  release_date: string
+  vote_average: number
+}
+
 // Полный Movie расширяет BaseMovie
 export type Movie = BaseMovie & {
   overview: string
@@ -181,13 +190,13 @@ export type Movie = BaseMovie & {
   video: boolean
 }
 
-// FavoriteMovie расширяет BaseMovie + добавляет поле addedAt
+// FavoriteMovie расширяет BaseMovie
 export type FavoriteMovie = BaseMovie & {
   addedAt: number
 }
 
-// Обновляем MovieCardProps
+// MovieCardProps принимает BaseMovie
 export type MovieCardProps = {
-  movie: BaseMovie // Теперь принимает любой объект с базовыми полями
+  movie: BaseMovie
   showRating?: boolean
 }

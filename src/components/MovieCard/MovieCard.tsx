@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useFavorites } from "../../hooks/useFavorites"
-import type { MovieCardProps } from "../../types"
+import type { MovieCardProps, Movie } from "../../types"
 import "./MovieCard.css"
 
 export const MovieCard = ({ movie, showRating = true }: MovieCardProps) => {
@@ -14,7 +14,17 @@ export const MovieCard = ({ movie, showRating = true }: MovieCardProps) => {
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    toggleFavorite(movie)
+
+    // Создаем объект с минимально необходимыми полями для сохранения в избранное
+    const favoriteMovieData = {
+      id: movie.id,
+      title: movie.title,
+      poster_path: movie.poster_path,
+      vote_average: movie.vote_average,
+      release_date: movie.release_date,
+    }
+
+    toggleFavorite(favoriteMovieData as Movie)
   }
 
   const releaseYear = movie.release_date?.split("-")[0] || "Нет года"

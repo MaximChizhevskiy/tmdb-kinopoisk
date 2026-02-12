@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
-import type { Movie } from "../types"
-import type { FavoriteMovie } from "../types/tmdbTypes.ts"
+import type { BaseMovie, FavoriteMovie } from "../types/tmdbTypes.ts"
 
 const FAVORITES_STORAGE_KEY = "favorites"
 
@@ -15,19 +14,16 @@ export const useFavorites = () => {
     }
   })
 
-  // Синхронизируем с localStorage при изменении
   useEffect(() => {
     localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites))
   }, [favorites])
 
-  const addFavorite = (movie: Movie) => {
+  const addFavorite = (movie: BaseMovie) => {
     setFavorites((prev) => {
-      // Проверяем, нет ли уже такого фильма
       if (prev.some((fav) => fav.id === movie.id)) {
         return prev
       }
 
-      // Добавляем новый фильм с минимальными данными
       const favoriteMovie: FavoriteMovie = {
         id: movie.id,
         title: movie.title,
@@ -45,7 +41,7 @@ export const useFavorites = () => {
     setFavorites((prev) => prev.filter((movie) => movie.id !== movieId))
   }
 
-  const toggleFavorite = (movie: Movie) => {
+  const toggleFavorite = (movie: BaseMovie) => {
     setFavorites((prev) => {
       const exists = prev.some((fav) => fav.id === movie.id)
       if (exists) {
