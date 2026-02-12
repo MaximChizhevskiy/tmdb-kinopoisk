@@ -4,6 +4,7 @@ import { SearchPage } from "../pages"
 import { HomePage } from "../pages"
 import { MoviePage } from "../pages/MoviePage/MoviePage.tsx"
 import { FiltersPage } from "../pages/FiltersPage/FiltersPage.tsx"
+import { FavoritesPage } from "../pages/FavoritesPage/FavoritesPage.tsx"
 
 export const AppRoutes = () => {
   return (
@@ -13,7 +14,7 @@ export const AppRoutes = () => {
       <Route path="/movie/:id" element={<MoviePage />} />
       <Route path="/filters" element={<FiltersPage />} />
       <Route path="/search" element={<SearchPage />} />
-      {/* <Route path="/favorites" element={<FavoritesPage />} />*/}
+      <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="*" element={<div>404 - Страница не найдена</div>} />
     </Routes>
   )

@@ -1,22 +1,5 @@
 import type { ReactNode } from "react"
 
-export type Movie = {
-  id: number
-  title: string
-  overview: string
-  poster_path: string | null
-  backdrop_path: string | null
-  release_date: string
-  vote_average: number
-  vote_count: number
-  popularity: number
-  adult: boolean
-  original_language: string
-  original_title: string
-  genre_ids: number[]
-  video: boolean
-}
-
 export type MoviesResponse = {
   page: number
   results: Movie[]
@@ -42,11 +25,6 @@ export type PaginationProps = {
   totalItems?: number
   onPageChange: (page: number) => void
   showItemsCount?: boolean
-}
-
-export type MovieCardProps = {
-  movie: Movie
-  showRating?: boolean
 }
 
 export type MoviesCategoryProps = {
@@ -167,7 +145,7 @@ export type DiscoverMoviesParams = {
   page?: number
   language?: string
   sort_by?: string
-  with_genres?: string // через запятую для AND, через | для OR
+  with_genres?: string
   "vote_average.gte"?: number
   "vote_average.lte"?: number
   "release_date.gte"?: string
@@ -179,4 +157,37 @@ export type DiscoverMoviesParams = {
   with_original_language?: string
   year?: number
   primary_release_year?: number
+}
+
+// Создаем базовый интерфейс с минимально необходимыми полями
+export interface BaseMovie {
+  id: number
+  title: string
+  poster_path: string | null
+  release_date: string
+  vote_average: number
+}
+
+// Полный Movie расширяет BaseMovie
+export type Movie = BaseMovie & {
+  overview: string
+  backdrop_path: string | null
+  vote_count: number
+  popularity: number
+  adult: boolean
+  original_language: string
+  original_title: string
+  genre_ids: number[]
+  video: boolean
+}
+
+// FavoriteMovie расширяет BaseMovie + добавляет поле addedAt
+export type FavoriteMovie = BaseMovie & {
+  addedAt: number
+}
+
+// Обновляем MovieCardProps
+export type MovieCardProps = {
+  movie: BaseMovie // Теперь принимает любой объект с базовыми полями
+  showRating?: boolean
 }
