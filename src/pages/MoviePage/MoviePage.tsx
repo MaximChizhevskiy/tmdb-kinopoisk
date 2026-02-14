@@ -8,7 +8,7 @@ import {
   useGetMovieDetailsQuery,
   useGetMovieRecommendationsQuery,
   useGetMovieVideosQuery,
-} from "../../api/tmdbApi.ts"
+} from "../../api"
 import { BackButton, MovieCard, Pagination } from "../../components"
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
 
@@ -96,9 +96,6 @@ export const MoviePage = () => {
   const mainCast = credits?.cast?.slice(0, 8) || []
 
   // Продолжительность
-  const runtimeHours = Math.floor(movie.runtime / 60)
-  const runtimeMinutes = movie.runtime % 60
-
   return (
     <div className="movie-page">
       {/* Хедер с кнопкой назад */}
@@ -143,11 +140,12 @@ export const MoviePage = () => {
 
               <div className="movie-year">{new Date(movie.release_date).getFullYear()}</div>
 
-              {movie.runtime > 0 && (
+              {movie.runtime ? (
                 <div className="movie-runtime">
-                  {runtimeHours > 0 && `${runtimeHours}ч `}
-                  {runtimeMinutes}мин
+                  {Math.floor(movie.runtime / 60)}ч {movie.runtime % 60}мин
                 </div>
+              ) : (
+                <div className="movie-runtime">Длительность неизвестна</div>
               )}
 
               {movie.adult && <div className="movie-adult">18+</div>}

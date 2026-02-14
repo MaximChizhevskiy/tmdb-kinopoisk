@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useFavorites } from "../../hooks/useFavorites"
 import type { MovieCardProps, Movie } from "../../types"
 import "./MovieCard.css"
+import React from "react"
 
 export const MovieCard = ({ movie, showRating = true }: MovieCardProps) => {
   const navigate = useNavigate()

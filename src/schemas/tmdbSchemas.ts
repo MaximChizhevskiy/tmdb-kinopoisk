@@ -18,7 +18,7 @@ export const movieSchema = baseMovieSchema.extend({
   adult: z.boolean(),
   original_language: z.string(),
   original_title: z.string(),
-  genre_ids: z.array(z.number()),
+  genre_ids: z.array(z.number()), // Только для списковых эндпоинтов
   video: z.boolean(),
 })
 
@@ -49,36 +49,54 @@ export const genresResponseSchema = z.object({
 })
 
 // Схема для детальной информации о фильме
-export const movieDetailsSchema = movieSchema.extend({
-  budget: z.number(),
-  genres: z.array(genreSchema),
-  homepage: z.string().nullable(),
-  imdb_id: z.string().nullable(),
-  production_companies: z.array(
-    z.object({
-      id: z.number(),
-      logo_path: z.string().nullable(),
-      name: z.string(),
-      origin_country: z.string(),
-    }),
-  ),
-  production_countries: z.array(
-    z.object({
-      iso_3166_1: z.string(),
-      name: z.string(),
-    }),
-  ),
-  revenue: z.number(),
-  runtime: z.number(),
-  spoken_languages: z.array(
-    z.object({
-      english_name: z.string(),
-      iso_639_1: z.string(),
-      name: z.string(),
-    }),
-  ),
-  status: z.string(),
-  tagline: z.string(),
+export const movieDetailsSchema = baseMovieSchema.extend({
+  overview: z.string(),
+  backdrop_path: z.string().nullable(),
+  vote_count: z.number(),
+  popularity: z.number(),
+  adult: z.boolean(),
+  original_language: z.string(),
+  original_title: z.string(),
+  video: z.boolean(),
+  // ✅ Вместо genre_ids - полные объекты жанров
+  genres: z.array(genreSchema).default([]),
+  // Дополнительные поля для деталей
+  budget: z.number().default(0),
+  homepage: z.string().nullable().default(null),
+  imdb_id: z.string().nullable().default(null),
+  production_companies: z
+    .array(
+      z.object({
+        id: z.number(),
+        logo_path: z.string().nullable(),
+        name: z.string(),
+        origin_country: z.string(),
+      }),
+    )
+    .default([]),
+  production_countries: z
+    .array(
+      z.object({
+        iso_3166_1: z.string(),
+        name: z.string(),
+      }),
+    )
+    .default([]),
+  revenue: z.number().default(0),
+  runtime: z.number().nullable().default(null),
+  spoken_languages: z
+    .array(
+      z.object({
+        english_name: z.string(),
+        iso_639_1: z.string(),
+        name: z.string(),
+      }),
+    )
+    .default([]),
+  status: z.string().default(""),
+  tagline: z.string().default(""),
+  // Опциональные поля
+  belongs_to_collection: z.any().optional(),
 })
 
 // Схема для актера
@@ -130,13 +148,12 @@ export const recommendationsResponseSchema = z.object({
 // Типы, экспортируемые из схем
 
 export type MoviesResponse = z.infer<typeof moviesResponseSchema>
-export type MovieDetails = z.infer<typeof movieDetailsSchema>
 export type MovieCredits = z.infer<typeof movieCreditsSchema>
 export type MovieVideos = z.infer<typeof movieVideosSchema>
 export type RecommendationsResponse = z.infer<typeof recommendationsResponseSchema>
-export type Genre = z.infer<typeof genreSchema>
 export type GenresResponse = z.infer<typeof genresResponseSchema>
-// Типы
+export type FavoriteMovie = z.infer<typeof favoriteMovieSchema>
 export type BaseMovie = z.infer<typeof baseMovieSchema>
 export type Movie = z.infer<typeof movieSchema>
-export type FavoriteMovie = z.infer<typeof favoriteMovieSchema>
+export type MovieDetails = z.infer<typeof movieDetailsSchema>
+export type Genre = z.infer<typeof genreSchema>

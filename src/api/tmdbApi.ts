@@ -2,22 +2,24 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { toast } from "react-toastify"
 import { z } from "zod"
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query"
-import type { DiscoverMoviesParams } from "../types"
+import type {
+  DiscoverMoviesParams,
+  GenresResponse,
+  MovieCredits,
+  MovieDetails,
+  MoviesResponse,
+  MovieVideos,
+  RecommendationsResponse,
+} from "../types"
 
 // Импортируем схемы
 import {
-  moviesResponseSchema,
-  movieDetailsSchema,
+  genresResponseSchema,
   movieCreditsSchema,
+  movieDetailsSchema,
+  moviesResponseSchema,
   movieVideosSchema,
   recommendationsResponseSchema,
-  genresResponseSchema,
-  type MoviesResponse,
-  type MovieDetails,
-  type MovieCredits,
-  type MovieVideos,
-  type RecommendationsResponse,
-  type GenresResponse,
 } from "../schemas/tmdbSchemas"
 
 export const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -46,19 +48,35 @@ function validateWithZod<T>(schema: z.ZodSchema<T>, data: unknown, endpoint: str
   try {
     return schema.parse(data)
   } catch (error) {
-    // Проверяем, что это объект с errors
     if (error && typeof error === "object" && "errors" in error) {
-      // Используем z.ZodIssue - это правильный тип, несмотря на deprecated
       const zodError = error as { errors: z.core.$ZodIssue[] }
 
       console.group("🔴 Zod Validation Error")
       console.error("Endpoint:", endpoint)
       console.error("Errors:", zodError.errors)
+
+      // Детальный вывод проблемных полей
+      zodError.errors.forEach((issue, index) => {
+        const path = issue.path.join(".") || "root"
+
+        // Формируем сообщение в зависимости от типа ошибки
+        let receivedValue = "unknown"
+
+        // Проверяем наличие поля received в объекте ошибки
+        if ("received" in issue) {
+          // @ts-ignore - временно игнорируем, так как поле есть в рантайме
+          receivedValue = issue.received
+        } else if ("expected" in issue) {
+          receivedValue = "invalid value"
+        }
+
+        console.error(`  ${index + 1}. ${path}: ${issue.message} (received: ${JSON.stringify(receivedValue)})`)
+      })
+
       console.error("Received data:", data)
       console.groupEnd()
     }
 
-    toast.error(`Ошибка валидации данных от сервера для ${endpoint}`)
     throw error
   }
 }
