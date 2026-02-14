@@ -1,0 +1,79 @@
+import "./ErrorMessage.css"
+
+interface ErrorMessageProps {
+  message?: string
+  onRetry?: () => void
+  errorType?: "network" | "auth" | "notFound" | "server" | "rateLimit" | "validation" | "unknown"
+}
+
+export const ErrorMessage = ({ message, onRetry, errorType = "unknown" }: ErrorMessageProps) => {
+  const getIcon = () => {
+    switch (errorType) {
+      case "network":
+        return "🌐"
+      case "auth":
+        return "🔑"
+      case "notFound":
+        return "🔍"
+      case "server":
+        return "🔧"
+      case "rateLimit":
+        return "⏳"
+      case "validation":
+        return "⚠️"
+      default:
+        return "❌"
+    }
+  }
+
+  const getTitle = () => {
+    switch (errorType) {
+      case "network":
+        return "Ошибка сети"
+      case "auth":
+        return "Ошибка авторизации"
+      case "notFound":
+        return "Ничего не найдено"
+      case "server":
+        return "Ошибка сервера"
+      case "rateLimit":
+        return "Слишком много запросов"
+      case "validation":
+        return "Ошибка в параметрах запроса"
+      default:
+        return "Произошла ошибка"
+    }
+  }
+
+  const getDefaultMessage = () => {
+    switch (errorType) {
+      case "network":
+        return "Проверьте подключение к интернету и попробуйте снова"
+      case "auth":
+        return "Недействительный ключ API. Пожалуйста, проверьте настройки"
+      case "notFound":
+        return "Запрашиваемый ресурс не найден"
+      case "server":
+        return "Сервер временно недоступен. Попробуйте позже"
+      case "rateLimit":
+        return "Превышен лимит запросов. Подождите немного"
+      case "validation":
+        return "Неверные параметры запроса"
+      default:
+        return "Попробуйте обновить страницу или повторить попытку"
+    }
+  }
+
+  return (
+    <div className={`error-message error-message--${errorType}`}>
+      <div className="error-icon">{getIcon()}</div>
+      <h3 className="error-title">{getTitle()}</h3>
+      <p className="error-text">{message || getDefaultMessage()}</p>
+      {onRetry && (
+        <button className="error-retry" onClick={onRetry}>
+          Попробовать снова
+        </button>
+      )}
+    </div>
+  )
+}

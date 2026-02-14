@@ -1,0 +1,68 @@
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 2px solid var(--border-color);
+    border-radius: 30px;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    transform: translateX(-4px);
+    box-shadow: 0 2px 8px rgba(1, 180, 228, 0.15);
+}
+
+.back-button:active {
+    transform: translateX(-2px);
+}
+
+.back-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.back-button:hover .back-icon {
+    transform: translateX(-2px);
+}
+
+/* Разные варианты */
+.back-button--large {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+}
+
+.back-button--small {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
+.back-button--ghost {
+    border: none;
+    background: transparent;
+    padding: 4px 8px;
+}
+
+.back-button--ghost:hover {
+    background-color: rgba(1, 180, 228, 0.1);
+    border: none;
+    transform: translateX(-2px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .back-button {
+        padding: 6px 12px;
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+    }
+}

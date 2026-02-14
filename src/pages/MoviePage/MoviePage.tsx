@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { MovieCard } from "../../components"
-import { Pagination } from "../../components"
+
+import { useErrorType } from "../../hooks/useErrorType"
 import "./MoviePage.css"
-import { useGetMovieCreditsQuery, useGetMovieDetailsQuery, useGetMovieRecommendationsQuery } from "../../api/tmdbApi.ts"
+import {
+  useGetMovieCreditsQuery,
+  useGetMovieDetailsQuery,
+  useGetMovieRecommendationsQuery,
+  useGetMovieVideosQuery,
+} from "../../api/tmdbApi.ts"
+import { BackButton, MovieCard, Pagination } from "../../components"
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
@@ -11,59 +18,91 @@ export const MoviePage = () => {
   const movieId = parseInt(id || "0")
   const [recommendationsPage, setRecommendationsPage] = useState(1)
 
-  useEffect(() => {
-    // Прокручиваем наверх при загрузке страницы
-    window.scrollTo(0, 0)
-  }, [id]) // Зависимость от id, чтобы срабатывало при переходе между разными фильмами
-
+  // Основная информация о фильме
   const {
     data: movie,
     isLoading: isMovieLoading,
     isError: isMovieError,
+    error: movieError,
+    refetch: refetchMovie,
   } = useGetMovieDetailsQuery({ movieId }, { skip: !movieId })
 
+  // Информация об актерах
   const { data: credits, isLoading: isCreditsLoading } = useGetMovieCreditsQuery(movieId, { skip: !movieId })
 
-  const { data: recommendations } = useGetMovieRecommendationsQuery(
+  // Трейлеры
+  const { data: videos } = useGetMovieVideosQuery(movieId, { skip: !movieId })
+
+  // Рекомендации
+  const { data: recommendations, isLoading: isRecommendationsLoading } = useGetMovieRecommendationsQuery(
     { movieId, page: recommendationsPage },
     { skip: !movieId },
   )
 
+  const errorType = useErrorType(movieError)
+
+  // Проверка валидности ID
   useEffect(() => {
     if (!movieId || isNaN(movieId)) {
       navigate("/")
     }
   }, [movieId, navigate])
 
+  // Скролл наверх при загрузке страницы
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [id])
+
+  // Загрузка
   if (isMovieLoading) {
     return (
       <div className="movie-page">
-        <div className="loading">Загрузка информации о фильме...</div>
-      </div>
-    )
-  }
-
-  if (isMovieError || !movie) {
-    return (
-      <div className="movie-page">
-        <div className="error">
-          <h2>Фильм не найден</h2>
-          <p>К сожалению, мы не смогли найти информацию об этом фильме.</p>
-          <button onClick={() => navigate("/")} className="back-button">
-            Вернуться на главную
-          </button>
+        <div className="movie-page-header">
+          <BackButton fallbackPath="/movies" />
+        </div>
+        <div className="loading">
+          <div className="loading-spinner"></div>
+          <p>Загрузка информации о фильме...</p>
         </div>
       </div>
     )
   }
 
+  // Ошибка
+  if (isMovieError || !movie) {
+    return (
+      <div className="movie-page">
+        <div className="movie-page-header">
+          <BackButton fallbackPath="/movies" />
+        </div>
+        <ErrorMessage
+          errorType={errorType || "notFound"}
+          message="Не удалось загрузить информацию о фильме"
+          onRetry={refetchMovie}
+        />
+      </div>
+    )
+  }
+
+  // Поиск трейлера
+  const trailer =
+    videos?.results?.find((video) => video.site === "YouTube" && video.type === "Trailer" && video.official) ||
+    videos?.results?.find((video) => video.site === "YouTube" && video.type === "Trailer")
+
+  // Режиссер
   const director = credits?.crew?.find((person) => person.job === "Director")
+
+  // Актерский состав (первые 8 актеров)
   const mainCast = credits?.cast?.slice(0, 8) || []
+
+  // Продолжительность
   const runtimeHours = Math.floor(movie.runtime / 60)
   const runtimeMinutes = movie.runtime % 60
-  console.log(recommendations)
+
   return (
     <div className="movie-page">
+      {/* Хедер с кнопкой назад */}
+
       {/* Hero секция с бэкдропом */}
       <div
         className="movie-hero"
@@ -74,6 +113,7 @@ export const MoviePage = () => {
         }}
       >
         <div className="movie-hero-content">
+          {/* Постер */}
           <div className="movie-poster">
             {movie.poster_path ? (
               <img
@@ -88,6 +128,7 @@ export const MoviePage = () => {
             )}
           </div>
 
+          {/* Информация */}
           <div className="movie-hero-info">
             <h1 className="movie-title">{movie.title}</h1>
 
@@ -104,7 +145,8 @@ export const MoviePage = () => {
 
               {movie.runtime > 0 && (
                 <div className="movie-runtime">
-                  {runtimeHours}ч {runtimeMinutes}мин
+                  {runtimeHours > 0 && `${runtimeHours}ч `}
+                  {runtimeMinutes}мин
                 </div>
               )}
 
@@ -118,10 +160,25 @@ export const MoviePage = () => {
                 </span>
               ))}
             </div>
+
+            {trailer && (
+              <div className="trailer-button-container">
+                <button
+                  className="trailer-button"
+                  onClick={() => window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")}
+                >
+                  ▶ Смотреть трейлер
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="movie-page-header">
+            <BackButton fallbackPath="/movies" />
           </div>
         </div>
       </div>
 
+      {/* Основной контент */}
       <div className="movie-content">
         <div className="movie-main">
           {/* Описание */}
@@ -130,7 +187,7 @@ export const MoviePage = () => {
             <p className="overview-text">{movie.overview || "Описание отсутствует"}</p>
           </section>
 
-          {/* Информация о съемочной группе */}
+          {/* Режиссер */}
           {director && (
             <section className="movie-director">
               <h2>Режиссер</h2>
@@ -167,7 +224,6 @@ export const MoviePage = () => {
                   </div>
                 ))}
               </div>
-              {credits && credits.cast.length > 8}
             </section>
           )}
 
@@ -209,6 +265,13 @@ export const MoviePage = () => {
                   <span className="detail-value">{movie.production_countries.map((c) => c.name).join(", ")}</span>
                 </div>
               )}
+
+              {movie.release_date && (
+                <div className="detail-item">
+                  <span className="detail-label">Дата выхода:</span>
+                  <span className="detail-value">{new Date(movie.release_date).toLocaleDateString("ru-RU")}</span>
+                </div>
+              )}
             </div>
           </section>
 
@@ -216,19 +279,28 @@ export const MoviePage = () => {
           {recommendations && recommendations.results.length > 0 && (
             <section className="movie-recommendations">
               <h2>Рекомендации</h2>
-              <div className="recommendations-grid">
-                {recommendations.results.slice(0, 6).map((recMovie) => (
-                  <MovieCard key={recMovie.id} movie={recMovie} showRating={true} />
-                ))}
-              </div>
+              {isRecommendationsLoading ? (
+                <div className="loading-recommendations">
+                  <div className="loading-spinner small"></div>
+                  <p>Загрузка рекомендаций...</p>
+                </div>
+              ) : (
+                <>
+                  <div className="recommendations-grid">
+                    {recommendations.results.slice(0, 6).map((recMovie) => (
+                      <MovieCard key={recMovie.id} movie={recMovie} showRating={true} />
+                    ))}
+                  </div>
 
-              {recommendations.total_pages > 1 && (
-                <Pagination
-                  currentPage={recommendationsPage}
-                  totalPages={Math.min(recommendations.total_pages, 5)}
-                  onPageChange={setRecommendationsPage}
-                  showItemsCount={false}
-                />
+                  {recommendations.total_pages > 1 && (
+                    <Pagination
+                      currentPage={recommendationsPage}
+                      totalPages={Math.min(recommendations.total_pages, 5)}
+                      onPageChange={setRecommendationsPage}
+                      showItemsCount={false}
+                    />
+                  )}
+                </>
               )}
             </section>
           )}
@@ -240,7 +312,7 @@ export const MoviePage = () => {
             <div className="sidebar-section">
               <h3>Официальный сайт</h3>
               <a href={movie.homepage} target="_blank" rel="noopener noreferrer" className="homepage-link">
-                Перейти на сайт
+                🌐 Перейти на сайт
               </a>
             </div>
           )}
@@ -266,8 +338,42 @@ export const MoviePage = () => {
               </div>
             </div>
           )}
+
+          {movie.production_countries && movie.production_countries.length > 0 && (
+            <div className="sidebar-section">
+              <h3>Страны производства</h3>
+              <div className="countries-list">
+                {movie.production_countries.map((country) => (
+                  <div key={country.iso_3166_1} className="country">
+                    <span className="country-flag">{getCountryFlag(country.iso_3166_1)}</span>
+                    <span className="country-name">{country.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
   )
+}
+
+// Вспомогательная функция для эмодзи флагов
+function getCountryFlag(countryCode: string): string {
+  const flags: Record<string, string> = {
+    US: "🇺🇸",
+    GB: "🇬🇧",
+    RU: "🇷🇺",
+    FR: "🇫🇷",
+    DE: "🇩🇪",
+    IT: "🇮🇹",
+    ES: "🇪🇸",
+    JP: "🇯🇵",
+    KR: "🇰🇷",
+    CN: "🇨🇳",
+    IN: "🇮🇳",
+    CA: "🇨🇦",
+    AU: "🇦🇺",
+  }
+  return flags[countryCode] || "🌍"
 }

@@ -1,0 +1,100 @@
+.error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.error-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.error-title {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+
+.error-text {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.error-retry {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.error-retry:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(1, 180, 228, 0.3);
+}
+
+/* Типы ошибок */
+.error-message--network .error-icon {
+    color: #ff6b6b;
+}
+
+.error-message--auth .error-icon {
+    color: #feca57;
+}
+
+.error-message--notFound .error-icon {
+    color: #54a0ff;
+}
+
+.error-message--server .error-icon {
+    color: #5f27cd;
+}
+
+@media (max-width: 768px) {
+    .error-message {
+        padding: 30px 16px;
+        margin: 16px;
+    }
+
+    .error-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* Добавить в ErrorMessage.css */
+.error-message--rateLimit .error-icon {
+    color: #f39c12;
+}
+
+.error-message--validation .error-icon {
+    color: #e67e22;
+}
+
+.error-message--rateLimit {
+    border-left: 4px solid #f39c12;
+}
+
+.error-message--validation {
+    border-left: 4px solid #e67e22;
+}

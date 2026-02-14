@@ -141,24 +141,6 @@ export type Genre = {
   name: string
 }
 
-export type DiscoverMoviesParams = {
-  page?: number
-  language?: string
-  sort_by?: string
-  with_genres?: string
-  "vote_average.gte"?: number
-  "vote_average.lte"?: number
-  "release_date.gte"?: string
-  "release_date.lte"?: string
-  with_runtime_gte?: number
-  with_runtime_lte?: number
-  include_adult?: boolean
-  include_video?: boolean
-  with_original_language?: string
-  year?: number
-  primary_release_year?: number
-}
-
 // Создаем базовый интерфейс с минимально необходимыми полями
 export interface BaseMovie {
   id: number
@@ -199,4 +181,24 @@ export type FavoriteMovie = BaseMovie & {
 export type MovieCardProps = {
   movie: BaseMovie
   showRating?: boolean
+}
+
+// Добавим недостающие типы
+export type GenreResponse = {
+  genres: Genre[]
+}
+
+// Обновим DiscoverMoviesParams
+export type DiscoverMoviesParams = {
+  page?: number
+  sort_by?: string
+  with_genres?: string
+  "vote_average.gte"?: number
+  "vote_average.lte"?: number
+  "release_date.gte"?: string
+  "release_date.lte"?: string
+  with_runtime_gte?: number
+  with_runtime_lte?: number
+  include_adult?: boolean
+  language?: string
 }

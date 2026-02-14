@@ -1,9 +1,15 @@
 export { tmdbApi } from "./tmdbApi.ts"
 export {
   useGetPopularMoviesQuery,
+  useSearchMoviesQuery,
   useGetTopRatedMoviesQuery,
   useGetUpcomingMoviesQuery,
   useGetNowPlayingMoviesQuery,
-  useSearchMoviesQuery,
+  useGetMovieDetailsQuery,
+  useGetMovieCreditsQuery,
+  useGetMovieVideosQuery,
+  useGetMovieRecommendationsQuery,
+  useGetGenresQuery,
+  useDiscoverMoviesQuery,
   useLazySearchMoviesQuery,
 } from "./tmdbApi.ts"

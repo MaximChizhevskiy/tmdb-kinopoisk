@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import "./SearchPage.css"
 import { useSearchMoviesQuery } from "../../api"
-import { SearchBar } from "../../components"
-import type { Movie } from "../../types"
-import { MovieCard } from "../../components"
-import { Pagination } from "../../components"
+import { SearchBar, MovieCard, Pagination } from "../../components"
+import { useErrorType } from "../../hooks/useErrorType"
+import "./SearchPage.css"
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
 
 export const SearchPage = () => {
   const [searchParams] = useSearchParams()
@@ -13,25 +12,20 @@ export const SearchPage = () => {
   const query = searchParams.get("query") || ""
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { data, isLoading, isError } = useSearchMoviesQuery(
-    {
-      query,
-      page: currentPage,
-    },
+  const { data, isLoading, isError, error, refetch } = useSearchMoviesQuery(
+    { query, page: currentPage },
     { skip: !query },
   )
 
+  const errorType = useErrorType(error)
+
   useEffect(() => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentPage(1)
   }, [query])
 
   const handleSearch = (searchQuery: string) => {
     navigate(`/search?query=${encodeURIComponent(searchQuery)}`)
-  }
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
   }
 
   if (!query) {
@@ -67,7 +61,11 @@ export const SearchPage = () => {
           <h1>Поиск фильмов</h1>
           <SearchBar initialQuery={query} onSearch={handleSearch} align="left" />
         </div>
-        <div className="error">Ошибка при загрузке фильмов</div>
+        <ErrorMessage
+          errorType={errorType || "unknown"}
+          message="Не удалось загрузить результаты поиска"
+          onRetry={refetch}
+        />
       </div>
     )
   }
@@ -97,7 +95,7 @@ export const SearchPage = () => {
           </div>
 
           <div className="movies-grid">
-            {movies.map((movie: Movie) => (
+            {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
@@ -106,7 +104,7 @@ export const SearchPage = () => {
             currentPage={currentPage}
             totalPages={totalPages}
             totalItems={totalResults}
-            onPageChange={handlePageChange}
+            onPageChange={setCurrentPage}
             showItemsCount={true}
           />
         </>

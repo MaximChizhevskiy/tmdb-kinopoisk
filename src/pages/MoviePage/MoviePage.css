@@ -452,3 +452,14 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
+
+/* В MoviePage.css */
+.movie-page-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 20px 0;
+}
+
+.movie-page-header .back-button {
+    margin-bottom: 0;
+}
