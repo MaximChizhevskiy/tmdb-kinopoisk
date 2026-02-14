@@ -1,6 +1,6 @@
 import "./ActiveFilters.css"
-import { type DiscoverMoviesParams, SORT_OPTIONS } from "../../types/tmdbTypes.ts"
-import { useGetGenresQuery } from "../../api/tmdbApi.ts"
+import { type DiscoverMoviesParams, SORT_OPTIONS } from "../../types"
+import { useGetGenresQuery } from "../../api"
 
 interface ActiveFiltersProps {
   filters: DiscoverMoviesParams

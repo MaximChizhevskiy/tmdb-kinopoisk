@@ -1,6 +1,7 @@
 export { HomePage } from "./HomePage/HomePage.tsx"
 export { SearchPage } from "./SearchPage/SearchPage.tsx"
 export { CategoryMoviesPage } from "./CategoryMoviesPage/CategoryMoviesPage.tsx"
-/*
-export { FiltersPage } from './FiltersPage/';
-export { FavoritesPage } from './FavoritesPage';*/
+export { NotFoundPage } from "./NotFoundPage/NotFoundPage"
+export { FiltersPage } from "./FiltersPage/FiltersPage.tsx"
+export { FavoritesPage } from "./FavoritesPage/FavoritesPage.tsx"
+export { MoviePage } from "./MoviePage/MoviePage.tsx"

@@ -1,15 +1,24 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { toast } from "react-toastify"
+import { z } from "zod"
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query"
-import type { MoviesResponse, SearchMoviesParams } from "../types"
-import type {
-  DiscoverMoviesParams,
-  MovieCredits,
-  MovieDetails,
-  MovieVideos,
-  RecommendationsResponse,
-  GenreResponse,
-} from "../types/tmdbTypes"
+import type { DiscoverMoviesParams } from "../types"
+
+// Импортируем схемы
+import {
+  moviesResponseSchema,
+  movieDetailsSchema,
+  movieCreditsSchema,
+  movieVideosSchema,
+  recommendationsResponseSchema,
+  genresResponseSchema,
+  type MoviesResponse,
+  type MovieDetails,
+  type MovieCredits,
+  type MovieVideos,
+  type RecommendationsResponse,
+  type GenresResponse,
+} from "../schemas/tmdbSchemas"
 
 export const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const BASE_URL = "https://api.themoviedb.org/3"
@@ -21,7 +30,7 @@ interface TMDBErrorData {
   success?: boolean
 }
 
-// Создаем типизированный baseQuery
+// Базовый query
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers) => {
@@ -31,18 +40,41 @@ const baseQuery = fetchBaseQuery({
   },
 })
 
-// Типизированная обертка для обработки ошибок
-const baseQueryWithErrorHandling: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+// Функция для валидации с ошибкой
+
+function validateWithZod<T>(schema: z.ZodSchema<T>, data: unknown, endpoint: string): T {
+  try {
+    return schema.parse(data)
+  } catch (error) {
+    // Проверяем, что это объект с errors
+    if (error && typeof error === "object" && "errors" in error) {
+      // Используем z.ZodIssue - это правильный тип, несмотря на deprecated
+      const zodError = error as { errors: z.core.$ZodIssue[] }
+
+      console.group("🔴 Zod Validation Error")
+      console.error("Endpoint:", endpoint)
+      console.error("Errors:", zodError.errors)
+      console.error("Received data:", data)
+      console.groupEnd()
+    }
+
+    toast.error(`Ошибка валидации данных от сервера для ${endpoint}`)
+    throw error
+  }
+}
+
+// Обертка для обработки ошибок и валидации
+const baseQueryWithValidation: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
   args,
   api,
   extraOptions,
 ) => {
   const result = await baseQuery(args, api, extraOptions)
 
+  // Обработка ошибок
   if (result.error) {
     const error = result.error
 
-    // Логируем ошибку
     console.group("❌ API Error")
     console.error("Endpoint:", typeof args === "string" ? args : args.url)
     console.error("Error:", error)
@@ -50,9 +82,7 @@ const baseQueryWithErrorHandling: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
     let errorMessage = "Произошла неизвестная ошибка"
 
-    // Обработка разных типов ошибок
     if (typeof error.status === "string") {
-      // Строковые статусы (FETCH_ERROR, TIMEOUT_ERROR, PARSING_ERROR)
       switch (error.status) {
         case "FETCH_ERROR":
           errorMessage = "🌐 Ошибка сети. Проверьте подключение к интернету."
@@ -63,25 +93,17 @@ const baseQueryWithErrorHandling: BaseQueryFn<string | FetchArgs, unknown, Fetch
         case "PARSING_ERROR":
           errorMessage = "📦 Ошибка при обработке данных от сервера."
           break
-        default:
-          errorMessage = `❌ Ошибка: ${error.error || "неизвестная"}`
       }
     } else {
-      // Числовые HTTP статусы
       const status = error.status
       const data = error.data as TMDBErrorData | undefined
 
-      // Если есть сообщение от TMDB
       if (data?.status_message) {
         errorMessage = data.status_message
       } else {
-        // Стандартные HTTP ошибки
         switch (status) {
           case 401:
             errorMessage = "🔑 Недействительный ключ API. Проверьте AUTH_TOKEN."
-            break
-          case 403:
-            errorMessage = "🚫 Доступ запрещен."
             break
           case 404:
             errorMessage = "🔍 Запрашиваемый ресурс не найден (404)."
@@ -92,21 +114,14 @@ const baseQueryWithErrorHandling: BaseQueryFn<string | FetchArgs, unknown, Fetch
           default:
             if (status >= 500) {
               errorMessage = `🔧 Серверная ошибка (${status})`
-            } else {
-              errorMessage = `❌ Ошибка ${status}`
             }
         }
       }
     }
 
-    // Показываем тост
     toast.error(errorMessage, {
       position: "top-right",
       autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
       theme: "colored",
     })
   }
@@ -116,51 +131,73 @@ const baseQueryWithErrorHandling: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
 export const tmdbApi = createApi({
   reducerPath: "tmdbApi",
-  baseQuery: baseQueryWithErrorHandling,
+  baseQuery: baseQueryWithValidation,
   endpoints: (builder) => ({
+    // Popular Movies с валидацией
     getPopularMovies: builder.query<MoviesResponse, number>({
       query: (page = 1) => `/movie/popular?language=ru-RU&page=${page}`,
+      transformResponse: (response: unknown) => validateWithZod(moviesResponseSchema, response, "getPopularMovies"),
     }),
 
-    searchMovies: builder.query<MoviesResponse, SearchMoviesParams>({
+    // Search Movies с валидацией
+    searchMovies: builder.query<MoviesResponse, { query: string; page?: number; language?: string }>({
       query: ({ query, page = 1, language = "ru-RU" }) => ({
         url: "/search/movie",
         params: { query, page, language },
       }),
+      transformResponse: (response: unknown) => validateWithZod(moviesResponseSchema, response, "searchMovies"),
     }),
 
+    // Top Rated с валидацией
     getTopRatedMovies: builder.query<MoviesResponse, number>({
       query: (page = 1) => `/movie/top_rated?language=ru-RU&page=${page}`,
+      transformResponse: (response: unknown) => validateWithZod(moviesResponseSchema, response, "getTopRatedMovies"),
     }),
 
+    // Upcoming с валидацией
     getUpcomingMovies: builder.query<MoviesResponse, number>({
       query: (page = 1) => `/movie/upcoming?language=ru-RU&page=${page}`,
+      transformResponse: (response: unknown) => validateWithZod(moviesResponseSchema, response, "getUpcomingMovies"),
     }),
 
+    // Now Playing с валидацией
     getNowPlayingMovies: builder.query<MoviesResponse, number>({
       query: (page = 1) => `/movie/now_playing?language=ru-RU&page=${page}`,
+      transformResponse: (response: unknown) => validateWithZod(moviesResponseSchema, response, "getNowPlayingMovies"),
     }),
 
+    // Movie Details с валидацией
     getMovieDetails: builder.query<MovieDetails, { movieId: number; language?: string }>({
       query: ({ movieId, language = "ru-RU" }) => `/movie/${movieId}?language=${language}`,
+      transformResponse: (response: unknown) => validateWithZod(movieDetailsSchema, response, "getMovieDetails"),
     }),
 
+    // Movie Credits с валидацией
     getMovieCredits: builder.query<MovieCredits, number>({
       query: (movieId) => `/movie/${movieId}/credits?language=ru-RU`,
+      transformResponse: (response: unknown) => validateWithZod(movieCreditsSchema, response, "getMovieCredits"),
     }),
 
+    // Movie Videos с валидацией
     getMovieVideos: builder.query<MovieVideos, number>({
       query: (movieId) => `/movie/${movieId}/videos?language=ru-RU`,
+      transformResponse: (response: unknown) => validateWithZod(movieVideosSchema, response, "getMovieVideos"),
     }),
 
+    // Recommendations с валидацией
     getMovieRecommendations: builder.query<RecommendationsResponse, { movieId: number; page?: number }>({
       query: ({ movieId, page = 1 }) => `/movie/${movieId}/recommendations?language=ru-RU&page=${page}`,
+      transformResponse: (response: unknown) =>
+        validateWithZod(recommendationsResponseSchema, response, "getMovieRecommendations"),
     }),
 
-    getGenres: builder.query<GenreResponse, string>({
+    // Genres с валидацией
+    getGenres: builder.query<GenresResponse, string>({
       query: (language = "ru-RU") => `/genre/movie/list?language=${language}`,
+      transformResponse: (response: unknown) => validateWithZod(genresResponseSchema, response, "getGenres"),
     }),
 
+    // Discover Movies с валидацией
     discoverMovies: builder.query<MoviesResponse, DiscoverMoviesParams>({
       query: (params) => ({
         url: "/discover/movie",
@@ -173,10 +210,12 @@ export const tmdbApi = createApi({
           ...params,
         },
       }),
+      transformResponse: (response: unknown) => validateWithZod(moviesResponseSchema, response, "discoverMovies"),
     }),
   }),
 })
 
+// Экспорты хуков
 export const {
   useGetPopularMoviesQuery,
   useSearchMoviesQuery,

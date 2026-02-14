@@ -500,3 +500,43 @@
         margin-bottom: 20px;
     }
 }
+
+/* Добавить в конец файла */
+.movies-grid.fetching {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Блокируем клики во время обновления */
+}
+
+/* Стили для скелетона (если еще не добавили) */
+.skeleton-movie-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.skeleton-poster {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(90deg, var(--border-color) 25%, var(--card-bg) 50%, var(--border-color) 75%);
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-content {
+    padding: 16px;
+}
+
+.skeleton-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: -200px 0; }
+    100% { background-position: calc(200px + 100%) 0; }
+}

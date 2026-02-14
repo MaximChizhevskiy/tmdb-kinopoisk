@@ -1,10 +1,14 @@
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import "./FiltersPage.css"
+import { useDiscoverMoviesQuery } from "../../api"
 import { MovieCard, Pagination, ActiveFilters } from "../../components"
+import { SkeletonMovieCard } from "../../components/Skeletons/SkeletonMovieCard" // Добавить
 import { FiltersSidebar } from "./FiltersSidebar"
-import type { DiscoverMoviesParams } from "../../types/tmdbTypes.ts"
-import { useDiscoverMoviesQuery } from "../../api/tmdbApi.ts"
+import { useErrorType } from "../../hooks/useErrorType"
+import type { DiscoverMoviesParams } from "../../types"
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
+
 export const FiltersPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -15,7 +19,6 @@ export const FiltersPage = () => {
       sort_by: searchParams.get("sort_by") || "popularity.desc",
     }
 
-    // Читаем все параметры из URL
     if (searchParams.get("with_genres")) params.with_genres = searchParams.get("with_genres")!
     if (searchParams.get("vote_average.gte"))
       params["vote_average.gte"] = parseFloat(searchParams.get("vote_average.gte")!)
@@ -28,13 +31,12 @@ export const FiltersPage = () => {
     return params
   })
 
-  const { data, isLoading, isFetching, isError } = useDiscoverMoviesQuery(filters)
+  const { data, isLoading, isFetching, isError, error, refetch } = useDiscoverMoviesQuery(filters)
+  const errorType = useErrorType(error)
 
-  // Обновляем URL при изменении фильтров
   const handleFilterChange = (newFilters: DiscoverMoviesParams) => {
     setFilters(newFilters)
 
-    // Преобразуем фильтры в URL параметры
     const params: Record<string, string> = {
       page: (newFilters.page || 1).toString(),
     }
@@ -90,6 +92,42 @@ export const FiltersPage = () => {
   const totalPages = Math.min(data?.total_pages || 0, 500)
   const totalResults = data?.total_results || 0
 
+  // 🔥 СКЕЛЕТОН ДЛЯ ПЕРВОЙ ЗАГРУЗКИ
+  if (isLoading) {
+    return (
+      <div className="filters-page">
+        <FiltersSidebar filters={filters} onFilterChange={handleFilterChange} />
+        <main className="filters-content">
+          <div className="filters-header">
+            <h1>Фильтры и сортировка</h1>
+          </div>
+          {/* Сетка скелетонов */}
+          <div className="movies-grid">
+            {[...Array(20)].map((_, i) => (
+              <SkeletonMovieCard key={i} />
+            ))}
+          </div>
+        </main>
+      </div>
+    )
+  }
+
+  // 🔥 ОШИБКА
+  if (isError) {
+    return (
+      <div className="filters-page">
+        <FiltersSidebar filters={filters} onFilterChange={handleFilterChange} />
+        <main className="filters-content">
+          <div className="filters-header">
+            <h1>Фильтры и сортировка</h1>
+          </div>
+          <ErrorMessage errorType={errorType || "unknown"} message="Не удалось загрузить фильмы" onRetry={refetch} />
+        </main>
+      </div>
+    )
+  }
+
+  // 🔥 ОСНОВНОЙ КОНТЕНТ
   return (
     <div className="filters-page">
       <FiltersSidebar filters={filters} onFilterChange={handleFilterChange} />
@@ -102,55 +140,34 @@ export const FiltersPage = () => {
           )}
         </div>
 
-        {/* Компонент активных фильтров */}
         <ActiveFilters filters={filters} onRemoveFilter={handleRemoveFilter} onClearAll={handleClearAllFilters} />
 
-        {isLoading && (
-          <div className="loading">
-            <div className="loading-spinner"></div>
-            <p>Загрузка фильмов...</p>
-          </div>
-        )}
-
-        {isError && (
-          <div className="error">
-            <h3>Ошибка при загрузке фильмов</h3>
-            <p>Попробуйте обновить страницу или изменить параметры фильтрации</p>
-            <button onClick={() => handleFilterChange({ ...filters })} className="retry-button">
-              Повторить
+        {movies.length === 0 ? (
+          <div className="no-results">
+            <div className="no-results-icon">🎬</div>
+            <h3>Фильмы не найдены</h3>
+            <p>Попробуйте изменить параметры фильтрации</p>
+            <button onClick={handleClearAllFilters} className="clear-filters-button">
+              Сбросить все фильтры
             </button>
           </div>
-        )}
-
-        {!isLoading && !isError && (
+        ) : (
           <>
-            {movies.length === 0 ? (
-              <div className="no-results">
-                <div className="no-results-icon">🎬</div>
-                <h3>Фильмы не найдены</h3>
-                <p>Попробуйте изменить параметры фильтрации</p>
-                <button onClick={handleClearAllFilters} className="clear-filters-button">
-                  Сбросить все фильтры
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className={`movies-grid ${isFetching ? "fetching" : ""}`}>
-                  {movies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                  ))}
-                </div>
+            {/* Добавляем класс fetching для визуального эффекта при обновлении */}
+            <div className={`movies-grid ${isFetching ? "fetching" : ""}`}>
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
 
-                {totalPages > 1 && (
-                  <Pagination
-                    currentPage={filters.page || 1}
-                    totalPages={totalPages}
-                    totalItems={totalResults}
-                    onPageChange={handlePageChange}
-                    showItemsCount={false}
-                  />
-                )}
-              </>
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={filters.page || 1}
+                totalPages={totalPages}
+                totalItems={totalResults}
+                onPageChange={handlePageChange}
+                showItemsCount={false}
+              />
             )}
           </>
         )}

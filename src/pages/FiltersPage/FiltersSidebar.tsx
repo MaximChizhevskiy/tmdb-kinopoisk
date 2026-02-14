@@ -2,8 +2,8 @@ import { useState, useEffect } from "react"
 import "./FiltersPage.css"
 
 import { useDebounce } from "../../hooks/useDebounce"
-import { type DiscoverMoviesParams, SORT_OPTIONS } from "../../types/tmdbTypes.ts"
-import { useGetGenresQuery } from "../../api/tmdbApi.ts"
+import { type DiscoverMoviesParams, SORT_OPTIONS } from "../../types"
+import { useGetGenresQuery } from "../../api"
 
 interface FiltersSidebarProps {
   filters: DiscoverMoviesParams
@@ -12,52 +12,93 @@ interface FiltersSidebarProps {
 
 export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps) => {
   const { data: genresData } = useGetGenresQuery("ru-RU")
-  const [localFilters, setLocalFilters] = useState(filters)
 
-  // Локальные состояния для ползунков
-  const [ratingMin, setRatingMin] = useState(filters["vote_average.gte"] || 0)
-  const [ratingMax, setRatingMax] = useState(filters["vote_average.lte"] || 10)
-  const [yearFrom, setYearFrom] = useState(filters["release_date.gte"]?.split("-")[0] || "")
-  const [yearTo, setYearTo] = useState(filters["release_date.lte"]?.split("-")[0] || "")
+  // ✅ 1. Локальное состояние для UI элементов (ползунки, инпуты)
+  // Инициализируем их из пропса `filters` один раз при монтировании.
+  const [ratingMin, setRatingMin] = useState(filters["vote_average.gte"] ?? 0)
+  const [ratingMax, setRatingMax] = useState(filters["vote_average.lte"] ?? 10)
+  const [yearFrom, setYearFrom] = useState(filters["release_date.gte"]?.split("-")[0] ?? "")
+  const [yearTo, setYearTo] = useState(filters["release_date.lte"]?.split("-")[0] ?? "")
 
-  // Дебаунс значений
+  // ✅ 2. Дебаунс для значений UI
   const debouncedRatingMin = useDebounce(ratingMin, 200)
   const debouncedRatingMax = useDebounce(ratingMax, 200)
   const debouncedYearFrom = useDebounce(yearFrom, 300)
   const debouncedYearTo = useDebounce(yearTo, 300)
 
-  // Синхронизируем локальные фильтры с пропсами
+  // ✅ 3. Эффект ТОЛЬКО для отправки дебаунс-значений наверх.
+  // Это не просто setState, а синхронизация с "внешней системой" (родительским компонентом и URL).
   useEffect(() => {
-    setLocalFilters(filters)
-    setRatingMin(filters["vote_average.gte"] || 0)
-    setRatingMax(filters["vote_average.lte"] || 10)
-    setYearFrom(filters["release_date.gte"]?.split("-")[0] || "")
-    setYearTo(filters["release_date.lte"]?.split("-")[0] || "")
-  }, [filters])
-
-  // Применяем debounced рейтинг
-  useEffect(() => {
-    if (
-      debouncedRatingMin !== (filters["vote_average.gte"] || 0) ||
-      debouncedRatingMax !== (filters["vote_average.lte"] || 10)
-    ) {
-      handleRatingChange(debouncedRatingMin, debouncedRatingMax)
+    // Формируем новые параметры на основе текущих фильтров и дебаунс-значений
+    const newFilters: DiscoverMoviesParams = {
+      ...filters, // Берем все текущие фильтры (жанры, сортировку и т.д.)
+      page: 1, // Сбрасываем на первую страницу при изменении фильтров
+      sort_by: filters.sort_by, // Сохраняем сортировку
+      "vote_average.gte": debouncedRatingMin > 0 ? debouncedRatingMin : undefined,
+      "vote_average.lte": debouncedRatingMax < 10 ? debouncedRatingMax : undefined,
+      "release_date.gte": debouncedYearFrom ? `${debouncedYearFrom}-01-01` : undefined,
+      "release_date.lte": debouncedYearTo ? `${debouncedYearTo}-12-31` : undefined,
     }
-  }, [debouncedRatingMin, debouncedRatingMax])
 
-  // Применяем debounced год
-  useEffect(() => {
-    if (
-      debouncedYearFrom !== (filters["release_date.gte"]?.split("-")[0] || "") ||
-      debouncedYearTo !== (filters["release_date.lte"]?.split("-")[0] || "")
-    ) {
-      handleYearChange(debouncedYearFrom, debouncedYearTo)
+    // Проверяем, действительно ли изменились рейтинг или год, чтобы избежать лишних вызовов
+    const hasRatingChanged =
+      (newFilters["vote_average.gte"] ?? 0) !== (filters["vote_average.gte"] ?? 0) ||
+      (newFilters["vote_average.lte"] ?? 10) !== (filters["vote_average.lte"] ?? 10)
+
+    const hasYearChanged =
+      (newFilters["release_date.gte"] ?? "") !== (filters["release_date.gte"] ?? "") ||
+      (newFilters["release_date.lte"] ?? "") !== (filters["release_date.lte"] ?? "")
+
+    if (hasRatingChanged || hasYearChanged) {
+      onFilterChange(newFilters)
     }
-  }, [debouncedYearFrom, debouncedYearTo])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedRatingMin, debouncedRatingMax, debouncedYearFrom, debouncedYearTo]) // Зависимости только от дебаунс-значений
 
-  // Эффект для обновления градиента ползунков
+  // ✅ 4. Удалены useEffect для синхронизации с пропсом.
+  // Теперь локальное состояние (ratingMin, и т.д.) не зависит от `filters` после монтирования.
+  // Это нормально, потому что эти поля управляются пользователем через UI.
+  // Если нужно сбросить фильтры извне, для этого есть кнопка "Сбросить все".
+
+  const handleChange = (key: keyof DiscoverMoviesParams, value: unknown) => {
+    // Можно добавить небольшую валидацию
+    const updated = { ...filters, [key]: value, page: 1 }
+    onFilterChange(updated)
+  }
+
+  const handleGenreToggle = (genreId: number) => {
+    const currentGenres = filters.with_genres?.split(",").filter(Boolean) || []
+    let newGenres: string[]
+
+    if (currentGenres.includes(genreId.toString())) {
+      newGenres = currentGenres.filter((id) => id !== genreId.toString())
+    } else {
+      newGenres = [...currentGenres, genreId.toString()]
+    }
+
+    handleChange("with_genres", newGenres.join(",") || undefined)
+  }
+
+  const clearAllFilters = () => {
+    const clearedFilters: DiscoverMoviesParams = {
+      page: 1,
+      sort_by: "popularity.desc",
+    }
+    onFilterChange(clearedFilters)
+
+    // Сбрасываем локальные состояния UI
+    setRatingMin(0)
+    setRatingMax(10)
+    setYearFrom("")
+    setYearTo("")
+  }
+
+  const hasActiveFilters = Object.keys(filters).some(
+    (key) => !["page", "sort_by", "language"].includes(key) && filters[key as keyof DiscoverMoviesParams],
+  )
+
+  // Эффект для обновления градиента ползунков (оставляем, это работа с DOM)
   useEffect(() => {
-    // Обновляем CSS переменные для позиции ползунков
     const minPercent = (ratingMin / 10) * 100
     const maxPercent = (ratingMax / 10) * 100
 
@@ -85,66 +126,6 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
     }
   }, [ratingMin, ratingMax])
 
-  const handleChange = (key: keyof DiscoverMoviesParams, value: any) => {
-    const updated = { ...localFilters, [key]: value, page: 1 }
-    setLocalFilters(updated)
-    onFilterChange(updated)
-  }
-
-  const handleRatingChange = (min: number, max: number) => {
-    const updated: DiscoverMoviesParams = {
-      ...localFilters,
-      "vote_average.gte": min > 0 ? min : undefined,
-      "vote_average.lte": max < 10 ? max : undefined,
-      page: 1,
-    }
-    setLocalFilters(updated)
-    onFilterChange(updated)
-  }
-
-  const handleYearChange = (from: string, to: string) => {
-    const updated: DiscoverMoviesParams = {
-      ...localFilters,
-      "release_date.gte": from ? `${from}-01-01` : undefined,
-      "release_date.lte": to ? `${to}-12-31` : undefined,
-      page: 1,
-    }
-    setLocalFilters(updated)
-    onFilterChange(updated)
-  }
-
-  const handleGenreToggle = (genreId: number) => {
-    const currentGenres = localFilters.with_genres?.split(",").filter(Boolean) || []
-    let newGenres: string[]
-
-    if (currentGenres.includes(genreId.toString())) {
-      newGenres = currentGenres.filter((id) => id !== genreId.toString())
-    } else {
-      newGenres = [...currentGenres, genreId.toString()]
-    }
-
-    handleChange("with_genres", newGenres.join(",") || undefined)
-  }
-
-  const clearAllFilters = () => {
-    const clearedFilters: DiscoverMoviesParams = {
-      page: 1,
-      sort_by: "popularity.desc",
-    }
-    setLocalFilters(clearedFilters)
-    onFilterChange(clearedFilters)
-
-    // Сбрасываем локальные состояния
-    setRatingMin(0)
-    setRatingMax(10)
-    setYearFrom("")
-    setYearTo("")
-  }
-
-  const hasActiveFilters = Object.keys(localFilters).some(
-    (key) => !["page", "sort_by", "language"].includes(key) && localFilters[key as keyof DiscoverMoviesParams],
-  )
-
   return (
     <aside className="filters-sidebar">
       <div className="filters-header">
@@ -160,7 +141,7 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
       <div className="filter-section">
         <h3>Сортировка</h3>
         <select
-          value={localFilters.sort_by || "popularity.desc"}
+          value={filters.sort_by || "popularity.desc"}
           onChange={(e) => handleChange("sort_by", e.target.value)}
           className="filter-select"
         >
@@ -172,7 +153,7 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
         </select>
       </div>
 
-      {/* 2. РЕЙТИНГ (ТЕПЕРЬ ПЕРЕД ЖАНРАМИ) */}
+      {/* 2. РЕЙТИНГ */}
       <div className="filter-section">
         <h3>Рейтинг</h3>
         <div className="rating-range">
@@ -185,7 +166,6 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
             </span>
           </div>
 
-          {/* КОНТЕЙНЕР С ДВУМЯ ПОЛЗУНКАМИ */}
           <div className="dual-slider-container">
             <input
               type="range"
@@ -195,7 +175,6 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
               value={ratingMin}
               onChange={(e) => {
                 const value = parseFloat(e.target.value)
-                // Не даём минимальному ползунку обогнать максимальный
                 setRatingMin(Math.min(value, ratingMax - 0.1))
               }}
               className="slider slider-min"
@@ -208,7 +187,6 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
               value={ratingMax}
               onChange={(e) => {
                 const value = parseFloat(e.target.value)
-                // Не даём максимальному ползунку стать меньше минимального
                 setRatingMax(Math.max(value, ratingMin + 0.1))
               }}
               className="slider slider-max"
@@ -252,7 +230,7 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
           {genresData?.genres.map((genre) => (
             <button
               key={genre.id}
-              className={`genre-chip ${localFilters.with_genres?.split(",").includes(genre.id.toString()) ? "active" : ""}`}
+              className={`genre-chip ${filters.with_genres?.split(",").includes(genre.id.toString()) ? "active" : ""}`}
               onClick={() => handleGenreToggle(genre.id)}
               type="button"
             >
@@ -295,7 +273,7 @@ export const FiltersSidebar = ({ filters, onFilterChange }: FiltersSidebarProps)
         <label className="checkbox-label">
           <input
             type="checkbox"
-            checked={localFilters.include_adult || false}
+            checked={filters.include_adult || false}
             onChange={(e) => handleChange("include_adult", e.target.checked)}
           />
           Включая 18+
