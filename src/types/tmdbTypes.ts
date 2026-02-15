@@ -1,10 +1,6 @@
 import type { ReactNode } from "react"
 import type { BaseMovie, Movie } from "../schemas/tmdbSchemas.ts"
 
-// ======================================
-// ТИПЫ ДЛЯ КОМПОНЕНТОВ
-// ======================================
-
 export type SearchBarProps = {
   initialQuery?: string
   onSearch?: (query: string) => void
@@ -20,22 +16,18 @@ export type PaginationProps = {
 }
 
 export type MovieCardProps = {
-  movie: BaseMovie // BaseMovie из схем
+  movie: BaseMovie
   showRating?: boolean
 }
 
 export type MoviesCategoryProps = {
   title: string
   category: "popular" | "top_rated" | "upcoming" | "now_playing"
-  movies: Movie[] // Movie из схем
+  movies: Movie[]
   isLoading: boolean
   isError: boolean
   viewMoreLink: string
 }
-
-// ======================================
-// ТИПЫ ДЛЯ ТЕМЫ
-// ======================================
 
 export type ThemeContextType = {
   isDarkMode: boolean
@@ -45,10 +37,6 @@ export type ThemeContextType = {
 export type ThemeProviderProps = {
   children: ReactNode
 }
-
-// ======================================
-// ТИПЫ ДЛЯ ФИЛЬТРОВ
-// ======================================
 
 export type SortOption = {
   value: string
@@ -81,10 +69,6 @@ export type DiscoverMoviesParams = {
   include_adult?: boolean
   language?: string
 }
-
-// ======================================
-// ТИПЫ ДЛЯ API (только те, что не в схемах)
-// ======================================
 
 export type SearchMoviesParams = {
   query: string

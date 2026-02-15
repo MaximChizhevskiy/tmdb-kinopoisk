@@ -54,22 +54,15 @@
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.3);
 }
 
-/* Типы ошибок */
-.error-message--network .error-icon {
-    color: #ff6b6b;
-}
+.error-message--network .error-icon { color: #ff6b6b; }
+.error-message--auth .error-icon { color: #feca57; }
+.error-message--notFound .error-icon { color: #54a0ff; }
+.error-message--server .error-icon { color: #5f27cd; }
+.error-message--rateLimit .error-icon { color: #f39c12; }
+.error-message--validation .error-icon { color: #e67e22; }
 
-.error-message--auth .error-icon {
-    color: #feca57;
-}
-
-.error-message--notFound .error-icon {
-    color: #54a0ff;
-}
-
-.error-message--server .error-icon {
-    color: #5f27cd;
-}
+.error-message--rateLimit { border-left: 4px solid #f39c12; }
+.error-message--validation { border-left: 4px solid #e67e22; }
 
 @media (max-width: 768px) {
     .error-message {
@@ -80,21 +73,4 @@
     .error-title {
         font-size: 1.3rem;
     }
-}
-
-/* Добавить в ErrorMessage.css */
-.error-message--rateLimit .error-icon {
-    color: #f39c12;
-}
-
-.error-message--validation .error-icon {
-    color: #e67e22;
-}
-
-.error-message--rateLimit {
-    border-left: 4px solid #f39c12;
-}
-
-.error-message--validation {
-    border-left: 4px solid #e67e22;
 }

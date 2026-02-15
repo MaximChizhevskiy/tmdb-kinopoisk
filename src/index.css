@@ -1,11 +1,9 @@
-/* Modern CSS Reset */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Базовые стили */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -15,29 +13,25 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Убираем стили форм */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font-family: inherit;
   color: inherit;
-}
-
-/* Убираем синюю подсветку на тач-устройствах */
-input, button, textarea, select {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Убираем стрелки у number input */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  -webkit-tap-highlight-color: transparent; /* Объединено с предыдущим */
 }
 
 input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* Убираем стандартные стили поиска */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
@@ -45,37 +39,27 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
-/* Убираем outline по умолчанию, но добавляем кастомный для доступности */
 :focus {
   outline: 2px solid var(--secondary-color, #01b4e4);
   outline-offset: 2px;
 }
 
-/* Убираем outline для элементов с mouse interaction */
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-/* Светлая тема (по умолчанию) */
 body.light-theme {
   background-color: #f8f9fa;
   color: #333;
 }
 
-/* Тёмная тема */
 body.dark-theme {
   background-color: #121212;
   color: #f0f0f0;
 }
 
-/* Стили для контента */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
 }

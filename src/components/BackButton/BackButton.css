@@ -35,7 +35,6 @@
     transform: translateX(-2px);
 }
 
-/* Разные варианты */
 .back-button--large {
     padding: 12px 24px;
     font-size: 1.1rem;
@@ -58,7 +57,6 @@
     transform: translateX(-2px);
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .back-button {
         padding: 6px 12px;

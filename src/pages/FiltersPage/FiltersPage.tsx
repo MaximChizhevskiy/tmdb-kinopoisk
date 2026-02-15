@@ -92,7 +92,6 @@ export const FiltersPage = () => {
   const totalPages = Math.min(data?.total_pages || 0, 500)
   const totalResults = data?.total_results || 0
 
-  // 🔥 СКЕЛЕТОН ДЛЯ ПЕРВОЙ ЗАГРУЗКИ
   if (isLoading) {
     return (
       <div className="filters-page">
@@ -101,7 +100,6 @@ export const FiltersPage = () => {
           <div className="filters-header">
             <h1>Фильтры и сортировка</h1>
           </div>
-          {/* Сетка скелетонов */}
           <div className="movies-grid">
             {[...Array(20)].map((_, i) => (
               <SkeletonMovieCard key={i} />
@@ -112,7 +110,6 @@ export const FiltersPage = () => {
     )
   }
 
-  // 🔥 ОШИБКА
   if (isError) {
     return (
       <div className="filters-page">
@@ -127,7 +124,6 @@ export const FiltersPage = () => {
     )
   }
 
-  // 🔥 ОСНОВНОЙ КОНТЕНТ
   return (
     <div className="filters-page">
       <FiltersSidebar filters={filters} onFilterChange={handleFilterChange} />
@@ -153,7 +149,6 @@ export const FiltersPage = () => {
           </div>
         ) : (
           <>
-            {/* Добавляем класс fetching для визуального эффекта при обновлении */}
             <div className={`movies-grid ${isFetching ? "fetching" : ""}`}>
               {movies.map((movie) => (
                 <MovieCard key={movie.id} movie={movie} />

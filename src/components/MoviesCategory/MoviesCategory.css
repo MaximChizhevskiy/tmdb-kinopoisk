@@ -58,7 +58,6 @@
     color: #ff4444;
 }
 
-/* Адаптивность */
 @media (max-width: 1024px) {
     .movies-category-grid {
         grid-template-columns: repeat(3, 1fr);

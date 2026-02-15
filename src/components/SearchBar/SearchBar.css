@@ -5,17 +5,9 @@
     max-width: 600px;
 }
 
-.search-bar-left {
-    justify-content: flex-start;
-}
-
-.search-bar-center {
-    justify-content: center;
-}
-
-.search-bar-right {
-    justify-content: flex-end;
-}
+.search-bar-left { justify-content: flex-start; }
+.search-bar-center { justify-content: center; }
+.search-bar-right { justify-content: flex-end; }
 
 .search-input-wrapper {
     position: relative;
@@ -26,7 +18,7 @@
 
 .search-bar-input {
     width: 100%;
-    padding: 12px 40px 12px 16px; /* Увеличили правый padding для крестика */
+    padding: 12px 40px 12px 16px;
     font-size: 1rem;
     border: 2px solid var(--border-color);
     border-radius: 40px;
@@ -96,7 +88,6 @@
     cursor: not-allowed;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .search-bar {
         max-width: 100%;

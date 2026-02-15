@@ -2,7 +2,16 @@
     min-height: 100vh;
 }
 
-/* Hero секция */
+.movie-page-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 20px 0;
+}
+
+.movie-page-header .back-button {
+    margin-bottom: 0;
+}
+
 .movie-hero {
     padding: 40px 20px;
     background-size: cover;
@@ -36,7 +45,7 @@
 .movie-poster-placeholder {
     width: 100%;
     height: 450px;
-    background: linear-gradient(135deg, #0d253f 0%, #01b4e4 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,25 +58,18 @@
 }
 
 .movie-title {
-font-size: 3rem;
-margin: 0 0 10px 0;
-font-weight: 700;
-line-height: 1.2;
-color: white !important; /* Добавляем !important чтобы перебить любые другие стили */
-text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень для лучшей читаемости */
+    font-size: 3rem;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    line-height: 1.2;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Если нужно уточнить для светлой темы (если вдруг будет светлый бэкдроп) */
-.dark-theme .movie-title,
-.light-theme .movie-title {
-    color: white !important;
-}
-
-/* Также можно улучшить цвет тегайна */
 .movie-tagline {
     font-size: 1.2rem;
     font-style: italic;
-    color: rgba(255, 255, 255, 0.9); /* Делаем светлее */
+    color: rgba(255, 255, 255, 0.9);
     margin: 0 0 25px 0;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -127,7 +129,7 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
 
 .genre-tag {
     background: rgba(1, 180, 228, 0.2);
-    color: #01b4e4;
+    color: var(--secondary-color);
     padding: 6px 12px;
     border-radius: 16px;
     font-size: 0.9rem;
@@ -157,7 +159,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     background: #ff3742;
 }
 
-/* Основной контент */
 .movie-content {
     max-width: 1200px;
     margin: 40px auto;
@@ -175,7 +176,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     flex-shrink: 0;
 }
 
-/* Секции */
 .movie-overview,
 .movie-director,
 .movie-cast,
@@ -202,7 +202,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     font-size: 1.1rem;
 }
 
-/* Актерский состав */
 .cast-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -235,7 +234,7 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
 
 .cast-placeholder {
     height: 100%;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--border-color) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -275,7 +274,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     color: white;
 }
 
-/* Детальная информация */
 .details-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -308,7 +306,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     text-align: right;
 }
 
-/* Рекомендации */
 .recommendations-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -316,7 +313,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     margin-bottom: 30px;
 }
 
-/* Сайдбар */
 .sidebar-section {
     background: var(--card-bg);
     padding: 20px;
@@ -363,7 +359,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     color: var(--text-secondary);
 }
 
-/* Состояния */
 .loading,
 .error {
     text-align: center;
@@ -392,20 +387,19 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
     opacity: 0.9;
 }
 
-/* Адаптивность */
 @media (max-width: 1024px) {
+    .movie-hero-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
     .movie-content {
         flex-direction: column;
     }
 
     .movie-sidebar {
         width: 100%;
-    }
-
-    .movie-hero-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
     }
 
     .movie-poster {
@@ -418,6 +412,10 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
 }
 
 @media (max-width: 768px) {
+    .movie-hero {
+        padding: 30px 15px;
+    }
+
     .movie-title {
         font-size: 2rem;
     }
@@ -432,6 +430,10 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
 
     .details-grid {
         grid-template-columns: 1fr;
+    }
+
+    .movie-page-header {
+        padding: 15px 15px 0;
     }
 }
 
@@ -448,18 +450,15 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень дл
         width: 200px;
     }
 
-    .recommendations-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    .movie-poster-placeholder {
+        height: 300px;
     }
-}
 
-/* В MoviePage.css */
-.movie-page-header {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px 20px 0;
-}
+    .cast-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
 
-.movie-page-header .back-button {
-    margin-bottom: 0;
+    .recommendations-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
 }

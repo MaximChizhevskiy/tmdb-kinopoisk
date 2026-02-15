@@ -5,7 +5,13 @@
     min-height: calc(100vh - 200px);
 }
 
-/* Заголовок и управление */
+.favorites-page--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+}
+
 .favorites-header {
     display: flex;
     justify-content: space-between;
@@ -105,20 +111,11 @@
     box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
 }
 
-/* Сетка карточек */
 .favorites-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
     margin-bottom: 40px;
-}
-
-/* Пустое состояние */
-.favorites-page--empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 70vh;
 }
 
 .empty-state {
@@ -134,11 +131,9 @@
 }
 
 @keyframes heartbeat {
-    0% { transform: scale(1); }
+    0%, 50%, 100% { transform: scale(1); }
     25% { transform: scale(1.1); }
-    50% { transform: scale(1); }
     75% { transform: scale(1.05); }
-    100% { transform: scale(1); }
 }
 
 .empty-state-title {
@@ -172,7 +167,6 @@
     box-shadow: 0 8px 20px rgba(1, 180, 228, 0.3);
 }
 
-/* Подвал */
 .favorites-footer {
     margin-top: 40px;
     padding-top: 20px;
@@ -185,7 +179,6 @@
     font-size: 0.95rem;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .favorites-page {
         padding: 20px 16px;
@@ -230,6 +223,10 @@
 }
 
 @media (max-width: 480px) {
+    .favorites-page {
+        padding: 16px 12px;
+    }
+
     .favorites-title {
         font-size: 1.5rem;
     }

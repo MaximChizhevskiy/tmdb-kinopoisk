@@ -4,7 +4,6 @@ import type { SerializedError } from "@reduxjs/toolkit"
 
 export type ErrorType = "network" | "auth" | "notFound" | "server" | "rateLimit" | "validation" | "unknown" | null
 
-// Типы ошибок из документации TMDB
 interface TMDBErrorResponse {
   status_code?: number
   status_message?: string
@@ -15,14 +14,12 @@ export const useErrorType = (error: FetchBaseQueryError | SerializedError | unde
   return useMemo(() => {
     if (!error) return null
 
-    // Обработка SerializedError
     if (!("status" in error)) {
       return "unknown"
     }
 
     const status = error.status
 
-    // Строковые статусы (ошибки сети/парсинга)
     if (typeof status === "string") {
       switch (status) {
         case "FETCH_ERROR":
@@ -36,8 +33,6 @@ export const useErrorType = (error: FetchBaseQueryError | SerializedError | unde
       }
     }
 
-    // Числовые HTTP статусы
-    // Проверяем специфические коды TMDB из data
     const data = error.data as TMDBErrorResponse | undefined
     if (data?.status_code) {
       switch (data.status_code) {

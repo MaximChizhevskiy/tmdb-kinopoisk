@@ -1,12 +1,7 @@
 import { useSelector } from "react-redux"
 import type { RootState } from "../store"
 
-// Список эндпоинтов, которые не должны запускать глобальный лоадер
-const excludedEndpoints: string[] = [
-  // Можно добавить эндпоинты, которые должны быть исключены
-  // Например, если какой-то запрос обновляется слишком часто
-  // 'getPopularMovies',
-]
+const excludedEndpoints: string[] = ["getPopularMovies"]
 
 export const useGlobalLoading = () => {
   return useSelector((state: RootState) => {
@@ -14,7 +9,6 @@ export const useGlobalLoading = () => {
     const mutations = Object.values(state.tmdbApi?.mutations || {})
 
     const hasActiveQueries = queries.some((query) => {
-      // Проверяем, что запрос в статусе 'pending' и не исключен
       return query?.status === "pending" && !excludedEndpoints.includes(query?.endpointName || "")
     })
 

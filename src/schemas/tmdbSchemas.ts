@@ -1,6 +1,5 @@
 import { z } from "zod"
 
-// Базовая схема для фильма (минимальные поля)
 export const baseMovieSchema = z.object({
   id: z.number(),
   title: z.string(),
@@ -9,7 +8,6 @@ export const baseMovieSchema = z.object({
   vote_average: z.number(),
 })
 
-// Полная схема фильма
 export const movieSchema = baseMovieSchema.extend({
   overview: z.string(),
   backdrop_path: z.string().nullable(),
@@ -18,19 +16,14 @@ export const movieSchema = baseMovieSchema.extend({
   adult: z.boolean(),
   original_language: z.string(),
   original_title: z.string(),
-  genre_ids: z.array(z.number()), // Только для списковых эндпоинтов
+  genre_ids: z.array(z.number()),
   video: z.boolean(),
 })
 
-// Схема для избранного фильма
 export const favoriteMovieSchema = baseMovieSchema.extend({
   addedAt: z.number(),
 })
 
-// ... остальные схемы
-
-// Базовая схема для фильма
-// Схема для ответа со списком фильмов
 export const moviesResponseSchema = z.object({
   page: z.number(),
   results: z.array(movieSchema),
@@ -38,7 +31,6 @@ export const moviesResponseSchema = z.object({
   total_results: z.number(),
 })
 
-// Схема для жанров
 export const genreSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -48,7 +40,6 @@ export const genresResponseSchema = z.object({
   genres: z.array(genreSchema),
 })
 
-// Схема для детальной информации о фильме
 export const movieDetailsSchema = baseMovieSchema.extend({
   overview: z.string(),
   backdrop_path: z.string().nullable(),
@@ -58,9 +49,7 @@ export const movieDetailsSchema = baseMovieSchema.extend({
   original_language: z.string(),
   original_title: z.string(),
   video: z.boolean(),
-  // ✅ Вместо genre_ids - полные объекты жанров
   genres: z.array(genreSchema).default([]),
-  // Дополнительные поля для деталей
   budget: z.number().default(0),
   homepage: z.string().nullable().default(null),
   imdb_id: z.string().nullable().default(null),
@@ -95,11 +84,9 @@ export const movieDetailsSchema = baseMovieSchema.extend({
     .default([]),
   status: z.string().default(""),
   tagline: z.string().default(""),
-  // Опциональные поля
   belongs_to_collection: z.any().optional(),
 })
 
-// Схема для актера
 export const castMemberSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -122,7 +109,6 @@ export const movieCreditsSchema = z.object({
   crew: z.array(crewMemberSchema),
 })
 
-// Схема для видео
 export const videoSchema = z.object({
   id: z.string(),
   key: z.string(),
@@ -137,15 +123,12 @@ export const movieVideosSchema = z.object({
   results: z.array(videoSchema),
 })
 
-// Схема для рекомендаций
 export const recommendationsResponseSchema = z.object({
   page: z.number(),
   results: z.array(movieSchema),
   total_pages: z.number(),
   total_results: z.number(),
 })
-
-// Типы, экспортируемые из схем
 
 export type MoviesResponse = z.infer<typeof moviesResponseSchema>
 export type MovieCredits = z.infer<typeof movieCreditsSchema>

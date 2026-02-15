@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import type { BaseMovie, FavoriteMovie } from "../schemas/tmdbSchemas.ts"
+import type { BaseMovie, FavoriteMovie } from "../schemas"
 
 const FAVORITES_STORAGE_KEY = "favorites"
 

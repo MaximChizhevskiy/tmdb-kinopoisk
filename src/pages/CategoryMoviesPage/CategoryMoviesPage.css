@@ -4,7 +4,6 @@
     padding: 20px;
 }
 
-/* Табы категорий */
 .category-tabs {
     display: flex;
     gap: 12px;
@@ -27,18 +26,19 @@
     overflow: hidden;
 }
 
-.category-tab:hover {
+.category-tab:hover,
+.category-tab.active {
     background-color: var(--secondary-color);
     color: white;
     border-color: var(--secondary-color);
+}
+
+.category-tab:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.3);
 }
 
 .category-tab.active {
-    background-color: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.4);
 }
 
@@ -49,7 +49,6 @@
     box-shadow: none;
 }
 
-/* Заголовок и информация */
 .category-movies-header {
     text-align: center;
     margin-bottom: 32px;
@@ -81,7 +80,6 @@
     margin-top: 16px;
 }
 
-/* Сетка фильмов */
 .category-movies-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -89,8 +87,9 @@
     margin-bottom: 40px;
 }
 
-/* Состояния */
-.loading, .error, .no-results {
+.loading,
+.error,
+.no-results {
     text-align: center;
     padding: 60px 20px;
     font-size: 1.2rem;
@@ -119,7 +118,6 @@
     transform: translateY(-2px);
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .category-movies-page {
         padding: 16px;
@@ -153,6 +151,7 @@
 
     .category-tab {
         text-align: center;
+        width: 100%;
     }
 
     .category-movies-header h1 {

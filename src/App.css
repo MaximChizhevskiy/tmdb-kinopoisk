@@ -1,26 +1,23 @@
-/* App.css */
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Весь экран по высоте */
+  min-height: 100vh;
 }
 
 .main-content {
-  flex: 1 0 auto; /* Растягивается, занимает всё доступное место */
+  flex: 1 0 auto;
+  width: 100%;
   padding: 0 !important;
   margin: 0 !important;
   max-width: none !important;
-  width: 100%;
 }
 
-/* Страницы с контентом */
 .page {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Для страниц, где есть своя пагинация */
 .page-with-pagination {
   display: flex;
   flex-direction: column;
@@ -33,29 +30,11 @@
 
 .page-with-pagination .pagination {
   flex-shrink: 0;
-  margin-top: auto; /* Прижимаем пагинацию к низу */
+  margin-top: auto;
   padding: 30px 0;
 }
 
-/* Остальные ваши стили */
-
-/* Убираем отступы у main на всех страницах */
-.main-content {
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: none !important;
-}
-
-/* Но добавляем отступы для других страниц, кроме Home */
-.page:not(:first-child) .main-content {
-  padding: 20px !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-}
-
-/* CSS переменные для тем */
 :root {
-  /* Светлая тема */
   --primary-color: #0d253f;
   --secondary-color: #01b4e4;
   --background-color: #f8f9fa;
@@ -66,7 +45,6 @@
 }
 
 .dark-theme {
-  /* Тёмная тема */
   --primary-color: #0a1a2d;
   --secondary-color: #90cea1;
   --background-color: #121212;
@@ -81,20 +59,37 @@ body {
   color: var(--text-color);
 }
 
-/* Отступы между блоками фильмов на главной */
+.page:first-child .main-content {
+  padding: 0 !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+}
+
+.page:not(:first-child) .main-content {
+  padding: 20px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
 .page > section + section {
   margin-top: 20px;
 }
 
-/* Граница между блоками */
 .page > section:not(:first-child) {
   border-top: 1px solid var(--border-color);
   padding-top: 40px;
 }
 
-/* Для мобильных */
 @media (max-width: 768px) {
+  .page:not(:first-child) .main-content {
+    padding: 16px !important;
+  }
+
   .page > section:not(:first-child) {
     padding-top: 30px;
+  }
+
+  .page-with-pagination .pagination {
+    padding: 20px 0;
   }
 }

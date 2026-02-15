@@ -40,12 +40,11 @@
     padding: 0 20px;
 }
 
-/* Остальные стили без изменений */
 .welcome-title {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 10px;
-    background: linear-gradient(90deg, #fff, #01b4e4);
+    background: linear-gradient(90deg, #fff, var(--secondary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -75,14 +74,13 @@
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.1);
     color: white;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     min-width: 300px;
-    box-sizing: border-box;
 }
 
 .search-input:focus {
     outline: none;
-    border-color: #01b4e4;
+    border-color: var(--secondary-color);
     background: rgba(255, 255, 255, 0.15);
 }
 
@@ -94,15 +92,14 @@
     padding: 14px 32px;
     font-size: 1rem;
     font-weight: 600;
-    background: #01b4e4;
+    background: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     min-width: 120px;
     white-space: nowrap;
-    box-sizing: border-box;
 }
 
 .search-button:hover:not(:disabled) {
@@ -117,14 +114,6 @@
     background: #666;
 }
 
-/* Добавляем стили для main */
-.main-content {
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: none !important;
-}
-
-/* Адаптивность */
 @media (max-width: 768px) {
     .welcome-section {
         height: 80vh;

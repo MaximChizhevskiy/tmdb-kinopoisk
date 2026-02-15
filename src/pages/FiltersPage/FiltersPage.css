@@ -7,16 +7,35 @@
     min-height: calc(100vh - 80px);
 }
 
-/* Сайдбар фильтров */
 .filters-sidebar {
-    flex: 0 0 280px;
+    flex: 0 0 300px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 24px;
-    height: fit-content;
+    height: calc(100vh - 120px);
     position: sticky;
     top: 100px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.filters-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filters-sidebar::-webkit-scrollbar-track {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 3px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #0199c7;
 }
 
 .filters-header {
@@ -73,64 +92,6 @@
     cursor: pointer;
 }
 
-/* Жанры */
-.genres-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 8px;
-    margin-bottom: 8px;
-}
-
-.genre-chip {
-    padding: 6px 12px;
-    background: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.genre-chip:hover {
-    border-color: var(--secondary-color);
-    background: var(--secondary-color);
-    color: white;
-}
-
-.genre-chip.active {
-    background: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
-}
-
-.filter-hint {
-    margin: 8px 0 0;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-/* Диапазоны */
-.range-inputs {
-    display: flex;
-    gap: 12px;
-}
-
-.range-input-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.range-input-group label {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-}
-
 .filter-input {
     padding: 8px;
     background: var(--background-color);
@@ -141,109 +102,6 @@
     width: 100%;
 }
 
-/* Чекбоксы */
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.95rem;
-    color: var(--text-color);
-    cursor: pointer;
-}
-
-/* Основной контент */
-.filters-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.filters-content .filters-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.filters-content h1 {
-    margin: 0;
-    font-size: 2rem;
-    color: var(--text-color);
-}
-
-.results-count {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-}
-
-.movies-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 24px;
-    margin-bottom: 40px;
-    transition: opacity 0.3s ease;
-}
-
-.movies-grid.fetching {
-    opacity: 0.6;
-}
-
-/* Адаптивность */
-@media (max-width: 1024px) {
-    .filters-page {
-        flex-direction: column;
-        padding: 16px;
-    }
-
-    .filters-sidebar {
-        flex: none;
-        width: 100%;
-        position: static;
-        top: auto;
-    }
-
-    .filters-content h1 {
-        font-size: 1.8rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .genres-grid {
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-    }
-
-    .filters-content h1 {
-        font-size: 1.5rem;
-    }
-
-    .movies-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .filters-page {
-        padding: 12px;
-    }
-
-    .filters-sidebar {
-        padding: 16px;
-    }
-
-    .filters-content h1 {
-        font-size: 1.3rem;
-    }
-
-    .movies-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    }
-}
-
-/* Добавить в FiltersPage.css */
-
-/* Стили для рейтинга с ползунками */
 .rating-range {
     display: flex;
     flex-direction: column;
@@ -260,123 +118,6 @@
 .rating-values strong {
     color: var(--secondary-color);
     font-size: 1.1rem;
-}
-
-.slider-container {
-    position: relative;
-    height: 30px;
-    display: flex;
-    align-items: center;
-}
-
-.slider {
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    background: var(--border-color);
-    border-radius: 2px;
-    pointer-events: none;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    background: var(--secondary-color);
-    border-radius: 50%;
-    cursor: pointer;
-    pointer-events: auto;
-    box-shadow: 0 2px 6px rgba(1, 180, 228, 0.4);
-    transition: transform 0.1s ease;
-    border: 2px solid white;
-}
-
-.slider::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
-}
-
-.slider-max {
-    z-index: 1;
-    background: transparent;
-}
-
-.rating-inputs {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.rating-inputs .filter-input {
-    flex: 1;
-    text-align: center;
-}
-
-.rating-separator {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-/* Стили для года */
-.year-inputs {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.year-inputs .filter-input {
-    flex: 1;
-}
-
-.year-separator {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-/* Активные фильтры */
-.active-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-    padding: 12px;
-    background: var(--card-bg);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.filter-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    background: var(--secondary-color);
-    color: white;
-    border-radius: 20px;
-    font-size: 0.85rem;
-}
-
-.filter-tag button {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 0 4px;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-}
-
-.filter-tag button:hover {
-    opacity: 0.8;
-}
-
-/* Состояние загрузки */
-.movies-grid.fetching {
-    opacity: 0.5;
-    transition: opacity 0.2s ease;
 }
 
 .dual-slider-container {
@@ -416,11 +157,6 @@
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.5);
 }
 
-.slider::-webkit-slider-runnable-track {
-    height: 4px;
-    background: transparent;
-}
-
 .slider-min {
     z-index: 2;
 }
@@ -429,86 +165,152 @@
     z-index: 1;
 }
 
-.filters-sidebar {
-    flex: 0 0 300px;
-    background: var(--card-bg);
+.rating-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rating-inputs .filter-input {
+    flex: 1;
+    text-align: center;
+}
+
+.rating-separator {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.genres-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.genre-chip {
+    padding: 6px 12px;
+    background: var(--background-color);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 24px;
-    height: calc(100vh - 120px); /* Фиксированная высота */
-    position: sticky;
-    top: 100px;
-    overflow-y: auto; /* Включаем скролл */
-    overscroll-behavior: contain; /* Предотвращаем цепной скролл */
-}
-
-/* Кастомный скроллбар */
-.filters-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.filters-sidebar::-webkit-scrollbar-track {
-    background: var(--border-color);
-    border-radius: 3px;
-}
-
-.filters-sidebar::-webkit-scrollbar-thumb {
-    background: var(--secondary-color);
-    border-radius: 3px;
-    opacity: 0.7;
-}
-
-
-/* Вместо старого .slider::-webkit-slider-thumb используйте этот: */
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: white;
-    border: 2px solid var(--secondary-color, #01b4e4); /* Значение по умолчанию */
-    border-radius: 50%;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--text-color);
     cursor: pointer;
-    pointer-events: auto;
-    box-shadow: 0 2px 8px rgba(1, 180, 228, 0.3);
-    transition: all 0.1s ease;
-    margin-top: -8px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Стили для скроллбара - убираем --secondary-color-dark */
-.filters-sidebar::-webkit-scrollbar-thumb {
-    background: var(--secondary-color, #01b4e4);
-    border-radius: 3px;
+.genre-chip:hover,
+.genre-chip.active {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
 }
 
-.filters-sidebar::-webkit-scrollbar-thumb:hover {
-    background: #0199c7; /* Просто хекс, не переменная */
+.filter-hint {
+    margin: 8px 0 0;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
 }
 
-/* Убираем везде --min-percent, он нам не нужен */
-/* Вместо этого просто задаем фон через JS */
-
-/* Адаптивность для мобильных */
-@media (max-width: 1024px) {
-    .filters-sidebar {
-        flex: none;
-        width: 100%;
-        height: auto;
-        max-height: 500px;
-        position: static;
-        top: auto;
-        margin-bottom: 20px;
-    }
+.year-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-/* Добавить в конец файла */
+.year-separator {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.filters-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.filters-content .filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filters-content h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.results-count {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--secondary-color);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.filter-tag button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0 4px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.filter-tag button:hover {
+    opacity: 0.8;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+    transition: opacity 0.3s ease;
+}
+
 .movies-grid.fetching {
     opacity: 0.6;
-    transition: opacity 0.3s ease;
-    pointer-events: none; /* Блокируем клики во время обновления */
+    pointer-events: none;
 }
 
-/* Стили для скелетона (если еще не добавили) */
+/* ===== СКЕЛЕТОН ===== */
 .skeleton-movie-card {
     background: var(--card-bg);
     border-radius: 12px;
@@ -521,6 +323,7 @@
     height: 300px;
     background: linear-gradient(90deg, var(--border-color) 25%, var(--card-bg) 50%, var(--border-color) 75%);
     animation: skeleton-loading 1.5s infinite;
+    background-size: 200% 100%;
 }
 
 .skeleton-content {
@@ -537,6 +340,60 @@
 }
 
 @keyframes skeleton-loading {
-    0% { background-position: -200px 0; }
-    100% { background-position: calc(200px + 100%) 0; }
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@media (max-width: 1024px) {
+    .filters-page {
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .filters-sidebar {
+        flex: none;
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        position: static;
+        top: auto;
+        margin-bottom: 20px;
+    }
+
+    .filters-content h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .genres-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    }
+
+    .filters-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filters-page {
+        padding: 12px;
+    }
+
+    .filters-sidebar {
+        padding: 16px;
+    }
+
+    .filters-content h1 {
+        font-size: 1.3rem;
+    }
+
+    .movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
 }

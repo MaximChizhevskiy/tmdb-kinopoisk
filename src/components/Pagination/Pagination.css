@@ -73,7 +73,6 @@
     font-weight: 700;
 }
 
-/* Форма перехода на конкретную страницу */
 .custom-page-form {
     display: flex;
     justify-content: center;
@@ -137,7 +136,6 @@
     cursor: not-allowed;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .pagination-controls {
         gap: 8px;
