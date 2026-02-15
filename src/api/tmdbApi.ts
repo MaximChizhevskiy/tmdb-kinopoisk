@@ -47,18 +47,25 @@ function validateWithZod<T>(schema: z.ZodSchema<T>, data: unknown, endpoint: str
       console.error("Endpoint:", endpoint)
       console.error("Errors:", zodError.errors)
 
+      function isZodIssueWithReceived(issue: z.core.$ZodIssue): issue is z.core.$ZodIssue & { received: unknown } {
+        return "received" in issue
+      }
+
+      function isZodIssueWithExpected(issue: z.core.$ZodIssue): issue is z.core.$ZodIssue & { expected: unknown } {
+        return "expected" in issue
+      }
+
       zodError.errors.forEach((issue, index) => {
         const path = issue.path.join(".") || "root"
+        let receivedInfo = ""
 
-        let receivedValue = "unknown"
-
-        if ("received" in issue) {
-          receivedValue = issue.received
-        } else if ("expected" in issue) {
-          receivedValue = "invalid value"
+        if (isZodIssueWithReceived(issue)) {
+          receivedInfo = ` (received: ${JSON.stringify(issue.received)})`
+        } else if (isZodIssueWithExpected(issue)) {
+          receivedInfo = ` (expected: ${JSON.stringify(issue.expected)})`
         }
 
-        console.error(`  ${index + 1}. ${path}: ${issue.message} (received: ${JSON.stringify(receivedValue)})`)
+        console.error(`  ${index + 1}. ${path}: ${issue.message}${receivedInfo}`)
       })
 
       console.error("Received data:", data)

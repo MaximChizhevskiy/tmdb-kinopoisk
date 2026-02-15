@@ -3,16 +3,15 @@ import { useSearchParams } from "react-router-dom"
 import "./FiltersPage.css"
 import { useDiscoverMoviesQuery } from "../../api"
 import { MovieCard, Pagination, ActiveFilters } from "../../components"
-import { SkeletonMovieCard } from "../../components/Skeletons/SkeletonMovieCard" // Добавить
+import { SkeletonMovieCard } from "../../components"
 import { FiltersSidebar } from "./FiltersSidebar"
-import { useErrorType } from "../../hooks/useErrorType"
+import { useErrorType } from "../../hooks"
 import type { DiscoverMoviesParams } from "../../types"
-import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
+import { ErrorMessage } from "../../components"
 
 export const FiltersPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  // Инициализируем фильтры из URL
   const [filters, setFilters] = useState<DiscoverMoviesParams>(() => {
     const params: DiscoverMoviesParams = {
       page: parseInt(searchParams.get("page") || "1"),
