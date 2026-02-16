@@ -9,7 +9,7 @@
     z-index: 1000;
 }
 
-.header-container {
+.headerContainer {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
@@ -20,22 +20,22 @@
     flex-wrap: wrap;
 }
 
-.header-logo {
+.headerLogo {
     flex: 0 0 auto;
 }
 
-.header-logo a {
+.headerLogo a {
     display: flex;
     align-items: center;
     text-decoration: none;
 }
 
-.tmdb-logo {
+.tmdbLogo {
     width: 154px;
     height: 20px;
 }
 
-.header-nav {
+.headerNav {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -44,7 +44,7 @@
     flex-wrap: wrap;
 }
 
-.nav-link {
+.navLink {
     color: white;
     text-decoration: none;
     font-size: 16px;
@@ -54,26 +54,26 @@
     white-space: nowrap;
 }
 
-.nav-link:hover {
+.navLink:hover {
     color: #01b4e4;
 }
 
-.nav-link.active {
+.navLink.active {
     color: #01b4e4;
     font-weight: 600;
 }
 
-.nav-separator {
+.navSeparator {
     color: rgba(255, 255, 255, 0.3);
     font-size: 16px;
     user-select: none;
 }
 
-.header-theme {
+.headerTheme {
     flex: 0 0 auto;
 }
 
-.theme-toggle {
+.themeToggle {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
@@ -88,66 +88,48 @@
     transition: all 0.2s;
 }
 
-.theme-toggle:hover {
+.themeToggle:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: #01b4e4;
 }
 
-.light-theme .header {
-    background-color: #0d253f;
-}
-
-.dark-theme .header {
-    background-color: #0a1a2d;
-}
-
-.light-theme .theme-toggle,
-.dark-theme .theme-toggle {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
 @media (max-width: 1024px) {
-    .header-nav {
+    .headerNav {
         gap: 8px;
     }
 
-    .nav-link {
+    .navLink {
         font-size: 15px;
         padding: 6px 3px;
     }
 }
 
 @media (max-width: 880px) {
-    .header-container {
+    .headerContainer {
         justify-content: center;
         gap: 15px;
         padding: 10px 15px;
         height: auto;
     }
 
-    .header-logo {
+    .headerLogo {
         width: 100%;
         text-align: center;
         margin-bottom: 5px;
     }
 
-    .header-logo a {
+    .headerLogo a {
         justify-content: center;
     }
 
-    .header-nav {
+    .headerNav {
         width: 100%;
         order: 3;
         margin: 10px 0 5px;
         gap: 8px;
     }
 
-    .header-theme {
+    .headerTheme {
         position: absolute;
         top: 15px;
         right: 15px;
@@ -155,14 +137,14 @@
 }
 
 @media (max-width: 650px) {
-    .header-nav {
+    .headerNav {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 8px 5px;
         padding: 5px 0;
     }
 
-    .nav-link {
+    .navLink {
         text-align: center;
         padding: 8px 5px;
         background: rgba(255, 255, 255, 0.05);
@@ -170,36 +152,36 @@
         font-size: 14px;
     }
 
-    .nav-link:hover {
+    .navLink:hover {
         background: rgba(1, 180, 228, 0.2);
     }
 
-    .nav-separator {
+    .navSeparator {
         display: none;
     }
 
-    .tmdb-logo {
+    .tmdbLogo {
         width: 120px;
         height: 16px;
     }
 }
 
 @media (max-width: 480px) {
-    .header-container {
+    .headerContainer {
         padding: 8px 10px;
     }
 
-    .header-nav {
+    .headerNav {
         grid-template-columns: repeat(2, 1fr);
         gap: 6px;
     }
 
-    .nav-link {
+    .navLink {
         font-size: 13px;
         padding: 6px 3px;
     }
 
-    .theme-toggle {
+    .themeToggle {
         width: 36px;
         height: 36px;
         font-size: 16px;
@@ -207,11 +189,11 @@
 }
 
 @media (max-width: 360px) {
-    .header-nav {
+    .headerNav {
         grid-template-columns: 1fr;
     }
 
-    .nav-link {
+    .navLink {
         width: 100%;
     }
 }

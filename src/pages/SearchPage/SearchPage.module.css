@@ -1,15 +1,15 @@
-.search-page {
+.searchPage {
     padding: 20px;
     max-width: 1400px;
     margin: 0 auto;
     font-family: inherit;
 }
 
-.search-page-header {
+.searchPageHeader {
     margin-bottom: 40px;
 }
 
-.search-page-header h1 {
+.searchPageHeader h1 {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--text-color);
@@ -17,10 +17,10 @@
     text-align: left;
 }
 
-.no-query,
+.noQuery,
 .loading,
 .error,
-.no-results {
+.noResults {
     text-align: center;
     padding: 60px 20px;
     font-size: 1.2rem;
@@ -31,30 +31,30 @@
     color: #ff4444;
 }
 
-.search-results-header {
+.searchResultsHeader {
     margin-bottom: 30px;
 }
 
-.search-results-header h2 {
+.searchResultsHeader h2 {
     font-size: 1.8rem;
     font-weight: 600;
     margin-bottom: 10px;
     color: var(--text-color);
 }
 
-.results-count {
+.resultsCount {
     font-size: 1rem;
     color: var(--text-secondary);
 }
 
-.movies-grid {
+.moviesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
     margin-bottom: 40px;
 }
 
-.pagination-controls {
+.paginationControls {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,7 +63,7 @@
     flex-wrap: wrap;
 }
 
-.page-info {
+.pageInfo {
     font-size: 1rem;
     color: var(--text-color);
     padding: 8px 16px;
@@ -74,12 +74,12 @@
     text-align: center;
 }
 
-.page-info strong {
+.pageInfo strong {
     color: var(--secondary-color);
     font-weight: 700;
 }
 
-.custom-page-form {
+.customPageForm {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,13 +90,13 @@
     margin-top: 10px;
 }
 
-.custom-page-label {
+.customPageLabel {
     font-size: 0.9rem;
     color: var(--text-secondary);
     white-space: nowrap;
 }
 
-.custom-page-input {
+.customPageInput {
     width: 70px;
     padding: 8px 12px;
     border: 2px solid var(--border-color);
@@ -108,19 +108,19 @@
     transition: all 0.2s;
 }
 
-.custom-page-input:focus {
+.customPageInput:focus {
     outline: none;
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 3px rgba(1, 180, 228, 0.1);
 }
 
-.custom-page-input::-webkit-inner-spin-button,
-.custom-page-input::-webkit-outer-spin-button {
+.customPageInput::-webkit-inner-spin-button,
+.customPageInput::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.custom-page-button {
+.customPageButton {
     padding: 8px 20px;
     background: var(--primary-color);
     color: white;
@@ -132,73 +132,73 @@
     font-size: 0.9rem;
 }
 
-.custom-page-button:hover:not(:disabled) {
+.customPageButton:hover:not(:disabled) {
     background: var(--secondary-color);
     transform: translateY(-1px);
 }
 
-.custom-page-button:disabled {
+.customPageButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
-    .search-page {
+    .searchPage {
         padding: 15px;
     }
 
-    .search-page-header h1 {
+    .searchPageHeader h1 {
         font-size: 2rem;
     }
 
-    .movies-grid {
+    .moviesGrid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 16px;
     }
 
-    .search-results-header h2 {
+    .searchResultsHeader h2 {
         font-size: 1.5rem;
     }
 
-    .page-info {
+    .pageInfo {
         min-width: 150px;
         font-size: 0.9rem;
         padding: 6px 12px;
     }
 
-    .custom-page-form {
+    .customPageForm {
         flex-direction: column;
         align-items: center;
         gap: 8px;
     }
 
-    .custom-page-label {
+    .customPageLabel {
         font-size: 0.85rem;
     }
 }
 
 @media (max-width: 480px) {
-    .movies-grid {
+    .moviesGrid {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
 
-    .search-page-header h1 {
+    .searchPageHeader h1 {
         font-size: 1.8rem;
     }
 
-    .pagination-controls {
+    .paginationControls {
         flex-direction: column;
         gap: 10px;
     }
 
-    .page-info {
+    .pageInfo {
         order: -1;
         width: 100%;
         margin-bottom: 10px;
     }
 
-    .custom-page-form {
+    .customPageForm {
         width: 100%;
     }
 }

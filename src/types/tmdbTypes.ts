@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import type { BaseMovie, Movie } from "../schemas/tmdbSchemas.ts"
+import type { BaseMovie, Movie } from "../schemas"
 
 export type SearchBarProps = {
   initialQuery?: string

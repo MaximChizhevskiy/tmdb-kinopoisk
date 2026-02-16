@@ -1,22 +1,22 @@
-.search-bar {
+.searchBar {
     display: flex;
     gap: 12px;
     width: 100%;
     max-width: 600px;
 }
 
-.search-bar-left { justify-content: flex-start; }
-.search-bar-center { justify-content: center; }
-.search-bar-right { justify-content: flex-end; }
+.searchBarLeft { justify-content: flex-start; }
+.searchBarCenter { justify-content: center; }
+.searchBarRight { justify-content: flex-end; }
 
-.search-input-wrapper {
+.searchInputWrapper {
     position: relative;
     flex: 1;
     display: flex;
     align-items: center;
 }
 
-.search-bar-input {
+.searchBarInput {
     width: 100%;
     padding: 12px 40px 12px 16px;
     font-size: 1rem;
@@ -28,12 +28,12 @@
     outline: none;
 }
 
-.search-bar-input:focus {
+.searchBarInput:focus {
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 3px rgba(1, 180, 228, 0.1);
 }
 
-.search-clear-button {
+.searchClearButton {
     position: absolute;
     right: 12px;
     width: 24px;
@@ -52,19 +52,19 @@
     opacity: 0.7;
 }
 
-.search-clear-button:hover {
+.searchClearButton:hover {
     opacity: 1;
     color: var(--secondary-color);
     background-color: rgba(1, 180, 228, 0.1);
     transform: scale(1.1);
 }
 
-.search-clear-button:focus-visible {
+.searchClearButton:focus-visible {
     outline: 2px solid var(--secondary-color);
     outline-offset: 2px;
 }
 
-.search-bar-button {
+.searchBarButton {
     padding: 12px 28px;
     background-color: var(--secondary-color);
     color: white;
@@ -77,33 +77,33 @@
     white-space: nowrap;
 }
 
-.search-bar-button:hover:not(:disabled) {
+.searchBarButton:hover:not(:disabled) {
     background-color: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.3);
 }
 
-.search-bar-button:disabled {
+.searchBarButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
-    .search-bar {
+    .searchBar {
         max-width: 100%;
     }
 
-    .search-bar-input {
+    .searchBarInput {
         padding: 10px 36px 10px 14px;
         font-size: 0.95rem;
     }
 
-    .search-bar-button {
+    .searchBarButton {
         padding: 10px 20px;
         font-size: 0.95rem;
     }
 
-    .search-clear-button {
+    .searchClearButton {
         width: 20px;
         height: 20px;
         font-size: 16px;
@@ -112,11 +112,11 @@
 }
 
 @media (max-width: 480px) {
-    .search-bar {
+    .searchBar {
         flex-direction: column;
     }
 
-    .search-bar-button {
+    .searchBarButton {
         width: 100%;
     }
 }

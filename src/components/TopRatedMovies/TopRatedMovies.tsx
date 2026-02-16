@@ -6,7 +6,7 @@ export const TopRatedMovies = () => {
 
   return (
     <MoviesCategory
-      title="Top Rated Movies"
+      title="Топ рейтинга"
       category="top_rated"
       movies={data?.results || []}
       isLoading={isLoading}

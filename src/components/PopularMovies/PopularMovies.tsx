@@ -6,7 +6,7 @@ export const PopularMovies = () => {
 
   return (
     <MoviesCategory
-      title="Popular Movies"
+      title="Популярные фильмы"
       category="popular"
       movies={data?.results || []}
       isLoading={isLoading}

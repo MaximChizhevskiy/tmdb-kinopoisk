@@ -1,10 +1,10 @@
-.category-movies-page {
+.categoryMoviesPage {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.category-tabs {
+.categoryTabs {
     display: flex;
     gap: 12px;
     margin-bottom: 32px;
@@ -12,7 +12,7 @@
     justify-content: center;
 }
 
-.category-tab {
+.categoryTab {
     padding: 12px 24px;
     background-color: var(--card-bg);
     border: 2px solid var(--border-color);
@@ -26,35 +26,35 @@
     overflow: hidden;
 }
 
-.category-tab:hover,
-.category-tab.active {
+.categoryTab:hover,
+.categoryTab.active {
     background-color: var(--secondary-color);
     color: white;
     border-color: var(--secondary-color);
 }
 
-.category-tab:hover {
+.categoryTab:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.3);
 }
 
-.category-tab.active {
+.categoryTab.active {
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.4);
 }
 
-.category-tab:disabled {
+.categoryTab:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }
 
-.category-movies-header {
+.categoryMoviesHeader {
     text-align: center;
     margin-bottom: 32px;
 }
 
-.category-movies-header h1 {
+.categoryMoviesHeader h1 {
     font-size: 2.5rem;
     margin-bottom: 8px;
     color: var(--text-color);
@@ -62,7 +62,7 @@
     display: inline-block;
 }
 
-.category-movies-header h1::after {
+.categoryMoviesHeader h1::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -74,22 +74,28 @@
     border-radius: 3px;
 }
 
-.movies-count {
+.moviesCount {
     color: var(--text-secondary);
     font-size: 1.1rem;
     margin-top: 16px;
 }
 
-.category-movies-grid {
+.categoryMoviesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
     margin-bottom: 40px;
 }
 
+.categoryMoviesGrid.fetching {
+    opacity: 0.6;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
 .loading,
 .error,
-.no-results {
+.noResults {
     text-align: center;
     padding: 60px 20px;
     font-size: 1.2rem;
@@ -99,7 +105,7 @@
     margin: 20px 0;
 }
 
-.retry-button {
+.retryButton {
     display: block;
     margin: 20px auto 0;
     padding: 12px 24px;
@@ -113,52 +119,52 @@
     transition: all 0.3s ease;
 }
 
-.retry-button:hover {
+.retryButton:hover {
     opacity: 0.9;
     transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
-    .category-movies-page {
+    .categoryMoviesPage {
         padding: 16px;
     }
 
-    .category-tabs {
+    .categoryTabs {
         gap: 8px;
         margin-bottom: 24px;
     }
 
-    .category-tab {
+    .categoryTab {
         padding: 10px 20px;
         font-size: 0.9rem;
     }
 
-    .category-movies-header h1 {
+    .categoryMoviesHeader h1 {
         font-size: 2rem;
     }
 
-    .category-movies-grid {
+    .categoryMoviesGrid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 16px;
     }
 }
 
 @media (max-width: 480px) {
-    .category-tabs {
+    .categoryTabs {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .category-tab {
+    .categoryTab {
         text-align: center;
         width: 100%;
     }
 
-    .category-movies-header h1 {
+    .categoryMoviesHeader h1 {
         font-size: 1.8rem;
     }
 
-    .category-movies-grid {
+    .categoryMoviesGrid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 12px;
     }

@@ -1,5 +1,5 @@
 import { type ChangeEvent, useState } from "react"
-import "./Pagination.css"
+import styles from "./Pagination.module.css"
 import type { PaginationProps } from "../../types"
 
 export const Pagination = ({
@@ -11,7 +11,6 @@ export const Pagination = ({
 }: PaginationProps) => {
   const [customPageInput, setCustomPageInput] = useState("")
 
-  // В Pagination.tsx, обновите onPageChange вызовы:
   const goToFirstPage = () => onPageChange(1)
   const goToLastPage = () => onPageChange(Math.min(totalPages, 500))
   const goToPrevPage = () => onPageChange(Math.max(1, currentPage - 1))
@@ -26,7 +25,7 @@ export const Pagination = ({
     const pageNum = parseInt(customPageInput)
 
     if (pageNum >= 1 && pageNum <= Math.min(totalPages, 500)) {
-      onPageChange(pageNum) // Просто вызываем onPageChange, не устанавливаем стейт напрямую
+      onPageChange(pageNum)
       setCustomPageInput("")
     }
   }
@@ -40,16 +39,16 @@ export const Pagination = ({
   }
 
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       {showItemsCount && totalItems && (
-        <div className="pagination-items-count">Всего найдено: {totalItems.toLocaleString()}</div>
+        <div className={styles.paginationItemsCount}>Всего найдено: {totalItems.toLocaleString()}</div>
       )}
 
-      <div className="pagination-controls">
+      <div className={styles.paginationControls}>
         <button
           onClick={goToFirstPage}
           disabled={currentPage === 1}
-          className="pagination-button pagination-button-first"
+          className={`${styles.paginationButton} ${styles.paginationButtonFirst}`}
           aria-label="Первая страница"
           title="Первая страница"
         >
@@ -59,21 +58,21 @@ export const Pagination = ({
         <button
           onClick={goToPrevPage}
           disabled={currentPage === 1}
-          className="pagination-button pagination-button-prev"
+          className={`${styles.paginationButton} ${styles.paginationButtonPrev}`}
           aria-label="Предыдущая страница"
           title="Предыдущая страница"
         >
           «
         </button>
 
-        <span className="page-info">
+        <span className={styles.pageInfo}>
           Страница <strong>{currentPage}</strong> из <strong>{totalPages}</strong>
         </span>
 
         <button
           onClick={goToNextPage}
           disabled={currentPage >= totalPages}
-          className="pagination-button pagination-button-next"
+          className={`${styles.paginationButton} ${styles.paginationButtonNext}`}
           aria-label="Следующая страница"
           title="Следующая страница"
         >
@@ -83,7 +82,7 @@ export const Pagination = ({
         <button
           onClick={goToLastPage}
           disabled={currentPage >= totalPages}
-          className="pagination-button pagination-button-last"
+          className={`${styles.paginationButton} ${styles.paginationButtonLast}`}
           aria-label="Последняя страница"
           title="Последняя страница"
         >
@@ -91,8 +90,8 @@ export const Pagination = ({
         </button>
       </div>
 
-      <form className="custom-page-form" onSubmit={handleCustomPageSubmit}>
-        <label htmlFor="custom-page" className="custom-page-label">
+      <form className={styles.customPageForm} onSubmit={handleCustomPageSubmit}>
+        <label htmlFor="custom-page" className={styles.customPageLabel}>
           Перейти на страницу:
         </label>
         <input
@@ -103,12 +102,12 @@ export const Pagination = ({
           value={customPageInput}
           onChange={handleCustomPageChange}
           placeholder="№"
-          className="custom-page-input"
+          className={styles.customPageInput}
           aria-label="Номер страницы для перехода"
         />
         <button
           type="submit"
-          className="custom-page-button"
+          className={styles.customPageButton}
           disabled={!customPageInput}
           aria-label="Перейти на указанную страницу"
         >

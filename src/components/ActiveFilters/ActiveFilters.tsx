@@ -1,4 +1,4 @@
-import "./ActiveFilters.css"
+import styles from "./ActiveFilters.module.css"
 import { type DiscoverMoviesParams, SORT_OPTIONS } from "../../types"
 import { useGetGenresQuery } from "../../api"
 
@@ -14,7 +14,6 @@ export const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }: ActiveFil
   const getActiveFilters = () => {
     const activeFilters: { key: string; label: string }[] = []
 
-    // Сортировка
     if (filters.sort_by && filters.sort_by !== "popularity.desc") {
       const sortOption = SORT_OPTIONS.find((opt) => opt.value === filters.sort_by)
       if (sortOption) {
@@ -25,7 +24,6 @@ export const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }: ActiveFil
       }
     }
 
-    // Жанры
     if (filters.with_genres) {
       const genreIds = filters.with_genres.split(",").filter(Boolean)
       const genreNames = genreIds
@@ -33,7 +31,6 @@ export const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }: ActiveFil
         .filter(Boolean)
 
       if (genreNames.length > 0) {
-        // Если жанров много, показываем первые 3 и +N
         let label = ""
         if (genreNames.length <= 3) {
           label = `Жанры: ${genreNames.join(", ")}`
@@ -44,7 +41,6 @@ export const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }: ActiveFil
       }
     }
 
-    // Рейтинг
     const ratingMin = filters["vote_average.gte"]
     const ratingMax = filters["vote_average.lte"]
     if (ratingMin || ratingMax) {
@@ -56,7 +52,6 @@ export const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }: ActiveFil
       })
     }
 
-    // Год
     const yearFrom = filters["release_date.gte"]?.split("-")[0]
     const yearTo = filters["release_date.lte"]?.split("-")[0]
     if (yearFrom || yearTo) {
@@ -68,7 +63,6 @@ export const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }: ActiveFil
       })
     }
 
-    // 18+
     if (filters.include_adult) {
       activeFilters.push({
         key: "include_adult",
@@ -86,24 +80,24 @@ export const ActiveFilters = ({ filters, onRemoveFilter, onClearAll }: ActiveFil
   }
 
   return (
-    <div className="active-filters">
-      <div className="active-filters-header">
-        <span className="active-filters-title">
-          <span className="filter-icon">⚡</span>
+    <div className={styles.activeFilters}>
+      <div className={styles.activeFiltersHeader}>
+        <span className={styles.activeFiltersTitle}>
+          <span className={styles.filterIcon}>⚡</span>
           Активные фильтры:
         </span>
-        <button onClick={onClearAll} className="clear-all-button" aria-label="Сбросить все фильтры">
+        <button onClick={onClearAll} className={styles.clearAllButton} aria-label="Сбросить все фильтры">
           Сбросить все
         </button>
       </div>
 
-      <div className="filters-tags">
+      <div className={styles.filtersTags}>
         {activeFilters.map((filter) => (
-          <span key={filter.key} className="filter-tag">
-            <span className="filter-tag-label">{filter.label}</span>
+          <span key={filter.key} className={styles.filterTag}>
+            <span className={styles.filterTagLabel}>{filter.label}</span>
             <button
               onClick={() => onRemoveFilter(filter.key)}
-              className="filter-tag-remove"
+              className={styles.filterTagRemove}
               aria-label={`Удалить фильтр ${filter.label}`}
               title="Удалить фильтр"
             >

@@ -1,4 +1,5 @@
-.movie-card {
+/* MovieCard.module.css */
+.movieCard {
     background: var(--card-bg);
     border-radius: 12px;
     overflow: hidden;
@@ -10,31 +11,31 @@
     flex-direction: column;
 }
 
-.movie-card:hover {
+.movieCard:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
     border-color: var(--secondary-color);
 }
 
-.movie-card-poster {
+.movieCardPoster {
     position: relative;
     width: 100%;
     height: 300px;
     overflow: hidden;
 }
 
-.movie-card-image {
+.movieCardImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
 
-.movie-card:hover .movie-card-image {
+.movieCard:hover .movieCardImage {
     transform: scale(1.05);
 }
 
-.movie-card-no-image {
+.movieCardNoImage {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -45,7 +46,7 @@
     font-weight: 500;
 }
 
-.movie-card-rating {
+.movieCardRating {
     position: absolute;
     top: 12px;
     right: 12px;
@@ -62,14 +63,14 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.movie-card-content {
+.movieCardContent {
     padding: 16px;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.movie-card-title {
+.movieCardTitle {
     margin: 0 0 8px 0;
     font-size: 1.1rem;
     font-weight: 600;
@@ -82,7 +83,7 @@
     flex: 1;
 }
 
-.movie-card-footer {
+.movieCardFooter {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,7 +92,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.movie-card-favorite {
+.movieCardFavorite {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -107,18 +108,18 @@
     order: 1;
 }
 
-.movie-card-favorite:hover {
+.movieCardFavorite:hover {
     background-color: rgba(255, 255, 255, 0.9);
     border-color: white;
     transform: scale(1.1);
 }
 
-.movie-card-favorite.active {
+.movieCardFavorite.active {
     background-color: rgba(255, 71, 87, 0.9);
     border-color: #ff4757;
 }
 
-.movie-card-favorite-icon {
+.movieCardFavoriteIcon {
     font-size: 16px;
     line-height: 1;
     display: flex;
@@ -126,7 +127,7 @@
     justify-content: center;
 }
 
-.movie-card-year {
+.movieCardYear {
     color: var(--text-secondary);
     opacity: 0.8;
     font-size: 14px;
@@ -139,48 +140,49 @@
     75% { transform: scale(1.2); }
 }
 
-.movie-card-favorite.active .movie-card-favorite-icon {
+.movieCardFavorite.active .movieCardFavoriteIcon {
     animation: heartBeat 0.4s ease-in-out;
 }
 
+/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 768px) {
-    .movie-card-poster {
+    .movieCardPoster {
         height: 250px;
     }
 
-    .movie-card-title {
+    .movieCardTitle {
         font-size: 1rem;
     }
 
-    .movie-card-favorite {
+    .movieCardFavorite {
         width: 28px;
         height: 28px;
     }
 
-    .movie-card-favorite-icon {
+    .movieCardFavoriteIcon {
         font-size: 14px;
     }
 
-    .movie-card-year,
-    .movie-card-rating {
+    .movieCardYear,
+    .movieCardRating {
         font-size: 12px;
     }
 
-    .movie-card-rating {
+    .movieCardRating {
         padding: 3px 6px;
     }
 }
 
 @media (max-width: 480px) {
-    .movie-card-poster {
+    .movieCardPoster {
         height: 200px;
     }
 
-    .movie-card-content {
+    .movieCardContent {
         padding: 12px;
     }
 
-    .movie-card-rating {
+    .movieCardRating {
         top: 8px;
         right: 8px;
         font-size: 0.8rem;

@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react"
+import { type ChangeEvent, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import "./WelcomeSection.css"
+import styles from "./WelcomeSection.module.css"
 import { useGetPopularMoviesQuery } from "../../api"
 
 export const WelcomeSection = () => {
@@ -28,7 +28,7 @@ export const WelcomeSection = () => {
     }
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
   }
 
@@ -36,20 +36,23 @@ export const WelcomeSection = () => {
 
   return (
     <section
-      className="welcome-section"
+      className={styles.welcomeSection}
       style={{
         backgroundImage: backdropUrl ? `url(${backdropUrl})` : "linear-gradient(135deg, #0d253f 0%, #01b4e4 100%)",
       }}
     >
-      <div className="welcome-content">
-        <h1 className="welcome-title">Добро пожаловать.</h1>
-        <p className="welcome-subtitle">Миллионы фильмов, сериалов и людей. Исследуйте сейчас.</p>
+      <div className={styles.welcomeContent}>
+        <h1 className={styles.welcomeTitle}>Добро пожаловать.</h1>
+        <p className={styles.welcomeSubtitle}>
+          Миллионы фильмов, сериалов и людей. <br />
+          Исследуйте сейчас.
+        </p>
 
-        <form className="search-form" onSubmit={handleSearch}>
-          <div className="search-input-wrapper">
+        <form className={styles.searchForm} onSubmit={handleSearch}>
+          <div className={styles.searchInputWrapper}>
             <input
               type="text"
-              className="search-input"
+              className={styles.searchInput}
               placeholder="Поиск фильмов..."
               value={searchQuery}
               onChange={handleInputChange}
@@ -57,7 +60,7 @@ export const WelcomeSection = () => {
             />
             <button
               type="submit"
-              className="search-button"
+              className={styles.searchButton}
               disabled={isSearchDisabled}
               aria-disabled={isSearchDisabled}
             >

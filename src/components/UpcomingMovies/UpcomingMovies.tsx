@@ -6,7 +6,7 @@ export const UpcomingMovies = () => {
 
   return (
     <MoviesCategory
-      title="Upcoming Movies"
+      title="Ожидаемые фильмы"
       category="upcoming"
       movies={data?.results || []}
       isLoading={isLoading}

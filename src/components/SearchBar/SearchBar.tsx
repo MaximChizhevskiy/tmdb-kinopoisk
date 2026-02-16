@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, useRef } from "react"
 import { useNavigate } from "react-router-dom"
-import "./SearchBar.css"
+import styles from "./SearchBar.module.css"
 import type { SearchBarProps } from "../../types"
 
 export const SearchBar = ({ initialQuery = "", onSearch, align = "left" }: SearchBarProps) => {
@@ -28,10 +28,8 @@ export const SearchBar = ({ initialQuery = "", onSearch, align = "left" }: Searc
 
   const handleClear = () => {
     setSearchQuery("")
-    // Возвращаем фокус на инпут после очистки
     inputRef.current?.focus()
 
-    // Опционально: очищаем результаты поиска
     if (onSearch) {
       onSearch("")
     }
@@ -40,13 +38,17 @@ export const SearchBar = ({ initialQuery = "", onSearch, align = "left" }: Searc
   const isDisabled = !searchQuery.trim()
   const showClearButton = searchQuery.length > 0
 
+  // Определяем класс выравнивания
+  const alignClass =
+    align === "left" ? styles.searchBarLeft : align === "center" ? styles.searchBarCenter : styles.searchBarRight
+
   return (
-    <form className={`search-bar search-bar-${align}`} onSubmit={handleSubmit} role="search">
-      <div className="search-input-wrapper">
+    <form className={`${styles.searchBar} ${alignClass}`} onSubmit={handleSubmit} role="search">
+      <div className={styles.searchInputWrapper}>
         <input
           ref={inputRef}
           type="search"
-          className="search-bar-input"
+          className={styles.searchBarInput}
           placeholder="Поиск фильмов..."
           value={searchQuery}
           onChange={handleInputChange}
@@ -61,7 +63,7 @@ export const SearchBar = ({ initialQuery = "", onSearch, align = "left" }: Searc
         {showClearButton && (
           <button
             type="button"
-            className="search-clear-button"
+            className={styles.searchClearButton}
             onClick={handleClear}
             aria-label="Очистить поиск"
             title="Очистить"
@@ -71,7 +73,7 @@ export const SearchBar = ({ initialQuery = "", onSearch, align = "left" }: Searc
         )}
       </div>
 
-      <button type="submit" className="search-bar-button" disabled={isDisabled} aria-disabled={isDisabled}>
+      <button type="submit" className={styles.searchBarButton} disabled={isDisabled} aria-disabled={isDisabled}>
         Search
       </button>
     </form>

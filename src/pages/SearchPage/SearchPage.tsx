@@ -2,12 +2,11 @@ import { useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { useSearchMoviesQuery } from "../../api"
 import { SearchBar, MovieCard, Pagination } from "../../components"
-import { SkeletonMovieCard } from "../../components/Skeletons/SkeletonMovieCard"
-import { useErrorType } from "../../hooks/useErrorType"
-import "./SearchPage.css"
-import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
+import { SkeletonMovieCard } from "../../components"
+import { useErrorType } from "../../hooks"
+import styles from "./SearchPage.module.css"
+import { ErrorMessage } from "../../components"
 
-// Создаем внутренний компонент, который будет получать query и управлять пагинацией
 const SearchContent = ({ query, onSearch }: { query: string; onSearch: (q: string) => void }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const { data, isLoading, isFetching, isError, error, refetch } = useSearchMoviesQuery(
@@ -16,17 +15,14 @@ const SearchContent = ({ query, onSearch }: { query: string; onSearch: (q: strin
   )
   const errorType = useErrorType(error)
 
-  // При изменении query (через key) состояние currentPage сбросится автоматически
-  // useEffect больше не нужен!
-
   if (isLoading) {
     return (
-      <div className="search-page">
-        <div className="search-page-header">
+      <div className={styles.searchPage}>
+        <div className={styles.searchPageHeader}>
           <h1>Поиск фильмов</h1>
           <SearchBar initialQuery={query} onSearch={onSearch} align="left" />
         </div>
-        <div className="movies-grid">
+        <div className={styles.moviesGrid}>
           {[...Array(20)].map((_, i) => (
             <SkeletonMovieCard key={i} />
           ))}
@@ -37,8 +33,8 @@ const SearchContent = ({ query, onSearch }: { query: string; onSearch: (q: strin
 
   if (isError) {
     return (
-      <div className="search-page">
-        <div className="search-page-header">
+      <div className={styles.searchPage}>
+        <div className={styles.searchPageHeader}>
           <h1>Поиск фильмов</h1>
           <SearchBar initialQuery={query} onSearch={onSearch} align="left" />
         </div>
@@ -56,26 +52,26 @@ const SearchContent = ({ query, onSearch }: { query: string; onSearch: (q: strin
   const totalResults = data?.total_results || 0
 
   return (
-    <div className="search-page">
-      <div className="search-page-header">
+    <div className={styles.searchPage}>
+      <div className={styles.searchPageHeader}>
         <h1>Поиск фильмов</h1>
         <SearchBar initialQuery={query} onSearch={onSearch} align="left" />
       </div>
 
       {movies.length === 0 ? (
-        <div className="no-results">
+        <div className={styles.noResults}>
           <h2>Результаты поиска: "{query}"</h2>
           <p>По вашему запросу ничего не найдено</p>
           <p>Попробуйте изменить поисковый запрос</p>
         </div>
       ) : (
         <>
-          <div className="search-results-header">
+          <div className={styles.searchResultsHeader}>
             <h2>Результаты поиска: "{query}"</h2>
-            <p className="results-count">Найдено фильмов: {totalResults.toLocaleString()}</p>
+            <p className={styles.resultsCount}>Найдено фильмов: {totalResults.toLocaleString()}</p>
           </div>
 
-          <div className={`movies-grid ${isFetching ? "fetching" : ""}`}>
+          <div className={`${styles.moviesGrid} ${isFetching ? styles.fetching : ""}`}>
             {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
@@ -94,7 +90,6 @@ const SearchContent = ({ query, onSearch }: { query: string; onSearch: (q: strin
   )
 }
 
-// Основной компонент страницы
 export const SearchPage = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -106,18 +101,17 @@ export const SearchPage = () => {
 
   if (!query) {
     return (
-      <div className="search-page">
-        <div className="search-page-header">
+      <div className={styles.searchPage}>
+        <div className={styles.searchPageHeader}>
           <h1>Поиск фильмов</h1>
           <SearchBar onSearch={handleSearch} align="left" />
         </div>
-        <div className="no-query">
+        <div className={styles.noQuery}>
           <p>Введите поисковый запрос, чтобы найти фильмы</p>
         </div>
       </div>
     )
   }
 
-  // ✅ Используем key={query} для полного сброса состояния при изменении запроса
   return <SearchContent key={query} query={query} onSearch={handleSearch} />
 }

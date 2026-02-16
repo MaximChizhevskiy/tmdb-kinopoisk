@@ -13,13 +13,43 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+:root {
+  --primary-color: #0d253f;
+  --secondary-color: #01b4e4;
+  --background-color: #f8f9fa;
+  --text-color: #333;
+  --text-secondary: #666;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0;
+}
+
+body.dark-theme {
+  --primary-color: #0a1a2d;
+  --secondary-color: #90cea1;
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --text-secondary: #aaa;
+  --card-bg: #1e1e1e;
+  --border-color: #333;
+}
+
+body.light-theme {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body.dark-theme {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 input,
 button,
 textarea,
 select {
   font-family: inherit;
   color: inherit;
-  -webkit-tap-highlight-color: transparent; /* Объединено с предыдущим */
+  -webkit-tap-highlight-color: transparent;
 }
 
 input[type="number"] {
@@ -40,22 +70,12 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 :focus {
-  outline: 2px solid var(--secondary-color, #01b4e4);
+  outline: 2px solid var(--secondary-color);
   outline-offset: 2px;
 }
 
 :focus:not(:focus-visible) {
   outline: none;
-}
-
-body.light-theme {
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-body.dark-theme {
-  background-color: #121212;
-  color: #f0f0f0;
 }
 
 #root {

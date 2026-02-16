@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom"
-import "./Header.css"
+import styles from "./Header.module.css"
 import { useTheme } from "../../context"
 
 export const Header = () => {
@@ -7,41 +7,51 @@ export const Header = () => {
   const { isDarkMode, toggleTheme } = useTheme()
 
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="header-logo">
+    <header className={styles.header}>
+      <div className={styles.headerContainer}>
+        <div className={styles.headerLogo}>
           <a href="/">
-            <img src="/tmdb-logo.svg" alt="TMDB Logo" className="tmdb-logo" width="154" height="20" />
+            <img src="/tmdb-logo.svg" alt="TMDB Logo" className={styles.tmdbLogo} width="154" height="20" />
           </a>
         </div>
 
-        <nav className="header-nav">
-          <a href="/" className={`nav-link ${location.pathname === "/" ? "active" : ""}`}>
-            Main
+        <nav className={styles.headerNav}>
+          <a href="/" className={`${styles.navLink} ${location.pathname === "/" ? styles.active : ""}`}>
+            Главная
           </a>
-          <span className="nav-separator">|</span>
-          <a href="/movies?category=popular" className={`nav-link ${location.pathname === "/movies" ? "active" : ""}`}>
-            Category movies
+          <span className={styles.navSeparator}>|</span>
+
+          <a
+            href="/movies?category=popular"
+            className={`${styles.navLink} ${location.pathname === "/movies" ? styles.active : ""}`}
+          >
+            Категории
           </a>
-          <span className="nav-separator">|</span>
-          <a href="/filters" className={`nav-link ${location.pathname === "/filters" ? "active" : ""}`}>
-            Filtered movies
+          <span className={styles.navSeparator}>|</span>
+
+          <a href="/filters" className={`${styles.navLink} ${location.pathname === "/filters" ? styles.active : ""}`}>
+            Фильтры
           </a>
-          <span className="nav-separator">|</span>
-          <a href="/search" className={`nav-link ${location.pathname === "/search" ? "active" : ""}`}>
-            Search
+          <span className={styles.navSeparator}>|</span>
+
+          <a href="/search" className={`${styles.navLink} ${location.pathname === "/search" ? styles.active : ""}`}>
+            Поиск
           </a>
-          <span className="nav-separator">|</span>
-          <a href="/favorites" className={`nav-link ${location.pathname === "/favorites" ? "active" : ""}`}>
-            Favorites
+          <span className={styles.navSeparator}>|</span>
+
+          <a
+            href="/favorites"
+            className={`${styles.navLink} ${location.pathname === "/favorites" ? styles.active : ""}`}
+          >
+            Избранное
           </a>
         </nav>
 
-        <div className="header-theme">
+        <div className={styles.headerTheme}>
           <button
-            className="theme-toggle"
+            className={styles.themeToggle}
             onClick={toggleTheme}
-            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label={isDarkMode ? "Переключить на светлую тему" : "Переключить на тёмную тему"}
           >
             {isDarkMode ? "☀️" : "🌙"}
           </button>

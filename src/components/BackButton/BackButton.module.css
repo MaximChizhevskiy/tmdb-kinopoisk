@@ -1,4 +1,4 @@
-.back-button {
+.backButton {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -14,51 +14,55 @@
     margin-bottom: 20px;
 }
 
-.back-button:hover {
+.backButton:hover {
     border-color: var(--secondary-color);
     color: var(--secondary-color);
     transform: translateX(-4px);
     box-shadow: 0 2px 8px rgba(1, 180, 228, 0.15);
 }
 
-.back-button:active {
+.backButton:active {
     transform: translateX(-2px);
 }
 
-.back-icon {
+.backIcon {
     font-size: 1.2rem;
     line-height: 1;
     transition: transform 0.2s ease;
 }
 
-.back-button:hover .back-icon {
+.backButton:hover .backIcon {
     transform: translateX(-2px);
 }
 
-.back-button--large {
+.backButtonLarge {
     padding: 12px 24px;
     font-size: 1.1rem;
 }
 
-.back-button--small {
+.backButtonSmall {
     padding: 6px 12px;
     font-size: 0.9rem;
 }
 
-.back-button--ghost {
+.backButtonGhost {
     border: none;
     background: transparent;
     padding: 4px 8px;
 }
 
-.back-button--ghost:hover {
+.backButtonGhost:hover {
     background-color: rgba(1, 180, 228, 0.1);
     border: none;
     transform: translateX(-2px);
 }
 
+.backLabel {
+    /* можно добавить стили при необходимости */
+}
+
 @media (max-width: 768px) {
-    .back-button {
+    .backButton {
         padding: 6px 12px;
         font-size: 0.95rem;
         margin-bottom: 16px;

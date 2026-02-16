@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
-import "./CategoryMoviesPage.css"
+import styles from "./CategoryMoviesPage.module.css"
 import {
   useGetNowPlayingMoviesQuery,
   useGetPopularMoviesQuery,
@@ -8,17 +8,17 @@ import {
   useGetUpcomingMoviesQuery,
 } from "../../api"
 import { MovieCard, Pagination } from "../../components"
-import { SkeletonMovieCard } from "../../components/Skeletons/SkeletonMovieCard"
-import { useErrorType } from "../../hooks/useErrorType"
-import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
+import { SkeletonMovieCard } from "../../components"
+import { useErrorType } from "../../hooks"
+import { ErrorMessage } from "../../components"
 
 type CategoryType = "popular" | "top_rated" | "upcoming" | "now_playing"
 
 const CATEGORIES = [
-  { id: "popular", label: "Popular" },
-  { id: "top_rated", label: "Top Rated" },
-  { id: "upcoming", label: "Upcoming" },
-  { id: "now_playing", label: "Now Playing" },
+  { id: "popular", label: "Популярные" },
+  { id: "top_rated", label: "Топ рейтинга" },
+  { id: "upcoming", label: "Ожидаемые" },
+  { id: "now_playing", label: "Сейчас в кино" },
 ] as const
 
 export const CategoryMoviesPage = () => {
@@ -67,13 +67,13 @@ export const CategoryMoviesPage = () => {
   const getCategoryTitle = () => {
     switch (category) {
       case "popular":
-        return "Popular Movies"
+        return "Популярные фильмы"
       case "top_rated":
-        return "Top Rated Movies"
+        return "Топ рейтинга"
       case "upcoming":
-        return "Upcoming Movies"
+        return "Ожидаемые фильмы"
       case "now_playing":
-        return "Now Playing Movies"
+        return "Сейчас в кино"
       default:
         return "Movies"
     }
@@ -81,15 +81,15 @@ export const CategoryMoviesPage = () => {
 
   if (isLoading) {
     return (
-      <div className="category-movies-page">
-        <div className="category-tabs">
+      <div className={styles.categoryMoviesPage}>
+        <div className={styles.categoryTabs}>
           {CATEGORIES.map((cat) => (
-            <button key={cat.id} className="category-tab">
+            <button key={cat.id} className={styles.categoryTab}>
               {cat.label}
             </button>
           ))}
         </div>
-        <div className="category-movies-grid">
+        <div className={styles.categoryMoviesGrid}>
           {[...Array(20)].map((_, i) => (
             <SkeletonMovieCard key={i} />
           ))}
@@ -100,10 +100,10 @@ export const CategoryMoviesPage = () => {
 
   if (isError) {
     return (
-      <div className="category-movies-page">
-        <div className="category-tabs">
+      <div className={styles.categoryMoviesPage}>
+        <div className={styles.categoryTabs}>
           {CATEGORIES.map((cat) => (
-            <button key={cat.id} className="category-tab">
+            <button key={cat.id} className={styles.categoryTab}>
               {cat.label}
             </button>
           ))}
@@ -122,12 +122,12 @@ export const CategoryMoviesPage = () => {
   const totalResults = data?.total_results || 0
 
   return (
-    <div className="category-movies-page">
-      <div className="category-tabs">
+    <div className={styles.categoryMoviesPage}>
+      <div className={styles.categoryTabs}>
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
-            className={`category-tab ${category === cat.id ? "active" : ""}`}
+            className={`${styles.categoryTab} ${category === cat.id ? styles.active : ""}`}
             onClick={() => handleCategoryChange(cat.id)}
           >
             {cat.label}
@@ -135,12 +135,12 @@ export const CategoryMoviesPage = () => {
         ))}
       </div>
 
-      <div className="category-movies-header">
+      <div className={styles.categoryMoviesHeader}>
         <h1>{getCategoryTitle()}</h1>
-        <p className="movies-count">Всего фильмов: {totalResults.toLocaleString()}</p>
+        <p className={styles.moviesCount}>Всего фильмов: {totalResults.toLocaleString()}</p>
       </div>
 
-      <div className={`category-movies-grid ${isFetching ? "fetching" : ""}`}>
+      <div className={`${styles.categoryMoviesGrid} ${isFetching ? styles.fetching : ""}`}>
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}

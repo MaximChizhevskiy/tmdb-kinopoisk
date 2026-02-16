@@ -1,4 +1,4 @@
-import "./ErrorMessage.css"
+import styles from "./ErrorMessage.module.css"
 
 interface ErrorMessageProps {
   message?: string
@@ -64,13 +64,32 @@ export const ErrorMessage = ({ message, onRetry, errorType = "unknown" }: ErrorM
     }
   }
 
+  const getErrorTypeClass = () => {
+    switch (errorType) {
+      case "network":
+        return styles.errorMessageNetwork
+      case "auth":
+        return styles.errorMessageAuth
+      case "notFound":
+        return styles.errorMessageNotFound
+      case "server":
+        return styles.errorMessageServer
+      case "rateLimit":
+        return styles.errorMessageRateLimit
+      case "validation":
+        return styles.errorMessageValidation
+      default:
+        return ""
+    }
+  }
+
   return (
-    <div className={`error-message error-message--${errorType}`}>
-      <div className="error-icon">{getIcon()}</div>
-      <h3 className="error-title">{getTitle()}</h3>
-      <p className="error-text">{message || getDefaultMessage()}</p>
+    <div className={`${styles.errorMessage} ${getErrorTypeClass()}`}>
+      <div className={styles.errorIcon}>{getIcon()}</div>
+      <h3 className={styles.errorTitle}>{getTitle()}</h3>
+      <p className={styles.errorText}>{message || getDefaultMessage()}</p>
       {onRetry && (
-        <button className="error-retry" onClick={onRetry}>
+        <button className={styles.errorRetry} onClick={onRetry}>
           Попробовать снова
         </button>
       )}

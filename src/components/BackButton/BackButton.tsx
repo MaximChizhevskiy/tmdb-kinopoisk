@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom"
-import "./BackButton.css"
+import styles from "./BackButton.module.css"
 
 interface BackButtonProps {
-  fallbackPath?: string // Путь по умолчанию, если нет истории
+  fallbackPath?: string
   className?: string
   label?: string
   showIcon?: boolean
+  size?: "normal" | "large" | "small" | "ghost"
 }
 
 export const BackButton = ({
@@ -13,22 +14,40 @@ export const BackButton = ({
   className = "",
   label = "Назад",
   showIcon = true,
+  size = "normal",
 }: BackButtonProps) => {
   const navigate = useNavigate()
 
   const handleGoBack = () => {
-    // Пытаемся вернуться на предыдущую страницу
     if (window.history.length > 2) {
-      navigate(-1) // Возврат на предыдущую страницу в истории
+      navigate(-1)
     } else {
-      navigate(fallbackPath) // Если истории нет, идём на fallback
+      navigate(fallbackPath)
+    }
+  }
+
+  const getSizeClass = () => {
+    switch (size) {
+      case "large":
+        return styles.backButtonLarge
+      case "small":
+        return styles.backButtonSmall
+      case "ghost":
+        return styles.backButtonGhost
+      default:
+        return ""
     }
   }
 
   return (
-    <button className={`back-button ${className}`} onClick={handleGoBack} aria-label="Вернуться назад" title={label}>
-      {showIcon && <span className="back-icon">←</span>}
-      {label && <span className="back-label">{label}</span>}
+    <button
+      className={`${styles.backButton} ${getSizeClass()} ${className}`}
+      onClick={handleGoBack}
+      aria-label="Вернуться назад"
+      title={label}
+    >
+      {showIcon && <span className={styles.backIcon}>←</span>}
+      {label && <span className={styles.backLabel}>{label}</span>}
     </button>
   )
 }

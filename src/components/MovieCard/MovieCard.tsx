@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useFavorites } from "../../hooks"
 import type { MovieCardProps } from "../../types"
-import "./MovieCard.css"
+import styles from "./MovieCard.module.css"
 import React from "react"
 import type { Movie } from "../../schemas"
 
@@ -17,7 +17,6 @@ export const MovieCard = ({ movie, showRating = true }: MovieCardProps) => {
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation()
 
-    // Создаем объект с минимально необходимыми полями для сохранения в избранное
     const favoriteMovieData = {
       id: movie.id,
       title: movie.title,
@@ -33,39 +32,39 @@ export const MovieCard = ({ movie, showRating = true }: MovieCardProps) => {
   const rating = movie.vote_average.toFixed(1)
 
   return (
-    <div className="movie-card" onClick={handleClick}>
-      <div className="movie-card-poster">
+    <div className={styles.movieCard} onClick={handleClick}>
+      <div className={styles.movieCardPoster}>
         {movie.poster_path ? (
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
-            className="movie-card-image"
+            className={styles.movieCardImage}
             loading="lazy"
           />
         ) : (
-          <div className="movie-card-no-image">
+          <div className={styles.movieCardNoImage}>
             <span>Нет изображения</span>
           </div>
         )}
 
-        {showRating && <div className="movie-card-rating">⭐ {rating}</div>}
+        {showRating && <div className={styles.movieCardRating}>⭐ {rating}</div>}
       </div>
 
-      <div className="movie-card-content">
-        <h3 className="movie-card-title" title={movie.title}>
+      <div className={styles.movieCardContent}>
+        <h3 className={styles.movieCardTitle} title={movie.title}>
           {movie.title}
         </h3>
-        <div className="movie-card-footer">
+        <div className={styles.movieCardFooter}>
           <button
-            className={`movie-card-favorite ${isFav ? "active" : ""}`}
+            className={`${styles.movieCardFavorite} ${isFav ? styles.active : ""}`}
             onClick={handleFavoriteClick}
             aria-label={isFav ? "Удалить из избранного" : "Добавить в избранное"}
             title={isFav ? "Удалить из избранного" : "Добавить в избранное"}
             type="button"
           >
-            <span className="movie-card-favorite-icon">{isFav ? "❤️" : "🤍"}</span>
+            <span className={styles.movieCardFavoriteIcon}>{isFav ? "❤️" : "🤍"}</span>
           </button>
-          <span className="movie-card-year">{releaseYear}</span>
+          <span className={styles.movieCardYear}>{releaseYear}</span>
         </div>
       </div>
     </div>

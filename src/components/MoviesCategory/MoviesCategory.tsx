@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import "./MoviesCategory.css"
+import styles from "./MoviesCategory.module.css"
 import type { MoviesCategoryProps } from "../../types"
 import { MovieCard } from "../MovieCard/MovieCard.tsx"
 
@@ -11,11 +11,11 @@ export const MoviesCategory = ({ title, movies, isLoading, isError, viewMoreLink
   }
 
   if (isLoading) {
-    return <div className="movies-category-loading">Загрузка {title.toLowerCase()}...</div>
+    return <div className={styles.moviesCategoryLoading}>Загрузка {title.toLowerCase()}...</div>
   }
 
   if (isError) {
-    return <div className="movies-category-error">Ошибка при загрузке {title.toLowerCase()}</div>
+    return <div className={styles.moviesCategoryError}>Ошибка при загрузке {title.toLowerCase()}</div>
   }
 
   const displayedMovies = movies?.slice(0, 6) || []
@@ -25,19 +25,19 @@ export const MoviesCategory = ({ title, movies, isLoading, isError, viewMoreLink
   }
 
   return (
-    <section className="movies-category">
-      <div className="movies-category-header">
-        <h2 className="movies-category-title">{title}</h2>
+    <section className={styles.moviesCategory}>
+      <div className={styles.moviesCategoryHeader}>
+        <h2 className={styles.moviesCategoryTitle}>{title}</h2>
         <button
-          className="movies-category-view-more"
+          className={styles.moviesCategoryViewMore}
           onClick={handleViewMore}
           aria-label={`View more ${title.toLowerCase()}`}
         >
-          View More
+          Смотреть все
         </button>
       </div>
 
-      <div className="movies-category-grid">
+      <div className={styles.moviesCategoryGrid}>
         {displayedMovies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}

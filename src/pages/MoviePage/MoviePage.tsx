@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 
-import { useErrorType } from "../../hooks/useErrorType"
-import "./MoviePage.css"
+import { useErrorType } from "../../hooks"
+import styles from "./MoviePage.module.css" // ← импорт стилей
 import {
   useGetMovieCreditsQuery,
   useGetMovieDetailsQuery,
@@ -10,7 +10,7 @@ import {
   useGetMovieVideosQuery,
 } from "../../api"
 import { BackButton, MovieCard, Pagination } from "../../components"
-import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.tsx"
+import { ErrorMessage } from "../../components"
 
 export const MoviePage = () => {
   const { id } = useParams<{ id: string }>()
@@ -18,7 +18,6 @@ export const MoviePage = () => {
   const movieId = parseInt(id || "0")
   const [recommendationsPage, setRecommendationsPage] = useState(1)
 
-  // Основная информация о фильме
   const {
     data: movie,
     isLoading: isMovieLoading,
@@ -27,13 +26,10 @@ export const MoviePage = () => {
     refetch: refetchMovie,
   } = useGetMovieDetailsQuery({ movieId }, { skip: !movieId })
 
-  // Информация об актерах
   const { data: credits, isLoading: isCreditsLoading } = useGetMovieCreditsQuery(movieId, { skip: !movieId })
 
-  // Трейлеры
   const { data: videos } = useGetMovieVideosQuery(movieId, { skip: !movieId })
 
-  // Рекомендации
   const { data: recommendations, isLoading: isRecommendationsLoading } = useGetMovieRecommendationsQuery(
     { movieId, page: recommendationsPage },
     { skip: !movieId },
@@ -41,26 +37,23 @@ export const MoviePage = () => {
 
   const errorType = useErrorType(movieError)
 
-  // Проверка валидности ID
   useEffect(() => {
     if (!movieId || isNaN(movieId)) {
       navigate("/")
     }
   }, [movieId, navigate])
 
-  // Скролл наверх при загрузке страницы
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [id])
 
-  // Загрузка
   if (isMovieLoading) {
     return (
-      <div className="movie-page">
-        <div className="movie-page-header">
+      <div className={styles.moviePage}>
+        <div className={styles.moviePageHeader}>
           <BackButton fallbackPath="/movies" />
         </div>
-        <div className="loading">
+        <div className={styles.loading}>
           <div className="loading-spinner"></div>
           <p>Загрузка информации о фильме...</p>
         </div>
@@ -68,11 +61,10 @@ export const MoviePage = () => {
     )
   }
 
-  // Ошибка
   if (isMovieError || !movie) {
     return (
-      <div className="movie-page">
-        <div className="movie-page-header">
+      <div className={styles.moviePage}>
+        <div className={styles.moviePageHeader}>
           <BackButton fallbackPath="/movies" />
         </div>
         <ErrorMessage
@@ -84,85 +76,76 @@ export const MoviePage = () => {
     )
   }
 
-  // Поиск трейлера
   const trailer =
     videos?.results?.find((video) => video.site === "YouTube" && video.type === "Trailer" && video.official) ||
     videos?.results?.find((video) => video.site === "YouTube" && video.type === "Trailer")
 
-  // Режиссер
   const director = credits?.crew?.find((person) => person.job === "Director")
 
-  // Актерский состав (первые 8 актеров)
   const mainCast = credits?.cast?.slice(0, 8) || []
 
-  // Продолжительность
   return (
-    <div className="movie-page">
-      {/* Хедер с кнопкой назад */}
-
-      {/* Hero секция с бэкдропом */}
+    <div className={styles.moviePage}>
       <div
-        className="movie-hero"
+        className={styles.movieHero}
         style={{
           backgroundImage: movie.backdrop_path
             ? `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`
             : undefined,
         }}
       >
-        <div className="movie-hero-content">
-          {/* Постер */}
-          <div className="movie-poster">
+        <div className={styles.movieHeroContent}>
+          <div className={styles.moviePoster}>
             {movie.poster_path ? (
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
-                className="movie-poster-image"
+                className={styles.moviePosterImage}
               />
             ) : (
-              <div className="movie-poster-placeholder">
+              <div className={styles.moviePosterPlaceholder}>
                 <span>Нет изображения</span>
               </div>
             )}
           </div>
 
-          {/* Информация */}
-          <div className="movie-hero-info">
-            <h1 className="movie-title">{movie.title}</h1>
+          <div className={styles.movieHeroInfo}>
+            <h1 className={styles.movieTitle}>{movie.title}</h1>
 
-            {movie.tagline && <p className="movie-tagline">{movie.tagline}</p>}
+            {movie.tagline && <p className={styles.movieTagline}>{movie.tagline}</p>}
 
-            <div className="movie-meta">
-              <div className="movie-rating">
-                <span className="rating-star">⭐</span>
-                <span className="rating-value">{movie.vote_average.toFixed(1)}</span>
-                <span className="rating-count">({movie.vote_count.toLocaleString()} оценок)</span>
+            <div className={styles.movieMeta}>
+              <div className={styles.movieRating}>
+                <span className={styles.ratingStar}>⭐</span>
+                <span className={styles.ratingValue}>{movie.vote_average.toFixed(1)}</span>
+                <span className={styles.ratingCount}>({movie.vote_count.toLocaleString()} оценок)</span>
               </div>
 
-              <div className="movie-year">{new Date(movie.release_date).getFullYear()}</div>
+              <div className={styles.movieYear}>{new Date(movie.release_date).getFullYear()}</div>
 
               {movie.runtime ? (
-                <div className="movie-runtime">
+                <div className={styles.movieRuntime}>
                   {Math.floor(movie.runtime / 60)}ч {movie.runtime % 60}мин
                 </div>
               ) : (
-                <div className="movie-runtime">Длительность неизвестна</div>
+                <div className={styles.movieRuntime}>Длительность неизвестна</div>
               )}
 
-              {movie.adult && <div className="movie-adult">18+</div>}
+              {movie.adult && <div className={styles.movieAdult}>18+</div>}
             </div>
 
-            <div className="movie-genres">
+            <div className={styles.movieGenres}>
               {movie.genres?.map((genre) => (
-                <span key={genre.id} className="genre-tag">
+                <span key={genre.id} className={styles.genreTag}>
                   {genre.name}
                 </span>
               ))}
             </div>
 
             {trailer && (
-              <div className="trailer-button-container">
+              <div className={styles.trailerButtonContainer}>
                 <button
-                  className="trailer-button"
+                  className={styles.trailerButton}
                   onClick={() => window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")}
                 >
                   ▶ Смотреть трейлер
@@ -170,24 +153,21 @@ export const MoviePage = () => {
               </div>
             )}
           </div>
-          <div className="movie-page-header">
-            <BackButton fallbackPath="/movies" />
+          <div className={styles.moviePageHeader}>
+            <BackButton fallbackPath="/movies" className={styles.heroBackButton} />
           </div>
         </div>
       </div>
 
-      {/* Основной контент */}
-      <div className="movie-content">
-        <div className="movie-main">
-          {/* Описание */}
-          <section className="movie-overview">
+      <div className={styles.movieContent}>
+        <div className={styles.movieMain}>
+          <section className={styles.movieOverview}>
             <h2>Описание</h2>
-            <p className="overview-text">{movie.overview || "Описание отсутствует"}</p>
+            <p className={styles.overviewText}>{movie.overview || "Описание отсутствует"}</p>
           </section>
 
-          {/* Режиссер */}
           {director && (
-            <section className="movie-director">
+            <section className={styles.movieDirector}>
               <h2>Режиссер</h2>
               <div className="director-info">
                 <span className="director-name">{director.name}</span>
@@ -195,29 +175,28 @@ export const MoviePage = () => {
             </section>
           )}
 
-          {/* Актерский состав */}
           {mainCast.length > 0 && !isCreditsLoading && (
-            <section className="movie-cast">
+            <section className={styles.movieCast}>
               <h2>В главных ролях</h2>
-              <div className="cast-grid">
+              <div className={styles.castGrid}>
                 {mainCast.map((actor) => (
-                  <div key={actor.id} className="cast-member">
-                    <div className="cast-photo">
+                  <div key={actor.id} className={styles.castMember}>
+                    <div className={styles.castPhoto}>
                       {actor.profile_path ? (
                         <img
                           src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
                           alt={actor.name}
-                          className="cast-image"
+                          className={styles.castImage}
                         />
                       ) : (
-                        <div className="cast-placeholder">
+                        <div className={styles.castPlaceholder}>
                           <span>Нет фото</span>
                         </div>
                       )}
                     </div>
-                    <div className="cast-info">
-                      <h3 className="cast-name">{actor.name}</h3>
-                      <p className="cast-character">{actor.character}</p>
+                    <div className={styles.castInfo}>
+                      <h3 className={styles.castName}>{actor.name}</h3>
+                      <p className={styles.castCharacter}>{actor.character}</p>
                     </div>
                   </div>
                 ))}
@@ -225,57 +204,55 @@ export const MoviePage = () => {
             </section>
           )}
 
-          {/* Детальная информация */}
-          <section className="movie-details">
+          <section className={styles.movieDetails}>
             <h2>Детальная информация</h2>
-            <div className="details-grid">
+            <div className={styles.detailsGrid}>
               {movie.status && (
-                <div className="detail-item">
-                  <span className="detail-label">Статус:</span>
-                  <span className="detail-value">{movie.status}</span>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Статус:</span>
+                  <span className={styles.detailValue}>{movie.status}</span>
                 </div>
               )}
 
               {movie.budget > 0 && (
-                <div className="detail-item">
-                  <span className="detail-label">Бюджет:</span>
-                  <span className="detail-value">${movie.budget.toLocaleString()}</span>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Бюджет:</span>
+                  <span className={styles.detailValue}>${movie.budget.toLocaleString()}</span>
                 </div>
               )}
 
               {movie.revenue > 0 && (
-                <div className="detail-item">
-                  <span className="detail-label">Сборы:</span>
-                  <span className="detail-value">${movie.revenue.toLocaleString()}</span>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Сборы:</span>
+                  <span className={styles.detailValue}>${movie.revenue.toLocaleString()}</span>
                 </div>
               )}
 
               {movie.original_language && (
-                <div className="detail-item">
-                  <span className="detail-label">Язык оригинала:</span>
-                  <span className="detail-value">{movie.original_language.toUpperCase()}</span>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Язык оригинала:</span>
+                  <span className={styles.detailValue}>{movie.original_language.toUpperCase()}</span>
                 </div>
               )}
 
               {movie.production_countries && movie.production_countries.length > 0 && (
-                <div className="detail-item">
-                  <span className="detail-label">Страна:</span>
-                  <span className="detail-value">{movie.production_countries.map((c) => c.name).join(", ")}</span>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Страна:</span>
+                  <span className={styles.detailValue}>{movie.production_countries.map((c) => c.name).join(", ")}</span>
                 </div>
               )}
 
               {movie.release_date && (
-                <div className="detail-item">
-                  <span className="detail-label">Дата выхода:</span>
-                  <span className="detail-value">{new Date(movie.release_date).toLocaleDateString("ru-RU")}</span>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Дата выхода:</span>
+                  <span className={styles.detailValue}>{new Date(movie.release_date).toLocaleDateString("ru-RU")}</span>
                 </div>
               )}
             </div>
           </section>
 
-          {/* Рекомендации */}
           {recommendations && recommendations.results.length > 0 && (
-            <section className="movie-recommendations">
+            <section className={styles.movieRecommendations}>
               <h2>Рекомендации</h2>
               {isRecommendationsLoading ? (
                 <div className="loading-recommendations">
@@ -284,7 +261,7 @@ export const MoviePage = () => {
                 </div>
               ) : (
                 <>
-                  <div className="recommendations-grid">
+                  <div className={styles.recommendationsGrid}>
                     {recommendations.results.slice(0, 6).map((recMovie) => (
                       <MovieCard key={recMovie.id} movie={recMovie} showRating={true} />
                     ))}
@@ -304,32 +281,31 @@ export const MoviePage = () => {
           )}
         </div>
 
-        {/* Сайдбар с дополнительной информацией */}
-        <div className="movie-sidebar">
+        <div className={styles.movieSidebar}>
           {movie.homepage && (
-            <div className="sidebar-section">
+            <div className={styles.sidebarSection}>
               <h3>Официальный сайт</h3>
-              <a href={movie.homepage} target="_blank" rel="noopener noreferrer" className="homepage-link">
+              <a href={movie.homepage} target="_blank" rel="noopener noreferrer" className={styles.homepageLink}>
                 🌐 Перейти на сайт
               </a>
             </div>
           )}
 
           {movie.production_companies && movie.production_companies.length > 0 && (
-            <div className="sidebar-section">
+            <div className={styles.sidebarSection}>
               <h3>Производство</h3>
-              <div className="production-companies">
+              <div className={styles.productionCompanies}>
                 {movie.production_companies.map((company) => (
-                  <div key={company.id} className="company">
+                  <div key={company.id} className={styles.company}>
                     {company.logo_path ? (
                       <img
                         src={`https://image.tmdb.org/t/p/w92${company.logo_path}`}
                         alt={company.name}
-                        className="company-logo"
+                        className={styles.companyLogo}
                         title={company.name}
                       />
                     ) : (
-                      <span className="company-name">{company.name}</span>
+                      <span className={styles.companyName}>{company.name}</span>
                     )}
                   </div>
                 ))}
@@ -338,7 +314,7 @@ export const MoviePage = () => {
           )}
 
           {movie.production_countries && movie.production_countries.length > 0 && (
-            <div className="sidebar-section">
+            <div className={styles.sidebarSection}>
               <h3>Страны производства</h3>
               <div className="countries-list">
                 {movie.production_countries.map((country) => (
@@ -356,7 +332,6 @@ export const MoviePage = () => {
   )
 }
 
-// Вспомогательная функция для эмодзи флагов
 function getCountryFlag(countryCode: string): string {
   const flags: Record<string, string> = {
     US: "🇺🇸",

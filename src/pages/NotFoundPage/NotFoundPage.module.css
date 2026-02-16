@@ -1,4 +1,4 @@
-.not-found-page {
+.notFoundPage {
     min-height: calc(100vh - 200px);
     display: flex;
     align-items: center;
@@ -7,7 +7,7 @@
     background: var(--background-color);
 }
 
-.not-found-content {
+.notFoundContent {
     max-width: 600px;
     text-align: center;
     animation: fadeIn 0.5s ease-out;
@@ -24,7 +24,7 @@
     }
 }
 
-.not-found-animation {
+.notFoundAnimation {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,11 +35,11 @@
     color: var(--secondary-color);
 }
 
-.not-found-number {
+.notFoundNumber {
     animation: bounce 2s ease-in-out infinite;
 }
 
-.not-found-circle {
+.notFoundCircle {
     width: 120px;
     height: 120px;
     background: var(--secondary-color);
@@ -73,7 +73,7 @@
     }
 }
 
-.not-found-title {
+.notFoundTitle {
     font-size: 2.5rem;
     color: var(--text-color);
     margin-bottom: 16px;
@@ -81,7 +81,7 @@
     display: inline-block;
 }
 
-.not-found-title::after {
+.notFoundTitle::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -93,14 +93,14 @@
     border-radius: 3px;
 }
 
-.not-found-text {
+.notFoundText {
     color: var(--text-secondary);
     font-size: 1.2rem;
     line-height: 1.6;
     margin-bottom: 40px;
 }
 
-.not-found-actions {
+.notFoundActions {
     display: flex;
     gap: 16px;
     justify-content: center;
@@ -108,7 +108,7 @@
     flex-wrap: wrap;
 }
 
-.not-found-button {
+.notFoundButton {
     padding: 14px 32px;
     border: none;
     border-radius: 40px;
@@ -119,48 +119,48 @@
     min-width: 160px;
 }
 
-.not-found-button--primary {
+.notFoundButtonPrimary {
     background: var(--secondary-color);
     color: white;
 }
 
-.not-found-button--primary:hover {
+.notFoundButtonPrimary:hover {
     background: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(1, 180, 228, 0.3);
 }
 
-.not-found-button--secondary {
+.notFoundButtonSecondary {
     background: transparent;
     color: var(--text-color);
     border: 2px solid var(--border-color);
 }
 
-.not-found-button--secondary:hover {
+.notFoundButtonSecondary:hover {
     border-color: var(--secondary-color);
     color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
-.not-found-help {
+.notFoundHelp {
     border-top: 1px solid var(--border-color);
     padding-top: 40px;
 }
 
-.not-found-help h3 {
+.notFoundHelp h3 {
     color: var(--text-color);
     font-size: 1.3rem;
     margin-bottom: 20px;
 }
 
-.help-links {
+.helpLinks {
     display: flex;
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.help-links a {
+.helpLinks a {
     color: var(--text-secondary);
     text-decoration: none;
     padding: 8px 16px;
@@ -170,72 +170,73 @@
     border: 1px solid var(--border-color);
 }
 
-.help-links a:hover {
+.helpLinks a:hover {
     color: var(--secondary-color);
     border-color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
+/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 768px) {
-    .not-found-animation {
+    .notFoundAnimation {
         font-size: 6rem;
         gap: 5px;
     }
 
-    .not-found-circle {
+    .notFoundCircle {
         width: 90px;
         height: 90px;
         font-size: 3rem;
     }
 
-    .not-found-title {
+    .notFoundTitle {
         font-size: 2rem;
     }
 
-    .not-found-text {
+    .notFoundText {
         font-size: 1rem;
     }
 
-    .not-found-button {
+    .notFoundButton {
         padding: 12px 24px;
         min-width: 140px;
     }
 
-    .help-links {
+    .helpLinks {
         gap: 10px;
     }
 
-    .help-links a {
+    .helpLinks a {
         padding: 6px 12px;
         font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
-    .not-found-animation {
+    .notFoundAnimation {
         font-size: 4rem;
     }
 
-    .not-found-circle {
+    .notFoundCircle {
         width: 60px;
         height: 60px;
         font-size: 2rem;
     }
 
-    .not-found-actions {
+    .notFoundActions {
         flex-direction: column;
     }
 
-    .not-found-button {
+    .notFoundButton {
         width: 100%;
     }
 
-    .help-links {
+    .helpLinks {
         flex-direction: column;
         align-items: center;
     }
 
-    .help-links a {
+    .helpLinks a {
         width: 100%;
         text-align: center;
     }

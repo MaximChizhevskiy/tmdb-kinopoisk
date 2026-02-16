@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
-import "./FiltersPage.css"
+import styles from "./FiltersPage.module.css"
 import { useDiscoverMoviesQuery } from "../../api"
 import { MovieCard, Pagination, ActiveFilters } from "../../components"
 import { SkeletonMovieCard } from "../../components"
@@ -93,13 +93,13 @@ export const FiltersPage = () => {
 
   if (isLoading) {
     return (
-      <div className="filters-page">
+      <div className={styles.filtersPage}>
         <FiltersSidebar filters={filters} onFilterChange={handleFilterChange} />
-        <main className="filters-content">
-          <div className="filters-header">
+        <main className={styles.filtersContent}>
+          <div className={styles.filtersHeader}>
             <h1>Фильтры и сортировка</h1>
           </div>
-          <div className="movies-grid">
+          <div className={styles.moviesGrid}>
             {[...Array(20)].map((_, i) => (
               <SkeletonMovieCard key={i} />
             ))}
@@ -111,10 +111,10 @@ export const FiltersPage = () => {
 
   if (isError) {
     return (
-      <div className="filters-page">
+      <div className={styles.filtersPage}>
         <FiltersSidebar filters={filters} onFilterChange={handleFilterChange} />
-        <main className="filters-content">
-          <div className="filters-header">
+        <main className={styles.filtersContent}>
+          <div className={styles.filtersHeader}>
             <h1>Фильтры и сортировка</h1>
           </div>
           <ErrorMessage errorType={errorType || "unknown"} message="Не удалось загрузить фильмы" onRetry={refetch} />
@@ -124,31 +124,31 @@ export const FiltersPage = () => {
   }
 
   return (
-    <div className="filters-page">
+    <div className={styles.filtersPage}>
       <FiltersSidebar filters={filters} onFilterChange={handleFilterChange} />
 
-      <main className="filters-content">
-        <div className="filters-header">
+      <main className={styles.filtersContent}>
+        <div className={styles.filtersHeader}>
           <h1>Фильтры и сортировка</h1>
           {!isLoading && !isError && (
-            <span className="results-count">Найдено фильмов: {totalResults.toLocaleString()}</span>
+            <span className={styles.resultsCount}>Найдено фильмов: {totalResults.toLocaleString()}</span>
           )}
         </div>
 
         <ActiveFilters filters={filters} onRemoveFilter={handleRemoveFilter} onClearAll={handleClearAllFilters} />
 
         {movies.length === 0 ? (
-          <div className="no-results">
-            <div className="no-results-icon">🎬</div>
+          <div className={styles.noResults}>
+            <div className={styles.noResultsIcon}>🎬</div>
             <h3>Фильмы не найдены</h3>
             <p>Попробуйте изменить параметры фильтрации</p>
-            <button onClick={handleClearAllFilters} className="clear-filters-button">
+            <button onClick={handleClearAllFilters} className={styles.clearFiltersButton}>
               Сбросить все фильтры
             </button>
           </div>
         ) : (
           <>
-            <div className={`movies-grid ${isFetching ? "fetching" : ""}`}>
+            <div className={`${styles.moviesGrid} ${isFetching ? styles.fetching : ""}`}>
               {movies.map((movie) => (
                 <MovieCard key={movie.id} movie={movie} />
               ))}

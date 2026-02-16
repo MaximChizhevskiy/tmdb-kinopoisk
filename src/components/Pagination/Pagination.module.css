@@ -7,14 +7,14 @@
     gap: 20px;
 }
 
-.pagination-items-count {
+.paginationItemsCount {
     text-align: center;
     font-size: 0.95rem;
     color: var(--text-secondary);
     margin-bottom: 10px;
 }
 
-.pagination-controls {
+.paginationControls {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,7 +22,7 @@
     gap: 12px;
 }
 
-.pagination-button {
+.paginationButton {
     padding: 10px 16px;
     background: var(--primary-color);
     color: white;
@@ -39,25 +39,29 @@
     font-size: 0.95rem;
 }
 
-.pagination-button:hover:not(:disabled) {
+.paginationButton:hover:not(:disabled) {
     background: var(--secondary-color);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.pagination-button:disabled {
+.paginationButton:disabled {
     opacity: 0.4;
     cursor: not-allowed;
     background: var(--text-secondary);
 }
 
-.pagination-button-first,
-.pagination-button-last {
+.paginationButtonFirst,
+.paginationButtonLast {
     min-width: 60px;
     font-weight: 700;
 }
 
-.page-info {
+.paginationButtonPrev,
+.paginationButtonNext {
+}
+
+.pageInfo {
     font-size: 1rem;
     color: var(--text-color);
     padding: 8px 16px;
@@ -68,12 +72,12 @@
     text-align: center;
 }
 
-.page-info strong {
+.pageInfo strong {
     color: var(--secondary-color);
     font-weight: 700;
 }
 
-.custom-page-form {
+.customPageForm {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,13 +88,13 @@
     margin-top: 10px;
 }
 
-.custom-page-label {
+.customPageLabel {
     font-size: 0.9rem;
     color: var(--text-secondary);
     white-space: nowrap;
 }
 
-.custom-page-input {
+.customPageInput {
     width: 70px;
     padding: 8px 12px;
     border: 2px solid var(--border-color);
@@ -102,19 +106,19 @@
     transition: all 0.2s;
 }
 
-.custom-page-input:focus {
+.customPageInput:focus {
     outline: none;
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 3px rgba(1, 180, 228, 0.1);
 }
 
-.custom-page-input::-webkit-inner-spin-button,
-.custom-page-input::-webkit-outer-spin-button {
+.customPageInput::-webkit-inner-spin-button,
+.customPageInput::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.custom-page-button {
+.customPageButton {
     padding: 8px 20px;
     background: var(--primary-color);
     color: white;
@@ -126,58 +130,59 @@
     font-size: 0.9rem;
 }
 
-.custom-page-button:hover:not(:disabled) {
+.customPageButton:hover:not(:disabled) {
     background: var(--secondary-color);
     transform: translateY(-1px);
 }
 
-.custom-page-button:disabled {
+.customPageButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
+/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 768px) {
-    .pagination-controls {
+    .paginationControls {
         gap: 8px;
     }
 
-    .pagination-button {
+    .paginationButton {
         padding: 8px 12px;
         min-width: 45px;
         height: 36px;
         font-size: 0.9rem;
     }
 
-    .page-info {
+    .pageInfo {
         min-width: 150px;
         font-size: 0.9rem;
         padding: 6px 12px;
     }
 
-    .custom-page-form {
+    .customPageForm {
         flex-direction: column;
         align-items: center;
         gap: 8px;
     }
 
-    .custom-page-label {
+    .customPageLabel {
         font-size: 0.85rem;
     }
 }
 
 @media (max-width: 480px) {
-    .pagination-controls {
+    .paginationControls {
         gap: 6px;
     }
 
-    .pagination-button {
+    .paginationButton {
         padding: 6px 10px;
         min-width: 40px;
         height: 32px;
         font-size: 0.85rem;
     }
 
-    .page-info {
+    .pageInfo {
         order: -1;
         width: 100%;
         margin-bottom: 10px;

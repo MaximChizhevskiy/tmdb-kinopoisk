@@ -1,18 +1,18 @@
-.home-page {
+.homePage {
     width: 100%;
 }
 
-.home-page > section + section {
+.homePage > section + section {
     margin-top: 20px;
 }
 
-.home-page > section:not(:first-child) {
+.homePage > section:not(:first-child) {
     border-top: 1px solid var(--border-color);
     padding-top: 40px;
 }
 
 @media (max-width: 768px) {
-    .home-page > section:not(:first-child) {
+    .homePage > section:not(:first-child) {
         padding-top: 30px;
     }
 }

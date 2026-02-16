@@ -1,4 +1,4 @@
-.filters-page {
+.filtersPage {
     display: flex;
     gap: 30px;
     max-width: 1400px;
@@ -7,7 +7,7 @@
     min-height: calc(100vh - 80px);
 }
 
-.filters-sidebar {
+.filtersSidebar {
     flex: 0 0 300px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -20,25 +20,25 @@
     overscroll-behavior: contain;
 }
 
-.filters-sidebar::-webkit-scrollbar {
+.filtersSidebar::-webkit-scrollbar {
     width: 6px;
 }
 
-.filters-sidebar::-webkit-scrollbar-track {
+.filtersSidebar::-webkit-scrollbar-track {
     background: var(--border-color);
     border-radius: 3px;
 }
 
-.filters-sidebar::-webkit-scrollbar-thumb {
+.filtersSidebar::-webkit-scrollbar-thumb {
     background: var(--secondary-color);
     border-radius: 3px;
 }
 
-.filters-sidebar::-webkit-scrollbar-thumb:hover {
+.filtersSidebar::-webkit-scrollbar-thumb:hover {
     background: #0199c7;
 }
 
-.filters-header {
+.filtersHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,13 +47,13 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.filters-header h2 {
+.filtersHeader h2 {
     margin: 0;
     font-size: 1.3rem;
     color: var(--text-color);
 }
 
-.clear-filters {
+.clearFilters {
     background: none;
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
@@ -64,24 +64,24 @@
     transition: all 0.2s ease;
 }
 
-.clear-filters:hover {
+.clearFilters:hover {
     background: rgba(255, 71, 87, 0.1);
     border-color: #ff4757;
     color: #ff4757;
 }
 
-.filter-section {
+.filterSection {
     margin-bottom: 28px;
 }
 
-.filter-section h3 {
+.filterSection h3 {
     margin: 0 0 16px 0;
     font-size: 1rem;
     color: var(--text-color);
     font-weight: 600;
 }
 
-.filter-select {
+.filterSelect {
     width: 100%;
     padding: 10px;
     background: var(--background-color);
@@ -92,7 +92,7 @@
     cursor: pointer;
 }
 
-.filter-input {
+.filterInput {
     padding: 8px;
     background: var(--background-color);
     border: 1px solid var(--border-color);
@@ -102,25 +102,25 @@
     width: 100%;
 }
 
-.rating-range {
+.ratingRange {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.rating-values {
+.ratingValues {
     display: flex;
     justify-content: space-between;
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
 
-.rating-values strong {
+.ratingValues strong {
     color: var(--secondary-color);
     font-size: 1.1rem;
 }
 
-.dual-slider-container {
+.dualSliderContainer {
     position: relative;
     height: 30px;
     width: 100%;
@@ -157,38 +157,38 @@
     box-shadow: 0 4px 12px rgba(1, 180, 228, 0.5);
 }
 
-.slider-min {
+.sliderMin {
     z-index: 2;
 }
 
-.slider-max {
+.sliderMax {
     z-index: 1;
 }
 
-.rating-inputs {
+.ratingInputs {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.rating-inputs .filter-input {
+.ratingInputs .filterInput {
     flex: 1;
     text-align: center;
 }
 
-.rating-separator {
+.ratingSeparator {
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
-.genres-grid {
+.genresGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 8px;
     margin-bottom: 8px;
 }
 
-.genre-chip {
+.genreChip {
     padding: 6px 12px;
     background: var(--background-color);
     border: 1px solid var(--border-color);
@@ -202,31 +202,31 @@
     text-overflow: ellipsis;
 }
 
-.genre-chip:hover,
-.genre-chip.active {
+.genreChip:hover,
+.genreChip.active {
     background: var(--secondary-color);
     color: white;
     border-color: var(--secondary-color);
 }
 
-.filter-hint {
+.filterHint {
     margin: 8px 0 0;
     font-size: 0.75rem;
     color: var(--text-secondary);
 }
 
-.year-inputs {
+.yearInputs {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.year-separator {
+.yearSeparator {
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
-.checkbox-label {
+.checkboxLabel {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -235,12 +235,12 @@
     cursor: pointer;
 }
 
-.filters-content {
+.filtersContent {
     flex: 1;
     min-width: 0;
 }
 
-.filters-content .filters-header {
+.filtersContent .filtersHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -249,18 +249,18 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.filters-content h1 {
+.filtersContent h1 {
     margin: 0;
     font-size: 2rem;
     color: var(--text-color);
 }
 
-.results-count {
+.resultsCount {
     color: var(--text-secondary);
     font-size: 1.1rem;
 }
 
-.active-filters {
+.activeFilters {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -271,7 +271,7 @@
     border: 1px solid var(--border-color);
 }
 
-.filter-tag {
+.filterTag {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -282,7 +282,7 @@
     font-size: 0.85rem;
 }
 
-.filter-tag button {
+.filterTag button {
     background: none;
     border: none;
     color: white;
@@ -293,11 +293,11 @@
     align-items: center;
 }
 
-.filter-tag button:hover {
+.filterTag button:hover {
     opacity: 0.8;
 }
 
-.movies-grid {
+.moviesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
@@ -305,32 +305,31 @@
     transition: opacity 0.3s ease;
 }
 
-.movies-grid.fetching {
+.moviesGrid.fetching {
     opacity: 0.6;
     pointer-events: none;
 }
 
-/* ===== СКЕЛЕТОН ===== */
-.skeleton-movie-card {
+.skeletonMovieCard {
     background: var(--card-bg);
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--border-color);
 }
 
-.skeleton-poster {
+.skeletonPoster {
     width: 100%;
     height: 300px;
     background: linear-gradient(90deg, var(--border-color) 25%, var(--card-bg) 50%, var(--border-color) 75%);
-    animation: skeleton-loading 1.5s infinite;
+    animation: skeletonLoading 1.5s infinite;
     background-size: 200% 100%;
 }
 
-.skeleton-content {
+.skeletonContent {
     padding: 16px;
 }
 
-.skeleton-footer {
+.skeletonFooter {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -339,18 +338,18 @@
     border-top: 1px solid var(--border-color);
 }
 
-@keyframes skeleton-loading {
+@keyframes skeletonLoading {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
 
 @media (max-width: 1024px) {
-    .filters-page {
+    .filtersPage {
         flex-direction: column;
         padding: 16px;
     }
 
-    .filters-sidebar {
+    .filtersSidebar {
         flex: none;
         width: 100%;
         height: auto;
@@ -360,40 +359,40 @@
         margin-bottom: 20px;
     }
 
-    .filters-content h1 {
+    .filtersContent h1 {
         font-size: 1.8rem;
     }
 }
 
 @media (max-width: 768px) {
-    .genres-grid {
+    .genresGrid {
         grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
     }
 
-    .filters-content h1 {
+    .filtersContent h1 {
         font-size: 1.5rem;
     }
 
-    .movies-grid {
+    .moviesGrid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 16px;
     }
 }
 
 @media (max-width: 480px) {
-    .filters-page {
+    .filtersPage {
         padding: 12px;
     }
 
-    .filters-sidebar {
+    .filtersSidebar {
         padding: 16px;
     }
 
-    .filters-content h1 {
+    .filtersContent h1 {
         font-size: 1.3rem;
     }
 
-    .movies-grid {
+    .moviesGrid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    }
+     }
 }

@@ -1,24 +1,24 @@
-.movies-category {
+.moviesCategory {
     padding: 40px 20px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-.movies-category-header {
+.moviesCategoryHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
 }
 
-.movies-category-title {
+.moviesCategoryTitle {
     font-size: 2rem;
     font-weight: 700;
     color: var(--text-color);
     margin: 0;
 }
 
-.movies-category-view-more {
+.moviesCategoryViewMore {
     padding: 10px 24px;
     background: var(--primary-color);
     color: white;
@@ -32,20 +32,20 @@
     display: inline-block;
 }
 
-.movies-category-view-more:hover {
+.moviesCategoryViewMore:hover {
     background: var(--secondary-color);
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.movies-category-grid {
+.moviesCategoryGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
 }
 
-.movies-category-loading,
-.movies-category-error {
+.moviesCategoryLoading,
+.moviesCategoryError {
     text-align: center;
     padding: 40px 20px;
     font-size: 1.2rem;
@@ -54,44 +54,44 @@
     margin: 0 auto;
 }
 
-.movies-category-error {
+.moviesCategoryError {
     color: #ff4444;
 }
 
 @media (max-width: 1024px) {
-    .movies-category-grid {
+    .moviesCategoryGrid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .movies-category {
+    .moviesCategory {
         padding: 30px 15px;
     }
 
-    .movies-category-title {
+    .moviesCategoryTitle {
         font-size: 1.8rem;
     }
 
-    .movies-category-grid {
+    .moviesCategoryGrid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
 }
 
 @media (max-width: 480px) {
-    .movies-category-header {
+    .moviesCategoryHeader {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
 
-    .movies-category-view-more {
+    .moviesCategoryViewMore {
         width: 100%;
         text-align: center;
     }
 
-    .movies-category-grid {
+    .moviesCategoryGrid {
         grid-template-columns: 1fr;
     }
 }

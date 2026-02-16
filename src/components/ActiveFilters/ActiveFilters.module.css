@@ -1,4 +1,4 @@
-.active-filters {
+.activeFilters {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -7,14 +7,14 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.active-filters-header {
+.activeFiltersHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
 }
 
-.active-filters-title {
+.activeFiltersTitle {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -23,11 +23,11 @@
     font-size: 0.95rem;
 }
 
-.filter-icon {
+.filterIcon {
     font-size: 1.1rem;
 }
 
-.clear-all-button {
+.clearAllButton {
     background: none;
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
@@ -41,19 +41,19 @@
     gap: 4px;
 }
 
-.clear-all-button:hover {
+.clearAllButton:hover {
     background: rgba(255, 71, 87, 0.08);
     border-color: #ff4757;
     color: #ff4757;
 }
 
-.filters-tags {
+.filtersTags {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.filter-tag {
+.filterTag {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -78,16 +78,16 @@
     }
 }
 
-.filter-tag:hover {
+.filterTag:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(1, 180, 228, 0.4);
 }
 
-.filter-tag-label {
+.filterTagLabel {
     font-weight: 500;
 }
 
-.filter-tag-remove {
+.filterTagRemove {
     background: rgba(255, 255, 255, 0.2);
     border: none;
     color: white;
@@ -104,38 +104,38 @@
     margin-left: 2px;
 }
 
-.filter-tag-remove:hover {
+.filterTagRemove:hover {
     background: rgba(255, 255, 255, 0.4);
     transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
-    .active-filters {
+    .activeFilters {
         padding: 14px 16px;
     }
 
-    .active-filters-header {
+    .activeFiltersHeader {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
 
-    .clear-all-button {
+    .clearAllButton {
         align-self: flex-start;
     }
 
-    .filter-tag {
+    .filterTag {
         font-size: 0.85rem;
         padding: 5px 10px;
     }
 }
 
 @media (max-width: 480px) {
-    .filters-tags {
+    .filtersTags {
         gap: 8px;
     }
 
-    .filter-tag {
+    .filterTag {
         width: 100%;
         justify-content: space-between;
     }

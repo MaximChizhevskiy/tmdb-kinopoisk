@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
-import { useFavorites } from "../../hooks/useFavorites"
+import { useFavorites } from "../../hooks"
 import { MovieCard } from "../../components"
-import "./FavoritesPage.css"
+import styles from "./FavoritesPage.module.css"
 
 type SortOption = "newest" | "oldest" | "rating" | "title"
 
@@ -36,12 +36,12 @@ export const FavoritesPage = () => {
 
   if (favorites.length === 0) {
     return (
-      <div className="favorites-page favorites-page--empty">
-        <div className="empty-state">
-          <div className="empty-state-icon">❤️</div>
-          <h1 className="empty-state-title">Здесь пока ничего нет</h1>
-          <p className="empty-state-text">Добавляйте фильмы в избранное, нажимая на сердечко в карточке фильма</p>
-          <button className="empty-state-button" onClick={() => navigate("/movies?category=popular")}>
+      <div className={`${styles.favoritesPage} ${styles.favoritesPageEmpty}`}>
+        <div className={styles.emptyState}>
+          <div className={styles.emptyStateIcon}>❤️</div>
+          <h1 className={styles.emptyStateTitle}>Здесь пока ничего нет</h1>
+          <p className={styles.emptyStateText}>Добавляйте фильмы в избранное, нажимая на сердечко в карточке фильма</p>
+          <button className={styles.emptyStateButton} onClick={() => navigate("/movies?category=popular")}>
             Перейти к фильмам
           </button>
         </div>
@@ -50,25 +50,25 @@ export const FavoritesPage = () => {
   }
 
   return (
-    <div className="favorites-page">
-      <div className="favorites-header">
-        <div className="favorites-header-left">
-          <h1 className="favorites-title">Мои любимые фильмы</h1>
-          <span className="favorites-count">
+    <div className={styles.favoritesPage}>
+      <div className={styles.favoritesHeader}>
+        <div className={styles.favoritesHeaderLeft}>
+          <h1 className={styles.favoritesTitle}>Мои любимые фильмы</h1>
+          <span className={styles.favoritesCount}>
             {getFavoritesCount()} {getFavoritesCount() === 1 ? "фильм" : "фильмов"}
           </span>
         </div>
 
-        <div className="favorites-controls">
-          <div className="filters-sort">
-            <label htmlFor="sort-select" className="sort-label">
+        <div className={styles.favoritesControls}>
+          <div className={styles.filtersSort}>
+            <label htmlFor="sort-select" className={styles.sortLabel}>
               Сортировка:
             </label>
             <select
               id="sort-select"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="sort-select"
+              className={styles.sortSelect}
             >
               <option value="newest">Сначала новые</option>
               <option value="oldest">Сначала старые</option>
@@ -77,21 +77,21 @@ export const FavoritesPage = () => {
             </select>
           </div>
 
-          <button className="clear-all-button" onClick={handleClearAll} aria-label="Удалить все">
+          <button className={styles.clearAllButton} onClick={handleClearAll} aria-label="Удалить все">
             🗑️ Очистить всё
           </button>
         </div>
       </div>
 
-      <div className="favorites-grid">
+      <div className={styles.favoritesGrid}>
         {sortedFavorites.map((movie) => (
           <MovieCard key={movie.id} movie={movie} showRating={true} />
         ))}
       </div>
 
       {favorites.length > 0 && (
-        <div className="favorites-footer">
-          <p className="favorites-hint">💡 Всего добавлено фильмов: {favorites.length}</p>
+        <div className={styles.favoritesFooter}>
+          <p className={styles.favoritesHint}>💡 Всего добавлено фильмов: {favorites.length}</p>
         </div>
       )}
     </div>
