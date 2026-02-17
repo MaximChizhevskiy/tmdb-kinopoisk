@@ -1,23 +1,19 @@
 import { BrowserRouter as Router } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { Header } from "./components"
-import { Footer } from "./components"
-import { LinearProgress } from "./components"
-import styles from "./App.module.css"
+import { Footer, Header } from "./components"
 import { ThemeProvider } from "./context"
 import { AppRoutes } from "./routes/Routes"
-import { useGlobalLoading } from "./hooks"
+import { ScrollToTop } from "./components/ScrollToTop/ScrollToTop.tsx"
 
 export const App = () => {
-  const isGlobalLoading = useGlobalLoading()
   return (
     <ThemeProvider>
       <Router>
-        <div className={styles.app}>
+        <div className="app">
           <Header />
-          {isGlobalLoading && <LinearProgress />}
-          <main className={styles.mainContent}>
+          <ScrollToTop />
+          <main className="main-content">
             <AppRoutes />
           </main>
           <Footer />
